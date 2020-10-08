@@ -5,12 +5,11 @@
       <router-link to="/">
         <img :src = "require('../assets/images/getkrackinname.png')" alt="Get krackin">
       </router-link>
-
       <v-toolbar-title>
         <ul>
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/QuienesSomos">Quienes somos</router-link></li>
-          <li><router-link to="/Ayuda">Ayuda</router-link></li>
+          <li><router-link to="/quienes_somos">Quienes somos</router-link></li>
+          <li><router-link to="/ayuda">Ayuda</router-link></li>
         </ul>
       </v-toolbar-title>
 
@@ -46,7 +45,7 @@ export default {
     margin: 50px;
   }
 
-  a{
+  .v-application a{
     color: #626262;
     font-family: NotoSansRegular;
     font-size: 30px;
@@ -65,7 +64,7 @@ export default {
   }
 
   .router-link-exact-active{
-    color: white;
+    color: white !important;
   }
 
 </style>
