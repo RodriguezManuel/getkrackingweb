@@ -2,9 +2,7 @@
   <v-app>
     <NavBar/>
 
-    <div class="home">
-      <h1>HomePage</h1>
-    </div>
+    <h1>COMPLETAR2</h1>
   </v-app>
 </template>
 
@@ -12,10 +10,14 @@
 import NavBar from "@/components/NavBar";
 
 export default {
-  name: 'Home',
+  name: "QuienesSomos",
 
   components: {
     NavBar
   }
 }
 </script>
+
+<style scoped>
+
+</style>
