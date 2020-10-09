@@ -22,11 +22,19 @@
                       Registrate!
                     </h1>
                     <div class="input">
-                      <input  type="text" value="Nombre">
+
+                      <input type="text" v-model="message" placeholder="nombre">
                     </div>
-                    <div class="input">
-                      <input type="password" value="Contraseña">
-                    </div>
+                    <div class="generalcontainer nomargin"><!--------------------->
+                      <input :type="visibility" :class="{'u-full-width' : !onlyunder, 'u-full-width onlyunder': onlyunder}" style="padding-right: 35px; width:75%;"
+                             :maxlength='maxlength' :placeholder="placeholder" v-bind:value="value"><!--v-on:input="$emit('input', $event.target.value}"-->
+                      <a @click="showPassword()" style="position: relative;" class="notunderlined" v-if="visibility == 'password'">
+                          <v-icon>mdi-eye</v-icon>
+                      </a>
+                      <a @click="hidePassword()" style="position: relative;" class="notunderlined" v-if="visibility == 'text'">
+                          <v-icon>mdi-eye-off</v-icon>
+                      </a>
+                    </div><!----------------------------->
                     <div>
                       <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="vistazoLink"> Echarle un vistazo</a>
                     </div>
@@ -56,10 +64,29 @@ import NavBar from "@/components/NavBar";
 
 export default {
   name: 'Home',
-
   components: {
     NavBar
+  },
+  data(){
+    return {
+      visibility: 'password',
+    }
+  },
+  props: {
+    placeholder: {type: String , default: ''},
+    value: {type: String , default: ''},
+    maxlength: {type: Number, default: 50},
+    onlyunder: {type: Boolean, default: false}
+  },
+  methods:{
+    showPassword(){
+      this.visibility = 'text';
+    },
+    hidePassword(){
+      this.visibility= 'password';
+    }
   }
+
 }
 </script>
 
@@ -119,13 +146,13 @@ p {
   display: table;
   clear: both;
 }
-
+/*
 .input{
   margin: 7px;
   border: 2px solid black;
   border-radius: 7px;
   font-size: 1em;
-}
+}*/
 .reg{
   vertical-align: middle;
   padding-bottom: 0;
