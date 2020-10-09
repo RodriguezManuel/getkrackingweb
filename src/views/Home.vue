@@ -31,10 +31,8 @@
                       <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="vistazoLink"> Echarle un vistazo</a>
                     </div>
                     <div >
-                      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                        <div class="regButton">
-                          Registrarse
-                        </div>
+                      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" style="text-decoration: none" >
+                        <v-btn block elevation="1" depressed color ="#3C3C3C" class="white--text" style="border-radius: 0px;" >Registrarse</v-btn>
                       </a>
                     </div>
                   </div>
