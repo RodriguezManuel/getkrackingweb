@@ -3,32 +3,32 @@
     <NavBar/>
 
     <div class="home">
-      <v-container>
-        <v-layout row>
-          <v-col>
-            <div style="border-style: solid">
-              <v-card class="elevation-10 hidden-sm-and-down" color=#F3BB96>
+
+      <v-container style="margin: auto">
+        <v-row justify="space-around">
+          <v-col v-if="$vuetify.breakpoint.mdAndUp">
+            <div height="550px" width="863px" class="elevation-10" style="border-style: solid">
+              <v-card color="#f3BB96">
                 <v-img :src="require('../assets/images/home1.png')" alt="Persona haciendo ejercicio">
-                  <p id="textoImg1">Armá rutinas fácil y compartilas con tus alumnos</p>
+                  <p class="textoImg1yDescargaAPP">Armá rutinas fácil y compartilas con tus alumnos</p>
                 </v-img>
               </v-card>
             </div>
           </v-col>
 
-          <v-col>
-            <div style="border-style: solid">
-              <v-card class="elevation-10" height="100%" min-height="596">
-
+          <v-col >
+            <div class="elevation-10" style="border-style: solid" height="550px" width="863px">
+              <v-card height="550px">
                 <div class="rowCustom fill-height">
                   <div class="columnCustom">
                     <div class="reg">
-                      <p class="registerTitle">
+                      <p id="registerTitle">
                         Registrate!
                       </p>
 
                       <div class="inputCustom">
                         <div class="input" style="margin-top: 8px; margin-left: 5px">
-                          <input type="text" v-model="message" placeholder="Mail" style="font-size: 16px">
+                          <input type="text" placeholder="Mail" style="font-size: 16px">
                         </div>
                       </div>
 
@@ -48,30 +48,51 @@
                         </a>
                       </div>
 
-                      <v-spacer></v-spacer>
-                      <p>
-                        <router-link to="/mbhert">
+                      <router-link to="/mbhert">
+                        <p id="EcharleUnVistazo">
                           Echarle un vistazo
-                        </router-link>
+                        </p>
+                      </router-link>
+                      <v-btn width="280px" height="48px" elevation="1" depressed color="#3C3C3C"
+                             class="white--text mt-2">
+                        Registrarse
+                      </v-btn>
+                      <p id="LineasDeFondo">
+                        <span id="RegistrateCon">
+                          O regístrate con
+                        </span>
                       </p>
-                      <a>
-                        <v-btn block width="280px" height="48px" elevation="1" depressed color="#3C3C3C"
-                               class="white--text">
-                          Registrarse
-                        </v-btn>
-                      </a>
                     </div>
                   </div>
 
-                  <div class="columnCustom hidden-sm-and-down">
+                  <div class="columnCustom" v-if="$vuetify.breakpoint.mdAndUp">
                     <v-img id="imgLogo" :src="require('../assets/images/logo.png')" alt="Logo"/>
                   </div>
                 </div>
-
               </v-card>
             </div>
           </v-col>
-        </v-layout>
+        </v-row>
+
+        <p class="textoImg1yDescargaAPP">
+          Querés entrenar? Descargate nuestra app!
+        </p>
+
+        <v-row>
+          <v-col>
+            <div align="right">
+              <v-btn align="right" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed
+                     color="#3C3C3C">
+                Descargar en Google Play
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col>
+            <v-btn height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed color="#3C3C3C">
+              Descargar en App Store
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </div>
   </v-app>
@@ -119,23 +140,41 @@ export default {
   src: url("../assets/fonts/NotoSans-Bold.ttf");
 }
 
-#textoImg1 {
+.textoImg1yDescargaAPP {
+  margin-top: 20px;
   color: #3E3E3E;
   font-family: NotoSansRegular;
   font-size: 30px;
   text-align: center;
 }
 
-p {
-  color: #3E3E3E;
-  font-family: NotoSansBold;
-  font-size: 30px;
+#LineasDeFondo {
+  text-align: center;
+  width: 280px;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 35px 0 20px;
 }
 
-registerTitle {
-  color: #FFFFFF;
+#RegistrateCon {
+  color: #3D3D3D;
+  font-family: NotoSansRegular;
+  font-size: 13px;
+  background: #fff;
+  padding: 0 10px;
+}
+
+#EcharleUnVistazo {
+  color: #707070;
+  font-family: NotoSansRegular;
+  font-size: 20px;
+}
+
+#registerTitle {
+  color: #3D3D3D;
   font-family: NotoSansBold;
   font-size: 32px;
+  margin-bottom: 35px;
 }
 
 #imgLogo {
@@ -175,15 +214,16 @@ registerTitle {
 
 .inputCustom {
   border-style: solid;
-  margin-top: 5px;
-  height: 48px
+  border-color: grey;
+  margin-top: 10px;
+  height: 48px;
+  width: 280px;
 }
 
 .reg {
   padding-left: 25%;
   padding-top: 20%;
   vertical-align: middle;
-  position: center;
 }
 
 /* Para las propiedades del boton de iniciar sesion */
