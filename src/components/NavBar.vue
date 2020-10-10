@@ -52,7 +52,7 @@ export default {
     text-decoration: none;
   }
 
-  /* Para cambiar el tamanio del boton de iniciar sesion */
+  /* Para las propiedades del boton de iniciar sesion */
   .v-btn.v-size--default{
     font-family: NotoSansRegular;
     font-size: 30px;
@@ -61,6 +61,7 @@ export default {
 
   img{
     margin-right: 30px;
+    padding-top: 15px;
   }
 
   .router-link-exact-active{
