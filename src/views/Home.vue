@@ -103,12 +103,14 @@
             <div align="right">
               <v-btn align="right" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed
                      color="#3C3C3C">
-                Descargar en Google Play
+                <v-icon medium style="position: relative; left: -12px;">fab fa-google-play</v-icon>
+                   Descargar en Google Play
               </v-btn>
             </div>
           </v-col>
           <v-col>
             <v-btn height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed color="#3C3C3C">
+              <v-icon large style="position: relative; left: -12px;">fab fa-app-store</v-icon>
               Descargar en App Store
             </v-btn>
           </v-col>
