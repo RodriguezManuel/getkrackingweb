@@ -93,6 +93,58 @@
             </v-btn>
           </v-col>
         </v-row>
+
+        <p class="queOfrecemos"> Qué ofrece Get Krackin'</p>
+
+        <v-row>
+          <v-col>
+            <v-img :src="require('../assets/images/chat.png')" alt="Ejemplo de chat con alumnos" width = "864px" > </v-img>
+          </v-col>
+          <v-col>
+            <div class="Descripcion">
+              <p class="TituloDescripcion"> Hablá con tus clientes </p>
+              <p class="TextoDescripcion">Disponemos de un sistema que te permite estar comunicado siempre.</p>
+            </div>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <div class="Descripcion">
+              <p class="TituloDescripcion"> Agendá eventos </p>
+              <p class="TextoDescripcion">Maneja tus entrenamientos con tus alumnos desde nuestra aplicación, coordinando una fecha especifica.</p>
+            </div>
+          </v-col>
+          <v-col>
+            <v-img :src="require('../assets/images/eventos.png')" alt="Ejemplo de calendario" width = "864px" > </v-img>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <v-img :src="require('../assets/images/estadisticas.png')" alt="Ejemplo de estadisticas" width = "864px" > </v-img>
+          </v-col>
+          <v-col>
+            <div class="Descripcion">
+              <p class="TituloDescripcion"> Estadísticas </p>
+              <p class="TextoDescripcion">Seguí tu crecimiento como entrenador en la aplicación.</p>
+            </div>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <div class="Descripcion">
+              <p class="TituloDescripcion"> Creá rutinas </p>
+              <p class="TextoDescripcion">Crea rutinas personalizadas a partir de tus propios ejercicios o de los que disponemos como default.</p>
+            </div>
+          </v-col>
+          <v-col>
+            <v-img :src="require('../assets/images/rutinas.png')" alt="Ejemplo de rutinas" width = "864px" > </v-img>
+          </v-col>
+        </v-row>
+
+
       </v-container>
     </div>
   </v-app>
@@ -183,6 +235,36 @@ export default {
   left: 15%;
   height: 300px;
   width: 300px;
+}
+
+.queOfrecemos {
+  color: #3E3E3E;
+  font-family: NotoSansBold;
+  font-size: 45px;
+  text-align: center;
+  margin-top: 7%;
+  margin-bottom: 3%;
+}
+
+.TituloDescripcion {
+  color: #3E3E3E;
+  font-family: NotoSansBold;
+  margin-left: 10%;
+  font-size: 36px;
+  text-align: left;
+}
+
+.TextoDescripcion {
+  color: #3E3E3E;
+  font-family: NotoSansBold;
+  margin-left: 10%;
+  font-size: 28px;
+  text-align: left;
+}
+
+.Descripcion{
+  position: relative;
+  top: 25%;
 }
 
 .v-application a {
