@@ -16,7 +16,7 @@
             </div>
           </v-col>
 
-          <v-col >
+          <v-col>
             <div class="elevation-10" style="border-style: solid" height="550px" width="863px">
               <v-card height="550px">
                 <div class="rowCustom fill-height">
@@ -62,6 +62,26 @@
                           O regístrate con
                         </span>
                       </p>
+
+                      <div style="max-width: 280px">
+                        <v-row justify="space-around">
+                          <v-col>
+                            <div align="right">
+                              <v-icon>fab fa-google</v-icon>
+                            </div>
+                          </v-col>
+                          <v-col>
+                            <div align="center">
+                              <v-icon>fab fa-facebook</v-icon>
+                            </div>
+                          </v-col>
+                          <v-col>
+                            <div align="left">
+                              <v-icon>fab fa-instagram</v-icon>
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </div>
                     </div>
                   </div>
 
@@ -151,6 +171,7 @@
 </template>
 
 <script>
+import '@fortawesome/fontawesome-free/css/all.css';
 import NavBar from "@/components/NavBar";
 
 export default {
@@ -176,8 +197,10 @@ export default {
     hidePassword() {
       this.visibility = 'password';
     }
+  },
+  icons: {
+    iconfont: 'fa',
   }
-
 }
 </script>
 
