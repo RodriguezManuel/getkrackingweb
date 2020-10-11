@@ -2,7 +2,9 @@
   <v-app>
     <side-bar/>
 
-    <div style="background-color: gray">
+    <div style="background-color: gray;">
+      <top-bar/>
+
       <h1>HOME DE PERSONA LOGUEADA</h1>
     </div>
   </v-app>
@@ -10,10 +12,11 @@
 
 <script>
 import SideBar from "@/components/SideBar"
+import TopBar from "@/components/TopBar"
 
 export default {
   name: "Home",
-  components: {SideBar}
+  components: {TopBar, SideBar}
 }
 </script>
 

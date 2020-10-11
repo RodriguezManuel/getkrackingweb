@@ -1,7 +1,9 @@
 <template>
   <v-navigation-drawer app permanent width="308">
 
-    <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin">
+    <router-link to="/loggedhome">
+      <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin">
+    </router-link>
 
     <v-list>
       <v-list-item v-for="item in items" :key="item.icon" style="justify-content: center">

@@ -2,7 +2,9 @@
   <v-app>
     <side-bar/>
 
-    <div style="background-color: red">
+    <div style="background-color: gray;">
+      <top-bar/>
+      
       <h1>PAGINA DE EJERCICIOS</h1>
     </div>
   </v-app>
@@ -10,10 +12,11 @@
 
 <script>
 import SideBar from "@/components/SideBar"
+import TopBar from "@/components/TopBar"
 
 export default {
   name: "exercises",
-  components: {SideBar}
+  components: {TopBar, SideBar}
 }
 </script>
 
