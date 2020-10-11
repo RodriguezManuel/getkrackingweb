@@ -9,7 +9,7 @@
           <v-col v-if="$vuetify.breakpoint.mdAndUp">
             <div height="550px" width="863px" class="elevation-10" style="border-style: solid">
               <v-card color="#f3BB96">
-                <v-img :src="require('../assets/images/home1.png')" alt="Persona haciendo ejercicio">
+                <v-img :src="require('../../assets/images/home1.png')" alt="Persona haciendo ejercicio">
                   <p class="textoImg1yDescargaAPP">Armá rutinas fácil y compartilas con tus alumnos</p>
                 </v-img>
               </v-card>
@@ -86,7 +86,7 @@
                   </div>
 
                   <div class="columnCustom" v-if="$vuetify.breakpoint.mdAndUp">
-                    <v-img id="imgLogo" :src="require('../assets/images/logo.png')" alt="Logo"/>
+                    <v-img id="imgLogo" :src="require('../../assets/images/logo.png')" alt="Logo"/>
                   </div>
                 </div>
               </v-card>
@@ -120,7 +120,7 @@
 
         <v-row>
           <v-col>
-            <v-img :src="require('../assets/images/chat.png')" alt="Ejemplo de chat con alumnos" width = "864px" > </v-img>
+            <v-img :src="require('../../assets/images/chat.png')" alt="Ejemplo de chat con alumnos" width = "864px" > </v-img>
           </v-col>
           <v-col>
             <div class="Descripcion">
@@ -138,13 +138,13 @@
             </div>
           </v-col>
           <v-col>
-            <v-img :src="require('../assets/images/eventos.png')" alt="Ejemplo de calendario" width = "864px" > </v-img>
+            <v-img :src="require('../../assets/images/eventos.png')" alt="Ejemplo de calendario" width = "864px" > </v-img>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col>
-            <v-img :src="require('../assets/images/estadisticas.png')" alt="Ejemplo de estadisticas" width = "864px" > </v-img>
+            <v-img :src="require('../../assets/images/estadisticas.png')" alt="Ejemplo de estadisticas" width = "864px" > </v-img>
           </v-col>
           <v-col>
             <div class="Descripcion">
@@ -162,7 +162,7 @@
             </div>
           </v-col>
           <v-col>
-            <v-img :src="require('../assets/images/rutinas.png')" alt="Ejemplo de rutinas" width = "864px" > </v-img>
+            <v-img :src="require('../../assets/images/rutinas.png')" alt="Ejemplo de rutinas" width = "864px" > </v-img>
           </v-col>
         </v-row>
 
@@ -173,8 +173,8 @@
 </template>
 
 <script>
-import '@fortawesome/fontawesome-free/css/all.css';
-import NavBar from "@/components/NavBar";
+import '@fortawesome/fontawesome-free/css/all.css'
+import NavBar from "@/components/NavBar"
 
 export default {
   name: 'Home',
@@ -209,12 +209,12 @@ export default {
 <style scoped>
 @font-face {
   font-family: "NotoSansRegular";
-  src: url("../assets/fonts/NotoSans-Regular.ttf");
+  src: url("../../assets/fonts/NotoSans-Regular.ttf");
 }
 
 @font-face {
   font-family: "NotoSansBold";
-  src: url("../assets/fonts/NotoSans-Bold.ttf");
+  src: url("../../assets/fonts/NotoSans-Bold.ttf");
 }
 
 .textoImg1yDescargaAPP {

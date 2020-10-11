@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import notLoggedHome from '../views/notLogged/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'notLoggedHome',
+    component: notLoggedHome
   },
   {
     path: '/ayuda',
@@ -16,12 +16,22 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Ayuda.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Ayuda.vue')
   },
   {
     path: '/quienes_somos',
     name: 'QuienesSomos',
-    component: () => import(/* webpackChunkName: "about" */ '../views/QuienesSomos.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/QuienesSomos.vue')
+  },
+  {
+    path: '/loggedhome',
+    name: 'LoggedHome',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Home.vue')
+  },
+  {
+    path: '/exercises',
+    name: 'Exercises',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/exercises.vue')
   },
   {
     path: '*',
