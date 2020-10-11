@@ -5,7 +5,7 @@
 
     <v-list>
       <v-list-item v-for="item in items" :key="item.icon" style="justify-content: center">
-          <v-btn router :to="item.path" width="288px" height="55px">
+          <v-btn :to="item.path" width="288px" height="55px">
             <v-icon large style="padding-right: 5%;">{{ item.icon }}</v-icon>
             {{ item.desc }}
           </v-btn>

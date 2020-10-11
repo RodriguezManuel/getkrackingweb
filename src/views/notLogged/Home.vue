@@ -6,6 +6,7 @@
 
       <v-container style="margin: auto">
         <v-row justify="space-around">
+
           <v-col v-if="$vuetify.breakpoint.mdAndUp">
             <div height="550px" width="863px" class="elevation-10" style="border-style: solid">
               <v-card color="#f3BB96">
@@ -64,21 +65,11 @@
                       </p>
 
                       <div style="max-width: 280px">
-                        <v-row justify="space-around">
-                          <v-col>
-                            <div align="right">
-                              <v-icon>fab fa-google</v-icon>
-                            </div>
-                          </v-col>
-                          <v-col>
-                            <div align="center">
-                              <v-icon>fab fa-facebook</v-icon>
-                            </div>
-                          </v-col>
-                          <v-col>
-                            <div align="left">
-                              <v-icon>fab fa-instagram</v-icon>
-                            </div>
+                        <v-row style="justify-content: space-evenly">
+                          <v-col v-for="icon in icons" :key="icon.name">
+                            <router-link to="/implementar">
+                              <v-icon align="center">{{ icon.name }}</v-icon>
+                            </router-link>
                           </v-col>
                         </v-row>
                       </div>
@@ -95,77 +86,39 @@
         </v-row>
 
         <p class="textoImg1yDescargaAPP">
-          Querés entrenar? Descargate nuestra app!
+          ¿Querés entrenar? ¡Descargate nuestra app!
         </p>
 
-        <v-row>
+        <v-row justify="center">
           <v-col>
             <div align="right">
-              <v-btn align="right" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed
-                     color="#3C3C3C">
+              <v-btn to="/implementar" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed color="#3C3C3C">
                 <v-icon medium style="position: relative; left: -12px;">fab fa-google-play</v-icon>
-                   Descargar en Google Play
+                Descargar en Google Play
               </v-btn>
             </div>
           </v-col>
           <v-col>
-            <v-btn height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed color="#3C3C3C">
+            <v-btn to="/implementar" height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed color="#3C3C3C" left>
               <v-icon large style="position: relative; left: -12px;">fab fa-app-store</v-icon>
               Descargar en App Store
             </v-btn>
           </v-col>
         </v-row>
 
-        <p class="queOfrecemos"> Qué ofrece Get Krackin'</p>
+        <p class="queOfrecemos"> ¿Qué ofrece Get Krackin'?</p>
 
-        <v-row>
-          <v-col>
-            <v-img :src="require('../../assets/images/chat.png')" alt="Ejemplo de chat con alumnos" width = "864px" > </v-img>
+        <v-row v-for="(description, index) in descriptions" :key="description.title">
+          <v-col :order="index % 2">
+            <v-img :src="description.src" :alt=description.imgAlt width="864px"/>
           </v-col>
-          <v-col>
+          <v-col :order="(index+1) % 2">
             <div class="Descripcion">
-              <p class="TituloDescripcion"> Hablá con tus clientes </p>
-              <p class="TextoDescripcion">Disponemos de un sistema que te permite estar comunicado siempre.</p>
+              <p class="TituloDescripcion">{{ description.title}}</p>
+              <p class="TextoDescripcion">{{ description.desc }}</p>
             </div>
           </v-col>
         </v-row>
-
-        <v-row>
-          <v-col>
-            <div class="Descripcion">
-              <p class="TituloDescripcion"> Agendá eventos </p>
-              <p class="TextoDescripcion">Maneja tus entrenamientos con tus alumnos desde nuestra aplicación, coordinando una fecha especifica.</p>
-            </div>
-          </v-col>
-          <v-col>
-            <v-img :src="require('../../assets/images/eventos.png')" alt="Ejemplo de calendario" width = "864px" > </v-img>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-img :src="require('../../assets/images/estadisticas.png')" alt="Ejemplo de estadisticas" width = "864px" > </v-img>
-          </v-col>
-          <v-col>
-            <div class="Descripcion">
-              <p class="TituloDescripcion"> Estadísticas </p>
-              <p class="TextoDescripcion">Seguí tu crecimiento como entrenador en la aplicación.</p>
-            </div>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <div class="Descripcion">
-              <p class="TituloDescripcion"> Creá rutinas </p>
-              <p class="TextoDescripcion">Crea rutinas personalizadas a partir de tus propios ejercicios o de los que disponemos como default.</p>
-            </div>
-          </v-col>
-          <v-col>
-            <v-img :src="require('../../assets/images/rutinas.png')" alt="Ejemplo de rutinas" width = "864px" > </v-img>
-          </v-col>
-        </v-row>
-
 
       </v-container>
     </div>
@@ -184,6 +137,34 @@ export default {
   data() {
     return {
       visibility: 'password',
+      icons: [
+        {name: 'fab fa-google'},
+        {name: 'fab fa-facebook'},
+        {name: 'fab fa-instagram'},
+      ],
+      descriptions: [
+        {
+          src: require('@/assets/images/chat.png'),
+          imgAlt: 'Ejemplo de chat con alumnos',
+          title: ' Hablá con tus clientes',
+          desc: 'Disponemos de un sistema que te permite estar comunicado siempre.',
+        },{
+          src: require('../../assets/images/eventos.png'),
+          imgAlt: 'Ejemplo de calendario',
+          title: ' Agendá eventos',
+          desc: 'Maneja tus entrenamientos con tus alumnos desde nuestra aplicación, coordinando una fecha especifica.',
+        },{
+          src: require('../../assets/images/estadisticas.png'),
+          imgAlt: 'Ejemplo de estadisticas',
+          title: ' Estadísticas',
+          desc: 'Seguí tu crecimiento como entrenador en la aplicación.',
+        },{
+          src: require('../../assets/images/rutinas.png'),
+          imgAlt: 'Ejemplo de rutinas',
+          title: ' Creá rutinas',
+          desc: 'Crea rutinas personalizadas a partir de tus propios ejercicios o de los que disponemos como default.',
+        },
+      ],
     }
   },
   props: {
@@ -220,7 +201,7 @@ export default {
 .textoImg1yDescargaAPP {
   margin-top: 20px;
   color: #3E3E3E;
-  font-family: NotoSansRegular;
+  font-family: NotoSansSemiBold;
   font-size: 30px;
   text-align: center;
 }
@@ -235,7 +216,7 @@ export default {
 
 #RegistrateCon {
   color: #3D3D3D;
-  font-family: NotoSansRegular;
+  font-family: NotoSansSemiBold;
   font-size: 13px;
   background: #fff;
   padding: 0 10px;
@@ -287,20 +268,9 @@ export default {
   text-align: left;
 }
 
-.Descripcion{
+.Descripcion {
   position: relative;
   top: 25%;
-}
-
-.v-application a {
-  text-decoration: none;
-  color: gray;
-  position: relative;
-  left: 15px;
-  bottom: 1px;
-  margin: 15px;
-  font-size: 20px;
-  font-family: NotoSansRegular;
 }
 
 .rowCustom {
@@ -333,9 +303,18 @@ export default {
   vertical-align: middle;
 }
 
+/*Para texto de los botones */
+.v-application a {
+  text-decoration: none;
+  color: gray;
+  position: relative;
+  bottom: 1px;
+  margin: 15px;
+}
+
 /* Para las propiedades del boton de iniciar sesion */
 .v-btn.v-size--default {
-  font-family: NotoSansRegular;
+  font-family: NotoSansSemiBold;
   font-size: 16px;
   text-transform: none;
 }
