@@ -18,8 +18,8 @@
       -->
       <!--      CAMBIAR PARA QUE SOLO ENTRE CUANDO ESTE LOGUEADO-->
       <v-btn width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
+        <Login margin-top="40px"></Login>
         Iniciar sesión
-        <Login></Login>
 
       </v-btn>
     </v-toolbar>
