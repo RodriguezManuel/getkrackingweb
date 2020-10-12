@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav style="z-index: 1;">
     <v-toolbar flat color=#D1D1D1 height=125px>
       <router-link to="/">
         <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin">
@@ -17,8 +17,8 @@
       </v-btn>
       -->
       <!--      CAMBIAR PARA QUE SOLO ENTRE CUANDO ESTE LOGUEADO-->
+      <Login v-show="login_show" style="position: absolute  ; margin-top: 9%; right: 0.7%; z-index: 2;"></Login>
       <v-btn width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
-        <Login margin-top="40px"></Login>
         Iniciar sesión
 
       </v-btn>
@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     login_show: function(){
-
     }
   }
 }

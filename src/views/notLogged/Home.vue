@@ -4,7 +4,7 @@
 
     <div class="home">
 
-      <v-container style="margin: auto">
+      <v-container style="margin: auto;">
         <v-row justify="space-around">
 
           <v-col v-if="$vuetify.breakpoint.mdAndUp">

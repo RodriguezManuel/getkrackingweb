@@ -1,10 +1,7 @@
-
-
-
-
 <template>
+
   <div>
-    <v-card outlined rounded width="338px" height="200px" depressed color=#3C3C3C class="white--text rounded-rectangle">
+    <v-card width="341px" height="260px" depressed color=#3C3C3C class="white--text" style="border-radius: 10%">
       <div class="inputCustom">
         <div class="input" style="margin-top: 8px; margin-left: 5px">
           <input type="text" placeholder="Usuario" style="font-size: 16px">
@@ -17,6 +14,7 @@
       <p class="olvidaste">Olvidaste tu contraseña?</p>
     </v-card>
   </div>
+
 </template>
 
 <script>
