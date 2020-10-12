@@ -17,6 +17,7 @@
             </div>
           </v-col>
 
+
           <v-col>
             <div class="elevation-10" style="border-style: solid" height="550px" width="863px">
               <v-card height="550px">

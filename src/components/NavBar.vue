@@ -11,9 +11,16 @@
       </v-tabs>
 
       <v-spacer/>
-      <!--      CAMBIAR PARA QUE SOLO ENTRE CUANDO ESTE LOGUEADO-->
+      <!--
       <v-btn to="/loggedhome" width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
         Iniciar sesión
+      </v-btn>
+      -->
+      <!--      CAMBIAR PARA QUE SOLO ENTRE CUANDO ESTE LOGUEADO-->
+      <v-btn width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
+        Iniciar sesión
+        <Login></Login>
+
       </v-btn>
     </v-toolbar>
   </nav>
@@ -21,8 +28,12 @@
 </template>
 
 <script>
+import Login from "./Login"
 export default {
   name: "NavBar",
+  components: {
+    Login
+  },
   data() {
     return {
       items: [
@@ -31,6 +42,11 @@ export default {
         {desc: 'Ayuda', path: '/ayuda'}
       ]
     };
+  },
+  methods: {
+    login_show: function(){
+
+    }
   }
 }
 </script>
