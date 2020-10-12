@@ -2,9 +2,30 @@
   <div>
     <side-bar/>
     <top-bar/>
+
     <v-list>
+      <v-card style="width: 98%; margin-left: 1%; height: 50px;">
+        <v-row>
+          <v-col cols="1" style="padding-left: 10%;" ></v-col>
+          <v-col cols="3">
+            <p>Nombre</p>
+          </v-col>
+          <v-col cols="1" >
+            <p>Edad</p>
+          </v-col>
+          <v-col cols="2">
+            <p>Rutina Actual</p>
+          </v-col>
+          <v-col cols="3">
+            <p>Progreso</p>
+          </v-col>
+          <v-col cols="1"></v-col>
+        </v-row>
+      </v-card>
       <v-list-item v-for="cliente in clientes" :key="cliente.nombre">
-        <client-entry v-bind:cliente="cliente"></client-entry>
+        <v-card style="width: 100%; margin-top: 20px">
+          <client-entry v-bind:cliente="cliente"></client-entry>
+        </v-card>
       </v-list-item>
     </v-list>
   </div>
@@ -31,5 +52,12 @@ name: "Clientes.vue",
 </script>
 
 <style scoped>
-
+p{
+  margin-bottom: 10px;
+  font-family: NotoSansRegular;
+  color: #626262;
+  font-size: 20px;
+  text-transform: none;
+  justify-content: left;
+}
 </style>
