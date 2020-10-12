@@ -1,8 +1,8 @@
 <template>
-  <v-navigation-drawer app permanent width="308">
+  <v-navigation-drawer app permanent width="308px">
 
     <router-link to="/loggedhome">
-      <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin">
+      <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin" class="ma-1">
     </router-link>
 
     <v-list>

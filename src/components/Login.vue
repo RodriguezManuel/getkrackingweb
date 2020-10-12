@@ -14,6 +14,8 @@
         </div>
         <p class="olvidaste" style="margin-top:7% ">Olvidaste tu contraseña?</p>
       </div>
+      <p class="olvidaste">Olvidaste tu contraseña?</p>
+<!--      DEBERIA APUNTAR A ALGUN LADO-->
     </v-card>
   </div>
 
