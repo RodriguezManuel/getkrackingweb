@@ -14,7 +14,13 @@
         </div>
         <p class="olvidaste" style="margin-top:7% ">Olvidaste tu contraseña?</p>
       </div>
-      <p class="olvidaste">Olvidaste tu contraseña?</p>
+
+      <v-col v-for="icon in icons" :key="icon.name">
+        <router-link to="/implementar">
+          <v-icon align="center">{{ icon.name }}</v-icon>
+        </router-link>
+      </v-col>
+
 <!--      DEBERIA APUNTAR A ALGUN LADO-->
     </v-card>
   </div>
@@ -27,6 +33,11 @@
     data() {
       return {
         visibility: "password",
+        icons: [
+          {name: 'fab fa-google'},
+          {name: 'fab fa-facebook'},
+          {name: 'fab fa-instagram'},
+        ]
       }
     }
   }
