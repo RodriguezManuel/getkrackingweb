@@ -17,8 +17,8 @@
       </v-btn>
       -->
       <!--      CAMBIAR PARA QUE SOLO ENTRE CUANDO ESTE LOGUEADO-->
-      <Login v-show="login_show" style="position: absolute  ; margin-top: 9%; right: 0.7%; z-index: 2;"></Login>
-      <v-btn width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
+      <Login v-if="visibilityLogin" style="position: absolute  ; margin-top: 9%; right: 0.7%; z-index: 2;"></Login>
+      <v-btn v-on:click="visibilityLogin = !visibilityLogin" width="338px" height="78px" depressed color=#3C3C3C class="white--text rounded-pill">
         Iniciar sesión
 
       </v-btn>
@@ -36,6 +36,7 @@ export default {
   },
   data() {
     return {
+      visibilityLogin: false,
       items: [
         {desc: 'Home', path: '/'},
         {desc: 'Quienes somos', path: 'quienes_somos'},
