@@ -1,19 +1,19 @@
 <template>
   <nav>
-    <v-toolbar height="120px" style="background-color: gray; box-shadow: none">
+    <v-toolbar height="120px" style="z-index: 1; box-shadow: none; background-color: transparent;">
       <v-row>
         <v-col/>
         <v-col cols="auto">
-          <router-link to="/implementar">
+          <v-btn icon to="/implementar">
             <v-icon x-large color="white" style="top: 50px; margin-right: 15px;">
               mdi-bell-circle-outline
             </v-icon>
-          </router-link>
-          <router-link to="/implementar">
+          </v-btn>
+          <v-btn icon to="/implementar">
             <v-icon x-large color="white" style="top: 50px;">
               mdi-help-circle-outline
             </v-icon>
-          </router-link>
+          </v-btn>
         </v-col>
         <v-col cols="auto">
           <router-link to="/implementar">
@@ -32,6 +32,10 @@
         </v-col>
       </v-row>
     </v-toolbar>
+    <!--  Para el color del fondo-->
+    <div style="height: 100%; width: 100%; background-color: #EDEDED; position: absolute; top: 0; z-index: 0;"/>
+    <div style="height: 490px; width: 100%; background-color: #8b8686; position: absolute; top: 0; z-index: 0;"/>
+    <div style="height: 40px; width: 100%; background-color: white; position: absolute; top: 490px; z-index: 0;"/>
   </nav>
 </template>
 
