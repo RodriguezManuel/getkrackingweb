@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <NavBar/>
 
     <div class="home">
@@ -123,7 +123,7 @@
 
       </v-container>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>

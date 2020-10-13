@@ -1,9 +1,9 @@
 <template>
-  <v-app>
+  <div>
     <NavBar/>
 
     <h1>COMPLETAR</h1>
-  </v-app>
+  </div>
 </template>
 
 <script>

@@ -4,13 +4,13 @@
       <v-row>
         <v-col/>
         <v-col cols="auto">
-          <v-btn icon to="/implementar">
-            <v-icon x-large color="white" style="top: 50px; margin-right: 15px;">
+          <v-btn icon to="/implementar" style="top: 50px; margin-right: 15px;">
+            <v-icon x-large color="white">
               mdi-bell-circle-outline
             </v-icon>
           </v-btn>
-          <v-btn icon to="/implementar">
-            <v-icon x-large color="white" style="top: 50px;">
+          <v-btn icon to="/implementar" style="top: 50px;">
+            <v-icon x-large color="white">
               mdi-help-circle-outline
             </v-icon>
           </v-btn>

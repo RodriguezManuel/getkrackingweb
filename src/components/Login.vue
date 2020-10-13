@@ -13,6 +13,7 @@
           <v-icon v-on:click="visibility = 'password'" v-else>mdi-eye-off</v-icon>
         </div>
         <p class="olvidaste" style="margin-top:7% ">Olvidaste tu contraseña?</p>
+        <!--      DEBERIA APUNTAR A ALGUN LADO-->
       </div>
 
       <v-col v-for="icon in icons" :key="icon.name">
