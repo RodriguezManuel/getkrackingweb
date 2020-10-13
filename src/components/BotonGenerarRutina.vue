@@ -1,14 +1,12 @@
 <template>
-  <div class="aux">
-  <v-btn color="#FBAC31" width="24%" height="10%" class=".v-btn.v-size--default white--text rounded-pill">
+  <v-btn color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="aux white--text rounded-pill">
     Generar rutina nueva
   </v-btn>
-  </div>
 </template>
 
 <script>
 export default {
-name: "BotonGenerarRutina"
+  name: "BotonGenerarRutina"
 }
 </script>
 
@@ -19,16 +17,16 @@ name: "BotonGenerarRutina"
 }
 
 /* Para que no tome el default que es relative y pueda seguir el scrolleo de la pantalla*/
-div.aux {
+.aux {
   position: -webkit-sticky;
   position: sticky;
-  top: 85%;
-  left: 38%;
+  left: 47.5%;
+  top: 89%;
   z-index: 3;
 }
 
 /* Para las propiedades del boton, el div.aux me permite evitar que herede las propiedades del boton del padre(componente donde sea contenido) */
-div.aux .v-btn.v-size--default {
+.v-btn.v-size--default.aux {
   font-family: GothamMedium;
   font-size: 26px;
   text-transform: none;

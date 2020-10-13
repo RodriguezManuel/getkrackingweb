@@ -2,8 +2,10 @@
   <div>
     <side-bar/>
     <top-bar/>
+
     <v-container style="margin-top: 30px">
 
+      <boton-generar-rutina/>
       <v-row justify="space-between">
         <v-col v-for="tarjeta in tarjetas" :key="tarjeta.title" align="center">
           <v-card width="80%" min-height="171px" depressed color="white" class="white--text"
@@ -21,7 +23,8 @@
                 </p>
               </v-col>
               <v-col cols="3">
-                <v-avatar v-bind:size="($vuetify.breakpoint.lgAndUp)? 100: 60" color="#FBAC31" style="top: 20px; left: -25px;">
+                <v-avatar v-bind:size="($vuetify.breakpoint.lgAndUp)? 100: 60" color="#FBAC31"
+                          style="top: 20px; left: -25px;">
                       <span class="white--text" style="font-size: 30px;">
                         {{ tarjeta.numero }}
                       </span>
@@ -60,8 +63,10 @@
         </v-col>
         <v-spacer/>
         <v-col cols="4" justify="space-around">
+
           <v-card color="white" width="89%" height="543px" elevation="2" outlined style="border-radius: 13px">
             <p class="textoTarjetasGrandes mt-4 ml-4">Rutinas populares</p>
+
             <v-row>
               <v-col>
                 <p class="textoRutinasPopulares ml-3">Nombre</p>
@@ -70,6 +75,7 @@
                 <p class="textoRutinasPopulares">Usuarios</p>
               </v-col>
             </v-row>
+
             <v-list>
               <v-list-item v-for="routine in routines" :key="routine.name">
                 <v-row>
@@ -84,10 +90,11 @@
                 </v-row>
               </v-list-item>
             </v-list>
+
           </v-card>
+
         </v-col>
       </v-row>
-
     </v-container>
 
   </div>
@@ -186,7 +193,7 @@ export default {
 }
 
 /* Para las propiedades de los botones del grafico */
-.v-btn.v-size--default{
+.v-btn.v-size--default {
   font-family: GothamMedium;
   font-size: 16px;
   text-transform: none;
