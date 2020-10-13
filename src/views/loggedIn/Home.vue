@@ -3,13 +3,14 @@
     <side-bar/>
     <top-bar/>
 
-    <v-container style="margin-top: 30px">
+    <v-container style="margin-top: 30px;">
 
       <boton-generar-rutina/>
+
       <v-row justify="space-between">
-        <v-col v-for="tarjeta in tarjetas" :key="tarjeta.title" align="center">
-          <v-card width="80%" min-height="171px" depressed color="white" class="white--text"
-                  style="border-radius: 40px;" align="left" height="100%" :to="tarjeta.path">
+        <v-col v-for="tarjeta in tarjetas" :key="tarjeta.title" >
+          <v-card width="80%" min-height="171px" depressed color="white" class="white--text mx-auto"
+                  style="border-radius: 40px;" height="100%" :to="tarjeta.path" >
             <v-row>
               <v-col cols="9">
                 <p class="textoTarjetas" style="font-size: 26px;">
@@ -22,6 +23,7 @@
                   {{ tarjeta.linea2 }}
                 </p>
               </v-col>
+
               <v-col cols="3">
                 <v-avatar v-bind:size="($vuetify.breakpoint.lgAndUp)? 100: 60" color="#FBAC31"
                           style="top: 20px; left: -25px;">
@@ -36,11 +38,11 @@
       </v-row>
 
       <v-row justify="space-around" class="mt-12">
-        <v-col cols="7" justify="space-around" align="center">
-          <v-card color="white" width="89%" height="543px" elevation="2" outlined style="border-radius: 13px">
+        <v-col cols="7" justify="space-around">
+          <v-card class="mx-auto" color="white" width="89%" height="543px" elevation="2" outlined style="border-radius: 13px">
             <v-card-title>
               <v-row>
-                <v-col cols="8" align="left">
+                <v-col cols="8">
                   <p class="textoTarjetasGrandes">Cantidad de usos a mis rutinas</p>
                 </v-col>
                 <v-spacer/>

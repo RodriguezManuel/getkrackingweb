@@ -17,7 +17,6 @@
             </div>
           </v-col>
 
-
           <v-col>
             <div class="elevation-10" style="border-style: solid" height="550px" width="863px">
               <v-card height="550px">
@@ -28,35 +27,19 @@
                         Registrate!
                       </p>
 
-                      <div class="inputCustom">
-                        <div class="input" style="margin-top: 8px; margin-left: 5px">
-                          <input type="text" placeholder="Mail" style="font-size: 16px">
-                        </div>
-                      </div>
+                      <v-text-field solo type="text" placeholder="Usuario" size="27%" outlined
+                                    style="font-size: 18px;"/>
 
-                      <div class="inputCustom">
-                        <input :type="visibility"
-                               :class="{'u-full-width' : !onlyunder, 'u-full-width onlyunder': onlyunder}"
-                               style="padding-right: 35px; width:75%; margin-top: 8px; margin-left: 5px;"
-                               :maxlength='maxlength' :placeholder="placeholder" v-bind:value="value">
-                        <!--v-on:input="$emit('input', $event.target.value}"-->
-                        <a @click="showPassword()" style="position: relative;" class="notunderlined"
-                           v-if="visibility == 'password'">
-                          <v-icon>mdi-eye</v-icon>
-                        </a>
-                        <a @click="hidePassword()" style="position: relative;" class="notunderlined"
-                           v-if="visibility == 'text'">
-                          <v-icon>mdi-eye-off</v-icon>
-                        </a>
-                      </div>
+                      <v-text-field solo :type="(visibility == false)? 'password':'text'" placeholder="Contraseña"
+                                    size="24%" outlined style="font-size: 18px"
+                      :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
 
                       <router-link to="/mbhert">
                         <p id="EcharleUnVistazo">
                           Echarle un vistazo
                         </p>
                       </router-link>
-                      <v-btn width="280px" height="48px" elevation="1" depressed color="#3C3C3C"
-                             class="white--text mt-2">
+                      <v-btn width="100%" height="48px" depressed color="#3C3C3C" class="white--text">
                         Registrarse
                       </v-btn>
                       <p id="LineasDeFondo">
@@ -65,12 +48,12 @@
                         </span>
                       </p>
 
-                      <div style="max-width: 280px">
-                        <v-row style="justify-content: space-evenly">
-                          <v-col v-for="icon in icons" :key="icon.name">
-                            <router-link to="/implementar">
-                              <v-icon align="center">{{ icon.name }}</v-icon>
-                            </router-link>
+                      <div>
+                        <v-row justify="space-around">
+                          <v-col v-for="icon in icons" :key="icon.name" class="text-center">
+                            <v-btn icon to="/implementar" style="vertical-align: top;">
+                              <v-icon color="gray">{{ icon.name }}</v-icon>
+                            </v-btn>
                           </v-col>
                         </v-row>
                       </div>
@@ -92,15 +75,17 @@
 
         <v-row justify="center">
           <v-col>
-            <div align="right">
-              <v-btn to="/implementar" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed color="#3C3C3C">
+            <div style="text-align: right;">
+              <v-btn to="/implementar" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed
+                     color="#3C3C3C">
                 <v-icon medium style="position: relative; left: -12px;">fab fa-google-play</v-icon>
                 Descargar en Google Play
               </v-btn>
             </div>
           </v-col>
           <v-col>
-            <v-btn to="/implementar" height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed color="#3C3C3C" left>
+            <v-btn to="/implementar" height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed
+                   color="#3C3C3C" left>
               <v-icon large style="position: relative; left: -12px;">fab fa-app-store</v-icon>
               Descargar en App Store
             </v-btn>
@@ -115,7 +100,7 @@
           </v-col>
           <v-col :order="(index+1) % 2">
             <div class="Descripcion">
-              <p class="TituloDescripcion">{{ description.title}}</p>
+              <p class="TituloDescripcion">{{ description.title }}</p>
               <p class="TextoDescripcion">{{ description.desc }}</p>
             </div>
           </v-col>
@@ -137,7 +122,7 @@ export default {
   },
   data() {
     return {
-      visibility: 'password',
+      visibility: false,
       icons: [
         {name: 'fab fa-google'},
         {name: 'fab fa-facebook'},
@@ -149,17 +134,17 @@ export default {
           imgAlt: 'Ejemplo de chat con alumnos',
           title: ' Hablá con tus clientes',
           desc: 'Disponemos de un sistema que te permite estar comunicado siempre.',
-        },{
+        }, {
           src: require('../../assets/images/eventos.png'),
           imgAlt: 'Ejemplo de calendario',
           title: ' Agendá eventos',
           desc: 'Maneja tus entrenamientos con tus alumnos desde nuestra aplicación, coordinando una fecha especifica.',
-        },{
+        }, {
           src: require('../../assets/images/estadisticas.png'),
           imgAlt: 'Ejemplo de estadisticas',
           title: ' Estadísticas',
           desc: 'Seguí tu crecimiento como entrenador en la aplicación.',
-        },{
+        }, {
           src: require('../../assets/images/rutinas.png'),
           imgAlt: 'Ejemplo de rutinas',
           title: ' Creá rutinas',
@@ -209,10 +194,11 @@ export default {
 
 #LineasDeFondo {
   text-align: center;
-  width: 280px;
+  width: 100%;
   border-bottom: 1px solid #000;
   line-height: 0.1em;
-  margin: 35px 0 20px;
+  margin-top: 35px;
+  margin-bottom: 0px;
 }
 
 #RegistrateCon {
@@ -290,17 +276,9 @@ export default {
   clear: both;
 }
 
-.inputCustom {
-  border-style: solid;
-  border-color: grey;
-  margin-top: 10px;
-  height: 48px;
-  width: 280px;
-}
-
 .reg {
-  padding-left: 25%;
-  padding-top: 20%;
+  padding-left: 15%;
+  padding-top: 10%;
   vertical-align: middle;
 }
 

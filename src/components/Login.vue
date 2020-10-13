@@ -1,60 +1,90 @@
 <template>
 
-  <div>
-    <v-card width="341px" height="260px" depressed color=#3C3C3C class="white--text" style="border-radius: 10%">
-      <div class="inputCustom" style=" position: absolute; margin-top: 15%; margin-left: 20%">
-        <p class="titulo">Iniciar sesión</p>
-        <div class="input">
-          <input type="text" placeholder="Usuario" style="font-size: 16px">
-        </div>
-        <div class="input" style="margin-top: 5%">
-          <input :type="visibility" placeholder="Contraseña" style="font-size: 16px">
-          <v-icon v-on:click="visibility = 'text'" v-if="visibility=='password'">mdi-eye</v-icon>
-          <v-icon v-on:click="visibility = 'password'" v-else>mdi-eye-off</v-icon>
-        </div>
-        <p class="olvidaste" style="margin-top:7% ">Olvidaste tu contraseña?</p>
-        <!--      DEBERIA APUNTAR A ALGUN LADO-->
+  <v-card width="341px" depressed color=#3C3C3C class="white--text" style="border-radius: 44px;">
+
+
+    <p class="titulo" style="margin-top: 17px; margin-left: 1px;">Iniciar sesión</p>
+    <v-container class="inputCustom ml-auto mr-auto">
+      <v-text-field solo dense type="text" placeholder="Usuario" size="27%" outlined
+                    style="font-size: 18px;" height="34%"/>
+
+      <v-text-field solo dense :type="(visibility == false)? 'password':'text'" placeholder="Contraseña"
+                    size="24%" outlined style="font-size: 18px"
+                    :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
+
+      <p class="olvidaste">Olvidaste tu contraseña?</p>
+      <!--      DEBERIA APUNTAR A ALGUN LADO-->
+      <div class="text-center">
+        <v-btn height="32px" class="rounded-pill white black--text">Ingresar</v-btn>
       </div>
 
-      <v-col v-for="icon in icons" :key="icon.name">
-        <router-link to="/implementar">
-          <v-icon align="center">{{ icon.name }}</v-icon>
-        </router-link>
-      </v-col>
+      <v-row justify="space-around">
+        <v-col v-for="icon in icons" :key="icon.name" class="text-center">
+          <v-btn icon to="/implementar">
+            <v-icon color="white">{{ icon.name }}</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
 
-<!--      DEBERIA APUNTAR A ALGUN LADO-->
-    </v-card>
-  </div>
+    </v-container>
+    <!--      DEBERIA APUNTAR A ALGUN LADO-->
+  </v-card>
 
 </template>
 
 <script>
-  export default {
-    name: "Login",
-    data() {
-      return {
-        visibility: "password",
-        icons: [
-          {name: 'fab fa-google'},
-          {name: 'fab fa-facebook'},
-          {name: 'fab fa-instagram'},
-        ]
-      }
+export default {
+  name: "Login",
+  data() {
+    return {
+      visibility: false,
+      icons: [
+        {name: 'fab fa-google'},
+        {name: 'fab fa-facebook'},
+        {name: 'fab fa-instagram'},
+      ]
     }
   }
+}
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "NotoSansRegular";
+  src: url("../assets/fonts/NotoSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "NotoSansBold";
+  src: url("../assets/fonts/NotoSans-Bold.ttf");
+}
+@font-face {
+  font-family: "NotoSansSemiBold";
+  src: url("../assets/fonts/NotoSans-SemiBold.ttf");
+}
+
+
 .olvidaste {
-    font-family: NotoSans-Regular;
-    font-size: 15px;
-    text-decoration: underline;
-    text-align: center;
+  font-family: NotoSans-Regular;
+  font-size: 18px;
+  text-decoration: underline;
+  text-align: center;
 }
 
 .titulo {
-  font-family: NotoSansBold;
-  font-size: 25px;
+  font-family: NotoSansSemiBold;
+  font-size: 30px;
   text-align: center;
+  letter-spacing: 0.0892857143em;
 }
+
+
+/* Para las propiedades del boton de iniciar sesion */
+.v-btn.v-size--default {
+  font-family: NotoSans-Regular;
+  font-size: 20px;
+  text-transform: none;
+  text-decoration: none;
+}
+
 </style>
