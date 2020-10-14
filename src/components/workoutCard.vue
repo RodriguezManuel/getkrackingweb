@@ -1,13 +1,13 @@
 <template>
   <v-card width="380px" height="100%" color="#4DB6AC" style="border-radius:25px">
-    <p class="nombre"> NOMBRE RUTINA</p>
+    <p class="nombre">{{ nombre }}</p>
     <v-row style="margin-top: -20px">
       <v-col cols="7">
         <v-img :src="require('../assets/images/workout.png')" alt="Imagen rutina" style="margin-left: 5px"></v-img>
 
         <div style="text-align: center;">
           <v-icon small color="#FFFFFF"> mdi-clock-time-five-outline</v-icon>
-          <a class="texto" color="#FFFFFF"> 5 minutos</a>
+          <a class="texto" color="#FFFFFF"> {{ time }} minutos</a>
         </div>
       </v-col>
 
@@ -26,11 +26,11 @@
     </v-row>
 
     <v-row class="mx-3" style="margin-top:-10px">
-      <p class="texto">Gana resistencia muscular y energizate con esta rutina de abdominales y piernas.</p>
+      <p class="texto">{{ descripcion }}</p>
     </v-row>
 
-    <v-btn x-large icon style="position: absolute; top: 4%; right: 3px; z-index: 1;">
-      <v-icon color="pink">mdi-heart</v-icon>
+    <v-btn x-large icon @click="favorite = !favorite" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
+      <v-icon color="pink">{{ (favorite == true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
     </v-btn>
 
     <v-btn small icon v-if="instrumentos" style="position: absolute; top: 20%; right: 13px; z-index: 1;">
@@ -46,9 +46,13 @@ export default {
   name: "workoutCard",
   data() {
     return {
+      nombre: 'NOMBRE RUTINA',
+      time: 5,
       dif: 3,
       flex: 1,
+      descripcion: 'Gana resistencia muscular y energizate con esta rutina de abdominales y piernas.',
       instrumentos: true,
+      favorite: false,
     }
   }
 }

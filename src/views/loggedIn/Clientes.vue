@@ -58,9 +58,15 @@ name: "Clientes.vue",
 </script>
 
 <style scoped>
+
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("../../assets/fonts/NotoSans-Regular.ttf");
+}
+
 textCustom{
   margin-bottom: 10px;
-  font-family: NotoSansRegular;
+  font-family: NotoSans-Regular;
   color: #626262;
   font-size: 24px;
   text-transform: none;

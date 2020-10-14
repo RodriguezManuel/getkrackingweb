@@ -20,7 +20,7 @@ export default {
 .aux {
   position: -webkit-sticky;
   position: sticky;
-  left: 47.5%;
+  left: 48.2%;
   bottom: 25px;
   z-index: 3;
 }
