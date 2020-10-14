@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="aux white--text rounded-pill">
+  <v-btn color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="aux mx-auto white--text rounded-pill">
     Generar rutina nueva
   </v-btn>
 </template>
@@ -21,7 +21,7 @@ export default {
   position: -webkit-sticky;
   position: sticky;
   left: 47.5%;
-  top: 89%;
+  bottom: 25px;
   z-index: 3;
 }
 

@@ -29,19 +29,29 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Home.vue')
   },
   {
-    path: '/exercises',
-    name: 'Exercises',
-    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/exercises.vue')
+    path: '/ejercicios',
+    name: 'Ejercicios',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Ejercicios.vue')
   },
   {
-    path: '/workoutCard',
-    name: 'WorkoutCard',
-    component: () => import(/* webpackChunkName: "about" */ '../components/workoutCard.vue')
+    path: '/rutinas',
+    name: 'Rutinas',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Rutinas.vue')
   },
   {
-    path: '/clients',
+    path: '/clientes',
     name: 'Clientes',
     component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Clientes.vue')
+  },
+  {
+    path: '/calendario',
+    name: 'Calendario',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Calendario.vue')
+  },
+  {
+    path: '/ajustes',
+    name: 'Ajustes',
+    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Ajustes.vue')
   },
   {
     path: '*',

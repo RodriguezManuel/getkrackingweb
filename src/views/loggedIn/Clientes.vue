@@ -4,24 +4,30 @@
     <top-bar/>
 
     <v-list>
-      <v-card style="width: 98%; margin-left: 1%; height: 50px;">
+      <v-card style="width: 98%; margin-left: 1%; height: 50px; border-radius: 36px;">
         <v-row>
-          <v-col cols="1" style="padding-left: 10%;" ></v-col>
+          <v-col cols="1" style="padding-left: 10%;"/>
+
           <v-col cols="3">
-            <p>Nombre</p>
+            <p class="textCustom">Nombre</p>
           </v-col>
+
           <v-col cols="1" >
-            <p>Edad</p>
+            <p class="textCustom">Edad</p>
           </v-col>
+
           <v-col cols="2">
-            <p>Rutina Actual</p>
+            <p class="textCustom">Rutina Actual</p>
           </v-col>
-          <v-col cols="3">
-            <p>Progreso</p>
+
+          <v-col cols="3" style="text-align: center;">
+            <p class="textCustom">Progreso</p>
           </v-col>
-          <v-col cols="1"></v-col>
+
+          <v-col cols="1"/>
         </v-row>
       </v-card>
+
       <v-list-item v-for="cliente in clientes" :key="cliente.nombre">
         <v-card style="width: 100%; margin-top: 20px">
           <client-entry v-bind:cliente="cliente"></client-entry>
@@ -52,11 +58,11 @@ name: "Clientes.vue",
 </script>
 
 <style scoped>
-p{
+textCustom{
   margin-bottom: 10px;
   font-family: NotoSansRegular;
   color: #626262;
-  font-size: 20px;
+  font-size: 24px;
   text-transform: none;
   justify-content: left;
 }

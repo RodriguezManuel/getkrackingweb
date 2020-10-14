@@ -3,18 +3,23 @@
     <v-toolbar height="120px" style="z-index: 1; box-shadow: none; background-color: transparent;">
       <v-row>
         <v-col/>
+
         <v-col cols="auto">
+
           <v-btn icon to="/implementar" style="top: 50px; margin-right: 15px;">
             <v-icon x-large color="white">
               mdi-bell-circle-outline
             </v-icon>
           </v-btn>
+
           <v-btn icon to="/implementar" style="top: 50px;">
             <v-icon x-large color="white">
               mdi-help-circle-outline
             </v-icon>
           </v-btn>
+
         </v-col>
+
         <v-col cols="auto">
           <router-link to="/implementar">
             <div>
@@ -25,13 +30,16 @@
             </div>
           </router-link>
         </v-col>
+
         <v-col cols="auto">
           <p style="position: relative; top: 35%; color: white; font-size: 18px; right: 10px">
             Julian Nicolas Sicardi
           </p>
         </v-col>
+
       </v-row>
     </v-toolbar>
+
     <!--  Para el color del fondo-->
     <div style="height: 100%; width: 100%; background-color: #EDEDED; position: absolute; top: 0; z-index: 0;"/>
     <div style="height: 490px; width: 100%; background-color: #8b8686; position: absolute; top: 0; z-index: 0;"/>

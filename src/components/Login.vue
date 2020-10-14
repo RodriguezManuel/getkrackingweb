@@ -15,7 +15,7 @@
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
       <div class="text-center">
-        <v-btn height="32px" class="rounded-pill white black--text">Ingresar</v-btn>
+        <v-btn height="32px" class="rounded-pill white black--text" to="/loggedhome">Ingresar</v-btn>
       </div>
 
       <v-row justify="space-around">

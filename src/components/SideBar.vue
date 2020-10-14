@@ -25,13 +25,13 @@ export default {
     return {
       items: [
         {icon: 'mdi-home-outline', desc: 'Home', path: '/loggedhome'},
-        {icon: 'mdi-email-outline', desc: 'Notificaciones', path: '/notifications'},
-        {icon: 'mdi-dumbbell', desc: 'Ejercicios', path: '/exercises'},
-        {icon: 'mdi-file-document-outline', desc: 'Mis rutinas', path: '/routines'},
-        {icon: 'mdi-message-outline', desc: 'Mensajes', path: '/messages'},
-        {icon: 'mdi-calendar', desc: 'Calendario', path: '/calendar'},
-        {icon: 'mdi-account-outline', desc: 'Clientes', path: '/clients'},
-        {icon: 'mdi-cog-outline', desc: 'Ajustes', path: '/settings'},
+        {icon: 'mdi-email-outline', desc: 'Notificaciones', path: '/notificaciones'},
+        {icon: 'mdi-dumbbell', desc: 'Ejercicios', path: '/ejercicios'},
+        {icon: 'mdi-file-document-outline', desc: 'Mis rutinas', path: '/rutinas'},
+        {icon: 'mdi-message-outline', desc: 'Mensajes', path: '/mensajes'},
+        {icon: 'mdi-calendar', desc: 'Calendario', path: '/calendario'},
+        {icon: 'mdi-account-outline', desc: 'Clientes', path: '/clientes'},
+        {icon: 'mdi-cog-outline', desc: 'Ajustes', path: '/ajustes'},
       ]
     }
   },

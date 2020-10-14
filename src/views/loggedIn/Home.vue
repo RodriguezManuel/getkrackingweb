@@ -3,11 +3,9 @@
     <side-bar/>
     <top-bar/>
 
-    <v-container style="margin-top: 30px;">
+    <v-container>
 
-      <boton-generar-rutina/>
-
-      <v-row justify="space-between">
+      <v-row :key="n" justify="space-between">
         <v-col v-for="tarjeta in tarjetas" :key="tarjeta.title" >
           <v-card width="80%" min-height="171px" depressed color="white" class="white--text mx-auto"
                   style="border-radius: 40px;" height="100%" :to="tarjeta.path" >
@@ -98,6 +96,8 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <boton-generar-rutina/>
 
   </div>
 </template>
