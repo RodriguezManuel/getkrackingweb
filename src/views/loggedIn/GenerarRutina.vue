@@ -86,20 +86,21 @@
           <v-spacer/>
           <p class="textoSecciones ml-12 mt-12">SECCIONES</p>
 
-          <v-container class="mx-12">
+          <v-container class="mx-12" v-for="section in sections" :key="section.name">
             <v-row class="justify-space-between">
               <v-col>
-                <p class="textoCaracteristicas my-auto">Entrada en calor</p>
+                <p class="textoCaracteristicas my-auto">{{ section.name }}</p>
               </v-col>
               <v-col>
                 <div style="width: 250px;">
                   <v-row justify="space-around">
-                    <v-icon class="mb-6" x-large @click="(series > 1)? series-- : null">fas fa-minus</v-icon>
+                    <v-icon class="mb-6" x-large @click="(section.series > 1)? section.series-- : null">fas fa-minus
+                    </v-icon>
                     <div style="width: 110px;">
-                      <v-text-field type="numeric" min="1" v-model="series" outlined
-                                    :rules="[rules.required(duracion), rules.valorMIN(duracion)]"/>
+                      <v-text-field v-model="section.series" type="numeric" min="1" outlined
+                                    :rules="[rules.required(section.series), rules.valorMIN(section.series)]"/>
                     </div>
-                    <v-icon class="mb-6" x-large @click="series++">fas fa-plus</v-icon>
+                    <v-icon class="mb-6" x-large @click="section.series++">fas fa-plus</v-icon>
                   </v-row>
                 </div>
               </v-col>
@@ -111,27 +112,31 @@
               </v-col>
               <v-spacer/>
             </v-row>
-            <v-row>
+            <v-row v-for="ejercicio in section.ejercicios" :key="ejercicio.name">
               <v-col cols="5">
-                <v-text-field outlined prepend-icon="mdi-menu"/>
+                <v-text-field v-model="ejercicio.name" outlined prepend-icon="mdi-menu"/>
               </v-col>
               <v-col style="text-align: center">
-                <v-icon class="mt-3" x-large @click="repeticiones = false" :color="(!repeticiones)? 'black':'gray'">
+                <v-icon class="mt-3" x-large @click="ejercicio.repeticiones = false"
+                        :color="(!ejercicio.repeticiones)? 'black':'gray'">
                   mdi-sync
                 </v-icon>
-                <v-icon class="mt-3" x-large @click="repeticiones = true" :color="(repeticiones)? 'black':'gray'">
+                <v-icon class="mt-3" x-large @click="ejercicio.repeticiones = true"
+                        :color="(ejercicio.repeticiones)? 'black':'gray'">
                   mdi-timer-outline
                 </v-icon>
               </v-col>
               <v-col>
                 <div style="width: 250px;">
                   <v-row justify="space-around">
-                    <v-icon class="mb-6" x-large @click="(quantity > 1)? quantity-- : null">fas fa-minus</v-icon>
+                    <v-icon class="mb-6" x-large @click="(ejercicio.cantidad > 1)? ejercicio.cantidad-- : null">fas
+                      fa-minus
+                    </v-icon>
                     <div style="width: 110px;">
-                      <v-text-field type="numeric" min="1" v-model="quantity" outlined
-                                    :rules="[rules.required(quantity), rules.valorMIN(quantity)]"/>
+                      <v-text-field v-model="ejercicio.cantidad" type="numeric" min="1" outlined
+                                    :rules="[rules.required(ejercicio.cantidad), rules.valorMIN(ejercicio.cantidad)]"/>
                     </div>
-                    <v-icon class="mb-6" x-large @click="series++">fas fa-plus</v-icon>
+                    <v-icon class="mb-6" x-large @click="ejercicio.cantidad++">fas fa-plus</v-icon>
                   </v-row>
                 </div>
               </v-col>
@@ -176,10 +181,7 @@ export default {
         name: 'far fa-futbol',
         value: false
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
-      series: 1,
-      repeticiones: false,
-      quantity: 10,
-      secciones: [{
+      sections: [{
         name: 'Entrada en calor', series: 1, ejercicios: [
           {name: 'Correr', repeticiones: false, cantidad: 15}, {name: 'Saltos', repeticiones: true, cantidad: 20},
           {name: 'Abdominales', repeticiones: true, cantidad: 30}]

@@ -175,31 +175,6 @@ export default {
       ],
     }
   },
-  props: {
-    placeholder: {
-      type: String,
-      default:
-          ''
-    }
-    ,
-    value: {
-      type: String,
-      default:
-          ''
-    }
-    ,
-    maxlength: {
-      type: Number,
-      default:
-          50
-    }
-    ,
-    onlyunder: {
-      type: Boolean,
-      default:
-          false
-    }
-  },
   icons: {
     iconfont: 'fa',
   }
