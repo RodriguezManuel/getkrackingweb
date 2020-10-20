@@ -5,7 +5,7 @@
 
     <p class="titulo" style="margin-top: 17px; margin-left: 1px;">Iniciar sesión</p>
     <v-container class="inputCustom ml-auto mr-auto">
-      <v-text-field solo dense type="text" placeholder="Usuario" size="27%" outlined
+      <v-text-field solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
                     style="font-size: 18px;" height="34%"/>
 
       <v-text-field solo dense :type="(visibility == false)? 'password':'text'" placeholder="Contraseña"

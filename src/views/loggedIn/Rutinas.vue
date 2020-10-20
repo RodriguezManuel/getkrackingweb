@@ -16,6 +16,14 @@
           </v-col>
 
           <v-col>
+            <v-select :items="flexibilidad" label="Flexibilidad" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+          </v-col>
+
+          <v-col>
+            <v-select :items="categoria" label="Categoria" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+          </v-col>
+
+          <v-col>
             <div>
               <v-text-field v-model="search" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
             </div>
@@ -23,8 +31,8 @@
         </v-row>
       </v-card>
 
-      <v-row v-for="n in 4" :key="n" class="mb-10" justify="space-around">
-        <v-col v-for="n in 3" :key="n">
+      <v-row class="mb-10" justify="space-around">
+        <v-col v-for="n in 11" :key="n">
           <workout-card class="mx-auto"/>
         </v-col>
       </v-row>
@@ -48,7 +56,9 @@ export default {
   data() {
     return {
       tipos: ['Todos', 'Cardio', 'Tonificacion', 'Yoga', 'Calentamiento', 'Estiramientos'],
-      dificultad: ['Todos', 'Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'],
+      dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
+      flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
+      categoria: ['Favoritos', 'No favoritos', 'Todos'],
       search: '',
       rutinas: [],
     }

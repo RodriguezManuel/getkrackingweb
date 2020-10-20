@@ -1,11 +1,11 @@
 <template>
   <nav>
     <v-toolbar flat color=#D1D1D1 height=125px style="z-index: 1;">
-      <router-link to="/">
+      <router-link to="/" >
         <img :src="require('../assets/images/getkrackinname.png')" alt="Get krackin">
       </router-link>
-      <v-tabs left slider-color="white" color="white">
-        <v-tab v-for="item in items" :key="item.icon" :to="item.path" class="tabCustom">
+      <v-tabs left slider-color="white" color="white" v-bind:style="($vuetify.breakpoint.lgAndDown === false)? {} : {'width': '450px'}" >
+        <v-tab v-for="item in items" :key="item.icon" :to="item.path" class="tabCustom" >
           {{ item.desc }}
         </v-tab>
       </v-tabs>

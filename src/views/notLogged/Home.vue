@@ -27,12 +27,21 @@
                         Registrate!
                       </p>
 
-                      <v-text-field solo type="text" placeholder="Usuario" size="27%" outlined
+                      <v-text-field solo type="text" v-model="username"
+                                    :rules="[rules.required, rules.counterMAX, rules.counterMIN]"
+                                    placeholder="Nombre de usuario" size="27%" outlined
                                     style="font-size: 18px;"/>
 
-                      <v-text-field solo :type="(visibility == false)? 'password':'text'" placeholder="Contraseña"
+                      <v-text-field v-model="email" :rules="[rules.required, rules.email]" solo type="text"
+                                    placeholder="Email" size="27%" outlined
+                                    style="font-size: 18px;"/>
+
+                      <v-text-field v-model="password" solo :type="(visibility == false)? 'password':'text'"
+                                    :rules="[rules.required, rules.counterMAX, rules.counterMIN]"
+                                    placeholder="Contraseña"
                                     size="24%" outlined style="font-size: 18px"
-                      :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
+                                    :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'"
+                                    @click:append="visibility = !visibility"/>
 
                       <router-link to="/mbhert">
                         <p id="EcharleUnVistazo">
@@ -69,7 +78,7 @@
           </v-col>
         </v-row>
 
-        <p class="textoImg1yDescargaAPP">
+        <p class="textoImg1yDescargaAPP mt-15">
           ¿Querés entrenar? ¡Descargate nuestra app!
         </p>
 
@@ -128,6 +137,18 @@ export default {
         {name: 'fab fa-facebook'},
         {name: 'fab fa-instagram'},
       ],
+      username: '',
+      email: '',
+      password: '',
+      rules: {
+        required: value => !!value || 'Requerido.',
+        counterMAX: value => (value.length <= 20) || 'Inserte menos de 20 caracteres.',
+        counterMIN: value => (value.length > 8) || 'Inserte mas de 8 caracteres.',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Formato de mail invalido.'
+        },
+      },
       descriptions: [
         {
           src: require('@/assets/images/chat.png'),
@@ -154,19 +175,41 @@ export default {
     }
   },
   props: {
-    placeholder: {type: String, default: ''},
-    value: {type: String, default: ''},
-    maxlength: {type: Number, default: 50},
-    onlyunder: {type: Boolean, default: false}
-  },
+    placeholder: {
+      type: String,
+      default:
+          ''
+    }
+    ,
+    value: {
+      type: String,
+      default:
+          ''
+    }
+    ,
+    maxlength: {
+      type: Number,
+      default:
+          50
+    }
+    ,
+    onlyunder: {
+      type: Boolean,
+      default:
+          false
+    }
+  }
+  ,
   methods: {
     showPassword() {
       this.visibility = 'text';
-    },
+    }
+    ,
     hidePassword() {
       this.visibility = 'password';
     }
-  },
+  }
+  ,
   icons: {
     iconfont: 'fa',
   }
@@ -219,7 +262,7 @@ export default {
   color: #3D3D3D;
   font-family: NotoSansBold;
   font-size: 32px;
-  margin-bottom: 35px;
+  margin-bottom: 5px;
 }
 
 #imgLogo {
@@ -288,7 +331,6 @@ export default {
   color: gray;
   position: relative;
   bottom: 1px;
-  margin: 15px;
 }
 
 /* Para las propiedades del boton de iniciar sesion */

@@ -13,15 +13,19 @@
 
       <v-col>
         <p class="texto" style="margin-bottom: 0;">Dificultad</p>
-        <a v-for="n in 5" :key="n">
-          <v-icon small v-if="n <= dif">mdi-checkbox-blank-circle</v-icon>
-          <v-icon small v-else>mdi-checkbox-blank-circle-outline</v-icon>
-        </a>
-        <p class="texto" style="margin-bottom: 0;">Flexibilidad</p>
-        <a v-for="n in 5" :key="n">
-          <v-icon small v-if="n <= flex">mdi-checkbox-blank-circle</v-icon>
-          <v-icon small v-else>mdi-checkbox-blank-circle-outline</v-icon>
-        </a>
+        <div>
+          <a v-for="n in 5" :key="n">
+            <v-icon small v-if="n <= dif">mdi-checkbox-blank-circle</v-icon>
+            <v-icon small v-else>mdi-checkbox-blank-circle-outline</v-icon>
+          </a>
+        </div>
+        <div>
+          <p class="texto" style="margin-bottom: 0;">Flexibilidad</p>
+          <a v-for="n in 5" :key="n">
+            <v-icon small v-if="n <= flex">mdi-checkbox-blank-circle</v-icon>
+            <v-icon small v-else>mdi-checkbox-blank-circle-outline</v-icon>
+          </a>
+        </div>
       </v-col>
     </v-row>
 
