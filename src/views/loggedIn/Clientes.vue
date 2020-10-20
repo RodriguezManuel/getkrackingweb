@@ -66,7 +66,7 @@ name: "Clientes.vue",
 
 textCustom{
   margin-bottom: 10px;
-  font-family: NotoSans-Regular;
+  font-family: NotoSans-Regular,sans-serif;
   color: #626262;
   font-size: 24px;
   text-transform: none;

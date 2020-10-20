@@ -40,15 +40,15 @@
 
     </v-container>
 
-    <boton-generar texto="Generar rutina nueva"/>
+    <boton-generar />
   </div>
 </template>
 
 <script>
+import SideBar from "@/components/SideBar"
+import TopBar from "@/components/TopBar"
+import WorkoutCard from "@/components/workoutCard"
 import BotonGenerar from "@/components/BotonGenerar";
-import SideBar from "@/components/SideBar";
-import TopBar from "@/components/TopBar";
-import WorkoutCard from "@/components/workoutCard";
 
 export default {
   name: "Rutinas",
@@ -74,18 +74,13 @@ export default {
 </script>
 
 <style scoped>
-
 @font-face {
   font-family: "NotoSans-Regular";
   src: url("../../assets/fonts/NotoSans-Regular.ttf");
 }
 
-.v-text-field {
-  padding-top: 3px;
-}
-
 .opciones {
   font-size: 20px;
-  font-family: NotoSans-Regular;
+  font-family: NotoSans-Regular,sans-serif;
 }
 </style>

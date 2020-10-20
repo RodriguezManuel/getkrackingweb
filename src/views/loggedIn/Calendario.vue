@@ -179,7 +179,7 @@ export default {
 
 /* Para las propiedades de los botones del calendario */
 .v-btn.v-size--default {
-  font-family: GothamMedium;
+  font-family: GothamMedium,sans-serif;
   font-size: 16px;
   text-transform: none;
 }

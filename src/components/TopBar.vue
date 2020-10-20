@@ -4,16 +4,16 @@
       <v-row>
         <v-col/>
 
-        <v-col cols="auto">
+        <v-col cols="auto" class="my-auto">
 
-          <v-btn icon to="/implementar" style="top: 50px; margin-right: 15px;">
-            <v-icon x-large color="white">
+          <v-btn icon to="/implementar" style="margin-right: 15px;">
+            <v-icon size="45px" color="white">
               mdi-bell-circle-outline
             </v-icon>
           </v-btn>
 
-          <v-btn icon to="/implementar" style="top: 50px;">
-            <v-icon x-large color="white">
+          <v-btn icon to="/implementar">
+            <v-icon size="45px" color="white">
               mdi-help-circle-outline
             </v-icon>
           </v-btn>
@@ -31,8 +31,8 @@
           </router-link>
         </v-col>
 
-        <v-col cols="auto">
-          <p style="position: relative; top: 35%; color: white; font-size: 18px; right: 10px">
+        <v-col cols="auto" class="my-auto">
+          <p class="my-auto" style=" color: white; font-size: 18px; right: 10px">
             Julian Nicolas Sicardi
           </p>
         </v-col>

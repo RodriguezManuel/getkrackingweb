@@ -1,6 +1,6 @@
 <template>
-  <v-btn color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="aux mx-auto white--text rounded-pill">
-    {{ texto }}
+  <v-btn to="/generar_rutina" color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="aux mx-auto white--text rounded-pill">
+    Generar nueva rutina
   </v-btn>
 </template>
 

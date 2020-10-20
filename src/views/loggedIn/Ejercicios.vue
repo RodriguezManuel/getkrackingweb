@@ -36,7 +36,7 @@
 
     </v-container>
 
-    <boton-generar texto="Generar ejercicio nuevo"/>
+    <PopupAddExercise/>
   </div>
 </template>
 
@@ -44,11 +44,11 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
-import BotonGenerar from "@/components/BotonGenerar";
+import PopupAddExercise from "@/components/PopupAddExercise";
 
 export default {
   name: "exercises",
-  components: {ExerciseCard, TopBar, SideBar, BotonGenerar},
+  components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
   data() {
     return {
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
@@ -72,6 +72,6 @@ export default {
 
 .opciones {
   font-size: 20px;
-  font-family: NotoSans-Regular;
+  font-family: NotoSans-Regular,sans-serif;
 }
 </style>

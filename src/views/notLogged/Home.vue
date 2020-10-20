@@ -8,7 +8,7 @@
         <v-row justify="space-around">
 
           <v-col v-if="$vuetify.breakpoint.mdAndUp">
-            <div height="550px" width="863px" class="elevation-10" style="border-style: solid">
+            <div class="elevation-10" style="border-style: solid">
               <v-card color="#f3BB96">
                 <v-img :src="require('../../assets/images/home1.png')" alt="Persona haciendo ejercicio">
                   <p class="textoImg1yDescargaAPP">Armá rutinas fácil y compartilas con tus alumnos</p>
@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col>
-            <div class="elevation-10" style="border-style: solid" height="550px" width="863px">
+            <div class="elevation-10" style="border-style: solid">
               <v-card height="550px">
                 <div class="rowCustom fill-height">
                   <div class="columnCustom">
@@ -28,16 +28,17 @@
                       </p>
 
                       <v-text-field solo type="text" v-model="username"
-                                    :rules="[rules.required, rules.counterMAX, rules.counterMIN]"
+                                    :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
                                     placeholder="Nombre de usuario" size="27%" outlined
                                     style="font-size: 18px;"/>
 
-                      <v-text-field v-model="email" :rules="[rules.required, rules.email]" solo type="text"
+                      <v-text-field v-model="email" :rules="[rules.required(email), rules.email(email)]" solo
+                                    type="text"
                                     placeholder="Email" size="27%" outlined
                                     style="font-size: 18px;"/>
 
                       <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
-                                    :rules="[rules.required, rules.counterMAX, rules.counterMIN]"
+                                    :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                                     placeholder="Contraseña"
                                     size="24%" outlined style="font-size: 18px"
                                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
@@ -142,8 +143,8 @@ export default {
       password: '',
       rules: {
         required: value => !!value || 'Requerido.',
-        counterMAX: value => (value.length <= 20) || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => (value.length > 8) || 'Inserte mas de 8 caracteres.',
+        counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
+        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'
@@ -198,18 +199,7 @@ export default {
       default:
           false
     }
-  }
-  ,
-  methods: {
-    showPassword() {
-      this.visibility = 'text';
-    }
-    ,
-    hidePassword() {
-      this.visibility = 'password';
-    }
-  }
-  ,
+  },
   icons: {
     iconfont: 'fa',
   }
@@ -230,7 +220,7 @@ export default {
 .textoImg1yDescargaAPP {
   margin-top: 20px;
   color: #3E3E3E;
-  font-family: NotoSansSemiBold;
+  font-family: NotoSansSemiBold, sans-serif;
   font-size: 30px;
   text-align: center;
 }
@@ -241,12 +231,12 @@ export default {
   border-bottom: 1px solid #000;
   line-height: 0.1em;
   margin-top: 35px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 #RegistrateCon {
   color: #3D3D3D;
-  font-family: NotoSansSemiBold;
+  font-family: NotoSansSemiBold, sans-serif;
   font-size: 13px;
   background: #fff;
   padding: 0 10px;
@@ -254,13 +244,13 @@ export default {
 
 #EcharleUnVistazo {
   color: #707070;
-  font-family: NotoSansRegular;
+  font-family: NotoSansRegular, sans-serif;
   font-size: 20px;
 }
 
 #registerTitle {
   color: #3D3D3D;
-  font-family: NotoSansBold;
+  font-family: NotoSansBold, sans-serif;
   font-size: 32px;
   margin-bottom: 5px;
 }
@@ -275,7 +265,7 @@ export default {
 
 .queOfrecemos {
   color: #3E3E3E;
-  font-family: NotoSansBold;
+  font-family: NotoSansBold, sans-serif;
   font-size: 45px;
   text-align: center;
   margin-top: 7%;
@@ -284,7 +274,7 @@ export default {
 
 .TituloDescripcion {
   color: #3E3E3E;
-  font-family: NotoSansBold;
+  font-family: NotoSansBold, sans-serif;
   margin-left: 10%;
   font-size: 36px;
   text-align: left;
@@ -292,7 +282,7 @@ export default {
 
 .TextoDescripcion {
   color: #3E3E3E;
-  font-family: NotoSansBold;
+  font-family: NotoSansBold, sans-serif;
   margin-left: 10%;
   font-size: 28px;
   text-align: left;
@@ -335,7 +325,7 @@ export default {
 
 /* Para las propiedades del boton de iniciar sesion */
 .v-btn.v-size--default {
-  font-family: NotoSansSemiBold;
+  font-family: NotoSansSemiBold, sans-serif;
   font-size: 16px;
   text-transform: none;
 }

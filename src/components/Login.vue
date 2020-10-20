@@ -5,12 +5,15 @@
 
     <p class="titulo" style="margin-top: 17px; margin-left: 1px;">Iniciar sesión</p>
     <v-container class="inputCustom ml-auto mr-auto">
-      <v-text-field solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
+      <v-text-field v-model="username" solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
+                    :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
                     style="font-size: 18px;" height="34%"/>
 
-      <v-text-field solo dense :type="(visibility === false)? 'password':'text'" placeholder="Contraseña"
+      <v-text-field v-model="password" solo dense :type="(visibility === false)? 'password':'text'" placeholder="Contraseña"
+                    :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                     size="24%" outlined style="font-size: 18px"
-                    :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
+                    :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
+                    @click:append="visibility = !visibility"/>
 
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
@@ -25,7 +28,6 @@
           </v-btn>
         </v-col>
       </v-row>
-
     </v-container>
     <!--      DEBERIA APUNTAR A ALGUN LADO-->
   </v-card>
@@ -38,13 +40,20 @@ export default {
   data() {
     return {
       visibility: false,
+      username: '',
+      password: '',
+      rules: {
+        required: value => !!value || 'Requerido.',
+        counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
+        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+      },
       icons: [
         {name: 'fab fa-google'},
         {name: 'fab fa-facebook'},
         {name: 'fab fa-instagram'},
       ]
     }
-  }
+  },
 }
 </script>
 
@@ -58,6 +67,7 @@ export default {
   font-family: "NotoSansBold";
   src: url("../assets/fonts/NotoSans-Bold.ttf");
 }
+
 @font-face {
   font-family: "NotoSansSemiBold";
   src: url("../assets/fonts/NotoSans-SemiBold.ttf");
@@ -65,14 +75,14 @@ export default {
 
 
 .olvidaste {
-  font-family: NotoSans-Regular;
+  font-family: NotoSans-Regular, sans-serif;
   font-size: 18px;
   text-decoration: underline;
   text-align: center;
 }
 
 .titulo {
-  font-family: NotoSansSemiBold;
+  font-family: NotoSansSemiBold, sans-serif;
   font-size: 30px;
   text-align: center;
   letter-spacing: 0.0892857143em;
@@ -81,7 +91,7 @@ export default {
 
 /* Para las propiedades del boton de iniciar sesion */
 .v-btn.v-size--default {
-  font-family: NotoSans-Regular;
+  font-family: NotoSans-Regular, sans-serif;
   font-size: 20px;
   text-transform: none;
   text-decoration: none;

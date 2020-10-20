@@ -97,7 +97,7 @@
       </v-row>
     </v-container>
 
-    <boton-generar texto="Generar rutina nueva"/>
+    <boton-generar />
 
   </div>
 </template>
@@ -114,7 +114,7 @@ Vue.use(Chartkick.use(Chart))
 
 export default {
   name: "Home",
-  components: {BotonGenerar, TopBar, SideBar},
+  components: {TopBar, SideBar, BotonGenerar},
   data() {
     return {
       tarjetas: [{
@@ -175,20 +175,20 @@ export default {
 }
 
 .textoTarjetas {
-  font-family: GothamMedium;
+  font-family: GothamMedium,sans-serif;
   font-size: 20px;
   color: #7C7C7C;
   margin-left: 30px;
 }
 
 .textoTarjetasGrandes {
-  font-family: GothamMedium;
+  font-family: GothamMedium,sans-serif;
   font-size: 30px;
   color: #7C7C7C;
 }
 
 .textoRutinasPopulares {
-  font-family: GothamMedium;
+  font-family: GothamMedium,sans-serif;
   font-size: 20px;
   margin-bottom: 0;
   color: #7C7C7C;
@@ -196,7 +196,7 @@ export default {
 
 /* Para las propiedades de los botones del grafico */
 .v-btn.v-size--default {
-  font-family: GothamMedium;
+  font-family: GothamMedium,sans-serif;
   font-size: 16px;
   text-transform: none;
 }
