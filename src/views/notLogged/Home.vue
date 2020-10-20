@@ -36,11 +36,11 @@
                                     placeholder="Email" size="27%" outlined
                                     style="font-size: 18px;"/>
 
-                      <v-text-field v-model="password" solo :type="(visibility == false)? 'password':'text'"
+                      <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
                                     :rules="[rules.required, rules.counterMAX, rules.counterMIN]"
                                     placeholder="Contraseña"
                                     size="24%" outlined style="font-size: 18px"
-                                    :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'"
+                                    :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                                     @click:append="visibility = !visibility"/>
 
                       <router-link to="/mbhert">

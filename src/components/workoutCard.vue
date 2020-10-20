@@ -1,13 +1,15 @@
 <template>
   <v-card width="380px" height="100%" color="#4DB6AC" style="border-radius:25px">
-    <p class="nombre">{{ nombre }}</p>
-    <v-row style="margin-top: -20px">
+    <div style="height: 30px">
+      <p class="nombre">{{ nombre }}</p>
+    </div>
+    <v-row >
       <v-col cols="7">
         <v-img :src="require('../assets/images/workout.png')" alt="Imagen rutina" style="margin-left: 5px"></v-img>
 
         <div style="text-align: center;">
           <v-icon small color="#FFFFFF"> mdi-clock-time-five-outline</v-icon>
-          <a class="texto" color="#FFFFFF"> {{ time }} minutos</a>
+          <a class="texto"> {{ time }} minutos</a>
         </div>
       </v-col>
 
@@ -34,7 +36,7 @@
     </v-row>
 
     <v-btn x-large icon @click="favorite = !favorite" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
-      <v-icon color="pink">{{ (favorite == true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
+      <v-icon color="pink">{{ (favorite === true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
     </v-btn>
 
     <v-btn small icon v-if="instrumentos" style="position: absolute; top: 20%; right: 13px; z-index: 1;">
@@ -74,11 +76,12 @@ export default {
 }
 
 .nombre {
-  margin-top: 15px;
   font-family: NotoSans-Bold;
-  font-size: 20px;
+  font-size: 26px;
   text-align: center;
   color: #FFFFFF;
+  position: relative;
+  top: 5px;
 }
 
 .texto {

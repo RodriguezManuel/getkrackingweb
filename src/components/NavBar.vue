@@ -47,10 +47,6 @@ export default {
       ]
     };
   },
-  methods: {
-    login_show: function () {
-    }
-  }
 }
 </script>
 

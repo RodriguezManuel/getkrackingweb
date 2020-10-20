@@ -5,7 +5,7 @@
 
     <v-container>
 
-      <v-row :key="n" justify="space-between">
+      <v-row justify="space-between">
         <v-col v-for="tarjeta in tarjetas" :key="tarjeta.title" >
           <v-card width="80%" min-height="171px" depressed color="white" class="white--text mx-auto"
                   style="border-radius: 40px;" height="100%" :to="tarjeta.path" >
@@ -46,16 +46,16 @@
                 <v-spacer/>
                 <v-col cols="4" justify="space-between">
                   <v-btn @click="graph = 'month'"
-                         v-bind:class="(graph == 'month')? 'orange white--text': 'white black--text'"
+                         v-bind:class="(graph === 'month')? 'orange white--text': 'white black--text'"
                          style="margin-right: 5%">Month
                   </v-btn>
                   <v-btn @click="graph = 'week'"
-                         v-bind:class="(graph == 'week')? 'orange white--text': 'white black--text'">Week
+                         v-bind:class="(graph === 'week')? 'orange white--text': 'white black--text'">Week
                   </v-btn>
                 </v-col>
               </v-row>
 
-              <line-chart v-bind:data="(graph == 'week')? weekData: monthData" width="100%" height="440px"
+              <line-chart v-bind:data="(graph === 'week')? weekData: monthData" width="100%" height="440px"
                           colors="#7070" :dataset="{borderWidth: 10}"/>
 
             </v-card-title>
@@ -97,7 +97,7 @@
       </v-row>
     </v-container>
 
-    <boton-generar-rutina/>
+    <boton-generar texto="Generar rutina nueva"/>
 
   </div>
 </template>
@@ -108,13 +108,13 @@ import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js'
-import BotonGenerarRutina from "@/components/BotonGenerarRutina";
+import BotonGenerar from "@/components/BotonGenerar";
 
 Vue.use(Chartkick.use(Chart))
 
 export default {
   name: "Home",
-  components: {BotonGenerarRutina, TopBar, SideBar},
+  components: {BotonGenerar, TopBar, SideBar},
   data() {
     return {
       tarjetas: [{

@@ -31,7 +31,7 @@
         </v-row>
       </v-card>
 
-      <v-row class="mb-10" justify="space-around">
+      <v-row class="my-10" justify="space-around">
         <v-col v-for="n in 11" :key="n">
           <workout-card class="mx-auto"/>
         </v-col>
@@ -40,19 +40,19 @@
 
     </v-container>
 
-    <boton-generar-rutina/>
+    <boton-generar texto="Generar rutina nueva"/>
   </div>
 </template>
 
 <script>
-import BotonGenerarRutina from "@/components/BotonGenerarRutina";
+import BotonGenerar from "@/components/BotonGenerar";
 import SideBar from "@/components/SideBar";
 import TopBar from "@/components/TopBar";
 import WorkoutCard from "@/components/workoutCard";
 
 export default {
   name: "Rutinas",
-  components: {WorkoutCard, TopBar, SideBar, BotonGenerarRutina},
+  components: {WorkoutCard, TopBar, SideBar, BotonGenerar},
   data() {
     return {
       tipos: ['Todos', 'Cardio', 'Tonificacion', 'Yoga', 'Calentamiento', 'Estiramientos'],

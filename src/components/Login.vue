@@ -8,9 +8,9 @@
       <v-text-field solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
                     style="font-size: 18px;" height="34%"/>
 
-      <v-text-field solo dense :type="(visibility == false)? 'password':'text'" placeholder="Contraseña"
+      <v-text-field solo dense :type="(visibility === false)? 'password':'text'" placeholder="Contraseña"
                     size="24%" outlined style="font-size: 18px"
-                    :append-icon="(visibility == false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
+                    :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'" @click:append="visibility = !visibility"/>
 
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
