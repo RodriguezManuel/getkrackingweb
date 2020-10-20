@@ -46,11 +46,11 @@
                 <v-spacer/>
                 <v-col cols="4" justify="space-between">
                   <v-btn @click="graph = 'month'"
-                         v-bind:class="(graph === 'month')? 'orange white--text': 'white black--text'"
+                         v-bind:class="(graph === 'month')? 'grey darken-2 white--text': 'white black--text'"
                          style="margin-right: 5%">Month
                   </v-btn>
                   <v-btn @click="graph = 'week'"
-                         v-bind:class="(graph === 'week')? 'orange white--text': 'white black--text'">Week
+                         v-bind:class="(graph === 'week')? 'grey darken-2 white--text': 'white black--text'">Week
                   </v-btn>
                 </v-col>
               </v-row>
