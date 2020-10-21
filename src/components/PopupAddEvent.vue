@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn slot="activator" color="#FBAC31" class="mr-4 rounded-pill white--text" v-bind="attrs" v-on="on">
+      <v-btn slot="activator" color="#FBAC31" class="mr-4 rounded-pill white--text CustomButton2" v-bind="attrs" v-on="on" >
         Nuevo evento
       </v-btn>
     </template>
@@ -15,6 +15,7 @@
             color="blue darken-1"
             text
             @click="dialog = false"
+            class="CustomButton"
         >
           Close
         </v-btn>
@@ -22,6 +23,7 @@
             color="blue darken-1"
             text
             @click="dialog = false"
+            class="CustomButton"
         >
           Save
         </v-btn>
@@ -41,14 +43,21 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: "GothamMedium";
+  font-family: "Gotham-Medium";
   src: url("../assets/fonts/Gotham-Medium.ttf");
 }
 
-/* Para las propiedades de los botones del calendario */
-.v-btn.v-size--default {
-  font-family: GothamMedium;
-  font-size: 16px;
-  text-transform: none;
+/*Para que los botones del calendario tengan las propiedades buscadas*/
+.CustomButton {
+  font-family: Gotham-Medium, sans-serif !important;
+  font-size: 20px !important;
+  text-transform: none !important;
 }
+
+.CustomButton2 {
+  font-family: Gotham-Medium, sans-serif !important;
+  font-size: 16px !important;
+  text-transform: none !important;
+}
+
 </style>

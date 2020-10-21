@@ -18,7 +18,7 @@
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
       <div class="text-center">
-        <v-btn v-on:click="login"  height="32px" class="rounded-pill white black--text" >Ingresar</v-btn>
+        <v-btn v-on:click="login"  height="32px" class="rounded-pill white black--text CustomButton" >Ingresar</v-btn>
       </div>
 
       <v-row justify="space-around">
@@ -48,7 +48,7 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
       },
       icons: [
         {name: 'fab fa-google'},
@@ -85,20 +85,14 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: "NotoSansRegular";
+  font-family: "NotoSans-Regular";
   src: url("../assets/fonts/NotoSans-Regular.ttf");
 }
 
 @font-face {
-  font-family: "NotoSansBold";
-  src: url("../assets/fonts/NotoSans-Bold.ttf");
-}
-
-@font-face {
-  font-family: "NotoSansSemiBold";
+  font-family: "NotoSans-SemiBold";
   src: url("../assets/fonts/NotoSans-SemiBold.ttf");
 }
-
 
 .olvidaste {
   font-family: NotoSans-Regular, sans-serif;
@@ -108,19 +102,18 @@ export default {
 }
 
 .titulo {
-  font-family: NotoSansSemiBold, sans-serif;
+  font-family: NotoSans-SemiBold, sans-serif;
   font-size: 30px;
   text-align: center;
   letter-spacing: 0.0892857143em;
 }
 
-
-/* Para las propiedades del boton de iniciar sesion */
-.v-btn.v-size--default {
-  font-family: NotoSans-Regular, sans-serif;
-  font-size: 20px;
-  text-transform: none;
-  text-decoration: none;
+/*Para que el boton tenga las propiedades buscadas*/
+.CustomButton {
+  font-family: NotoSans-Regular, sans-serif !important;
+  font-size: 20px !important;
+  text-transform: none !important;
 }
+
 
 </style>

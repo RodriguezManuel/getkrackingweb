@@ -7,7 +7,7 @@
 
     <v-list>
       <v-list-item v-for="item in items" :key="item.icon" style="justify-content: center">
-          <v-btn :to="item.path" width="288px" height="55px">
+          <v-btn :to="item.path" width="288px" height="55px" class="CustomButton">
             <v-icon large style="padding-right: 5%;">{{ item.icon }}</v-icon>
             {{ item.desc }}
           </v-btn>
@@ -43,14 +43,19 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("../assets/fonts/NotoSans-Regular.ttf");
+}
+
 /*Para que los botones tengan las propiedades buscadas*/
-.v-btn.v-size--default {
-  font-family: NotoSansRegular;
-  color: #626262;
-  font-size: 26px;
-  text-transform: none;
+.CustomButton {
+  font-family: NotoSans-Regular, sans-serif !important;
+  font-size: 26px !important;
+  text-transform: none !important;
   justify-content: left;
   margin-bottom: 5%;
+  color: #626262;
 }
 
 </style>

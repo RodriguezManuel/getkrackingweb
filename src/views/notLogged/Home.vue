@@ -49,7 +49,7 @@
                           Echarle un vistazo
                         </p>
                       </router-link>
-                      <v-btn width="100%" height="48px" depressed color="#3C3C3C" class="white--text">
+                      <v-btn width="100%" height="48px" depressed color="#3C3C3C" class="CustomButton white--text">
                         Registrarse
                       </v-btn>
                       <p id="LineasDeFondo">
@@ -86,7 +86,7 @@
         <v-row justify="center">
           <v-col>
             <div style="text-align: right;">
-              <v-btn to="/implementar" height="64px" width="350px" class="mr-2 white--text rounded-pill" depressed
+              <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 white--text rounded-pill" depressed
                      color="#3C3C3C">
                 <v-icon medium style="position: relative; left: -12px;">fab fa-google-play</v-icon>
                 Descargar en Google Play
@@ -94,7 +94,7 @@
             </div>
           </v-col>
           <v-col>
-            <v-btn to="/implementar" height="64px" width="350px" class="ml-2 white--text rounded-pill" depressed
+            <v-btn to="/implementar" height="64px" width="350px" class="CustomButton ml-2 white--text rounded-pill" depressed
                    color="#3C3C3C" left>
               <v-icon large style="position: relative; left: -12px;">fab fa-app-store</v-icon>
               Descargar en App Store
@@ -144,7 +144,7 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'
@@ -290,18 +290,15 @@ export default {
   vertical-align: middle;
 }
 
-/*Para texto de los botones */
-.v-application a {
+/* Para las propiedades de los botones */
+.CustomButton {
+  font-family: NotoSans-SemiBold, sans-serif !important;
+  font-size: 16px !important;
+  text-transform: none !important;
   text-decoration: none;
   color: gray;
   position: relative;
-  bottom: 1px;
+  bottom: 1px !important; /* Para que este alineado con el icono de las apps stores */
 }
 
-/* Para las propiedades del boton de iniciar sesion */
-.v-btn.v-size--default {
-  font-family: NotoSansSemiBold, sans-serif;
-  font-size: 16px;
-  text-transform: none;
-}
 </style>

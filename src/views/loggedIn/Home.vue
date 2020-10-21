@@ -46,11 +46,11 @@
                 <v-spacer/>
                 <v-col cols="4" justify="space-between">
                   <v-btn @click="graph = 'month'"
-                         v-bind:class="(graph === 'month')? 'grey darken-2 white--text': 'white black--text'"
+                         v-bind:class="(graph === 'month')? 'grey darken-2 white--text CustomButton': 'white black--text CustomButton'"
                          style="margin-right: 5%">Month
                   </v-btn>
                   <v-btn @click="graph = 'week'"
-                         v-bind:class="(graph === 'week')? 'grey darken-2 white--text': 'white black--text'">Week
+                         v-bind:class="(graph === 'week')? 'grey darken-2 white--text CustomButton': 'white black--text CustomButton'">Week
                   </v-btn>
                 </v-col>
               </v-row>
@@ -170,34 +170,35 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: "GothamMedium";
+  font-family: "Gotham-Medium";
   src: url("../../assets/fonts/Gotham-Medium.ttf");
 }
 
 .textoTarjetas {
-  font-family: GothamMedium,sans-serif;
+  font-family: Gotham-Medium,sans-serif;
   font-size: 20px;
   color: #7C7C7C;
   margin-left: 30px;
 }
 
 .textoTarjetasGrandes {
-  font-family: GothamMedium,sans-serif;
+  font-family: Gotham-Medium,sans-serif;
   font-size: 30px;
   color: #7C7C7C;
 }
 
 .textoRutinasPopulares {
-  font-family: GothamMedium,sans-serif;
+  font-family: Gotham-Medium,sans-serif;
   font-size: 20px;
   margin-bottom: 0;
   color: #7C7C7C;
 }
 
-/* Para las propiedades de los botones del grafico */
-.v-btn.v-size--default {
-  font-family: GothamMedium,sans-serif;
-  font-size: 16px;
-  text-transform: none;
+/* Para las propiedades de los botones */
+.CustomButton {
+  font-family: Gotham-Medium, sans-serif !important;
+  font-size: 16px !important;
+  text-transform: none !important;
 }
+
 </style>

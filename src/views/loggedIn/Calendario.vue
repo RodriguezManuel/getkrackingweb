@@ -25,11 +25,11 @@
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-btn @click="type = 'month'"
+                <v-btn @click="type = 'month'" class="CustomButton"
                        v-bind:class="(type === 'month')? 'grey darken-2 white--text': 'white black--text'"
                        style="margin-right: 1%">Month
                 </v-btn>
-                <v-btn @click="type = 'week'"
+                <v-btn @click="type = 'week'" class="CustomButton"
                        v-bind:class="(type === 'week')? 'grey darken-2 white--text': 'white black--text'">Week
                 </v-btn>
 
@@ -178,9 +178,9 @@ export default {
 }
 
 /* Para las propiedades de los botones del calendario */
-.v-btn.v-size--default {
-  font-family: GothamMedium,sans-serif;
-  font-size: 16px;
-  text-transform: none;
+.CustomButton {
+  font-family: Gotham-Medium, sans-serif !important;
+  font-size: 16px !important;
+  text-transform: none !important;
 }
 </style>

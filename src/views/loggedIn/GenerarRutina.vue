@@ -43,7 +43,7 @@
                   </v-row>
                 </v-col>
                 <v-col class="my-auto ml-4">
-                  <v-btn class="rounded-pill" x-large>
+                  <v-btn class="rounded-pill CustomButton" x-large>
                     Agregar etiqueta
                   </v-btn>
                 </v-col>
@@ -71,13 +71,13 @@
                 </v-card>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" color="#FBB13E" class="rounded-pill white--text">Publicar</v-btn>
+                <v-btn width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">Publicar</v-btn>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" class="rounded-pill">Guardar borrador</v-btn>
+                <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Guardar borrador</v-btn>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" class="rounded-pill">Eliminar</v-btn>
+                <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Eliminar</v-btn>
               </v-row>
             </v-col>
           </v-row>
@@ -144,7 +144,7 @@
               </v-col>
             </v-row>
             <v-row justify="space-around">
-              <v-btn width="300px" height="60px" class="rounded-pill">Agregar</v-btn>
+              <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Agregar</v-btn>
             </v-row>
           </v-container>
 
@@ -205,7 +205,7 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
         valorMIN: value => value > 0 || 'Duracion invalida.'
       },
@@ -261,12 +261,10 @@ export default {
   color: #8B8686;
 }
 
-/* Para las propiedades de los botones*/
-.v-btn.v-size--default {
-  font-family: NotoSans-Regular, sans-serif;
-  font-size: 20px;
-  text-transform: none;
-  text-decoration: none;
+/* Para las propiedades de los botones */
+.CustomButton {
+  font-family: NotoSans-Regular, sans-serif !important;
+  font-size: 20px !important;
+  text-transform: none !important;
 }
-
 </style>

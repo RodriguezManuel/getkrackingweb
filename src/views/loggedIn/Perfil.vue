@@ -92,11 +92,11 @@
         </v-row>
 
         <div style="text-align: center;" class="mb-8">
-          <v-btn to="/implementar" height="64px" width="350px" class="mr-2 gray darken-0 rounded-pill" depressed>
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill" depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
-          <v-btn to="/implementar" height="64px" width="350px" class="rounded-pill" depressed color="#FBAC31">
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed color="#FBAC31">
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
@@ -133,7 +133,7 @@ export default {
       menu: false,
       rules: {
         required: value => !!value || 'Requerido.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
         counterNameMAX: value => value.length < 30 || 'Inserte menos de 30 caracteres.',
         email: value => {
@@ -149,27 +149,28 @@ export default {
 
 <style scoped>
 @font-face {
-  font-family: "NotoSansRegular";
-  src: url("../../assets/fonts/NotoSans-Regular.ttf");
+  font-family: "NotoSans-SemiBold";
+  src: url("../../assets/fonts/NotoSans-SemiBold.ttf");
 }
 
 .textoNombre {
-  font-family: NotoSansSemiBold, sans-serif;
+  font-family: NotoSans-SemiBold, sans-serif;
   font-size: 30px;
   color: #8B8686;
 }
 
 .texto {
-  font-family: NotoSansSemiBold, sans-serif;
+  font-family: NotoSans-SemiBold, sans-serif;
   font-size: 26px;
   color: #8B8686;
 }
 
+
 /* Para las propiedades de los botones */
-.v-btn.v-size--default {
-  font-family: NotoSansSemiBold, sans-serif;
-  font-size: 26px;
-  text-transform: none;
-  text-decoration: none;
+.CustomButton {
+  font-family: NotoSans-SemiBold, sans-serif !important;
+  font-size: 26px !important;
+  text-transform: none !important;
 }
+
 </style>
