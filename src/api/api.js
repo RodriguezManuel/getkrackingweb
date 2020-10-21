@@ -27,15 +27,15 @@ class Api {
     try {
       const response = await fetch(url, init);
       const text = await response.text();
-      const result = text ? (JSON).parse(text) : {};
+      const result = text ? (JSON).parse(text) : {}
+
       if (result.code)
         throw result;
 
       return result;
     } catch (error) {
       if (!error.code) {
-        // eslint-disable-next-line no-ex-assign
-        error = { "code": 99, "description": error.message.toLowerCase() };
+        const error = { "code": 99, "description": error.message.toLowerCase() };
       }
       throw error;
     } finally {
