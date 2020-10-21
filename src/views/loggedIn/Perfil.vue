@@ -98,7 +98,7 @@
             Guardar cambios
           </v-btn>
           <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
-                 color="#FBAC31">
+                 color="primary">
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>

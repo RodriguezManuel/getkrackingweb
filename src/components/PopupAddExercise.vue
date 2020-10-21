@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="700px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn slot="activator" v-bind="attrs" v-on="on" color="#FBAC31" width="24%" min-width="350px" min-height="90px"
+      <v-btn slot="activator" v-bind="attrs" v-on="on" color="primary" width="24%" min-width="350px" min-height="90px"
              class="CustomButton2 mx-auto white--text rounded-pill">
         Generar nuevo ejercicio
       </v-btn>
@@ -29,7 +29,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="#FBAC31" depressed min-width="280px" min-height="65px" @click="dialog = true"
+        <v-btn color="primary" depressed min-width="280px" min-height="65px" @click="dialog = true"
                class="rounded-pill white--text CustomButton mb-7">
           Guardar rutina
         </v-btn>

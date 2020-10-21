@@ -42,7 +42,7 @@
 
 <script>
 
-import urlApi from '../paths.js'
+import urlApi from '../api/paths.js'
 
 export default {
   name: "Login",

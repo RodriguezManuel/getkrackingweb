@@ -1,5 +1,5 @@
 <template>
-  <v-btn to="/generar_rutina" color="#FBAC31" width="24%" min-width="350px" min-height="90px" class="CustomButtonGenerar mx-auto white--text rounded-pill">
+  <v-btn to="/generar_rutina" color="primary" width="24%" min-width="350px" min-height="90px" class="CustomButtonGenerar mx-auto white--text rounded-pill">
     Generar nueva rutina
   </v-btn>
 </template>
