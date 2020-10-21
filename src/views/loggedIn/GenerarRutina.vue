@@ -16,8 +16,7 @@
               <div style="max-width: 500px" class="mx-15">
                 <v-text-field label="Nombre de rutina" type="text" v-model="nombre" class="textoRutina"
                               :rules="[rules.required(nombre), rules.counterMAX(nombre), rules.counterMIN(nombre)]"/>
-                <v-textarea label="Descripcion" type="text" v-model="descripcion" class="textoRutina" rows="1"
-                            auto-grow
+                <v-textarea label="Descripcion" v-model="descripcion" class="textoRutina" rows="1" auto-grow
                             :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion), rules.counterMIN(descripcion)]"
                             prepend-icon="mdi-text-short"/>
                 <v-row>
@@ -235,6 +234,7 @@ export default {
 }
 
 .textoRutina {
+  font-size: 24px;
   font-family: NotoSans-Regular, sans-serif;
   color: #8B8686;
 }
