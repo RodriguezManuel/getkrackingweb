@@ -18,7 +18,7 @@
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
       <div class="text-center">
-        <v-btn height="32px" class="rounded-pill white black--text" to="/loggedhome">Ingresar</v-btn>
+        <v-btn v-on:click="login"  height="32px" class="rounded-pill white black--text" >Ingresar</v-btn>
       </div>
 
       <v-row justify="space-around">
@@ -54,6 +54,29 @@ export default {
       ]
     }
   },
+    methods:{
+      async login(){
+        let infoLogin =  JSON.stringify({
+          "username": this.username,
+          "password": this.password
+        });
+        console.log("trying :" + infoLogin);
+          const response = await fetch("http://localhost:6900/api/user/login" ,
+              {
+                method: "POST",
+                headers: {"content-type": "application/json"},
+                body: infoLogin,
+              }
+              );//este es mi puerto de AP
+        if ( response.ok ){
+          console.log("Funciono");
+          location.assign("http://localhost:8081/loggedhome");
+        }
+        else {
+          console.log("MBERTO");
+        }
+      }
+    },
 }
 </script>
 
