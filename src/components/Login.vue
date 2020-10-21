@@ -70,7 +70,7 @@ export default {
               );//este es mi puerto de AP
         if ( response.ok ){
           console.log("Funciono");
-          location.assign("http://localhost:8081/loggedhome");
+          location.assign("./loggedhome");
         }
         else {
           console.log("MBERTO");
