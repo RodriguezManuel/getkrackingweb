@@ -133,7 +133,7 @@ export default {
       menu: false,
       rules: {
         required: value => !!value || 'Requerido.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
         counterNameMAX: value => value.length < 30 || 'Inserte menos de 30 caracteres.',
         email: value => {

@@ -144,7 +144,7 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'

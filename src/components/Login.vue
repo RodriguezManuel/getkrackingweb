@@ -45,7 +45,7 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 8 || 'Inserte mas de 8 caracteres.',
+        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
       },
       icons: [
         {name: 'fab fa-google'},
