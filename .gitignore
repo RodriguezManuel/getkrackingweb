@@ -22,3 +22,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 src/paths.js
+
+src/api/paths.js

@@ -42,7 +42,7 @@
 
 <script>
 
-import urlApi from '../paths.js'
+import {UserApi, Credentials} from "@/api/user";
 
 export default {
   name: "Login",
@@ -64,7 +64,16 @@ export default {
       ]
     }
   },
-    methods:{
+  methods: {
+    async login() {
+      const credentials = new Credentials(this.username, this.password);
+      await UserApi.login(credentials);
+    }
+  },
+}
+
+
+    /*
       async login(){
         let infoLogin =  JSON.stringify({
           "username": this.username,
@@ -76,7 +85,7 @@ export default {
                 method: "POST",
                 headers: {"content-type": "application/json"},
                 body: infoLogin,
-              });//este es mi puerto de AP
+              });//este es mi puerto de API
         if ( response.ok ){
           this.log_suc = true;
           console.log("Funciono");
@@ -88,7 +97,7 @@ export default {
         }
       }
     },
-}
+}*/
 </script>
 
 <style scoped>
