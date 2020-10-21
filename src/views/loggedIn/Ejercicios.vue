@@ -47,7 +47,7 @@ export default {
   components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
   data() {
     return {
-      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
+      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
     }

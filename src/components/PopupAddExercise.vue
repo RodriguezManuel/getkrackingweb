@@ -21,7 +21,8 @@
                       auto-grow rounded background-color="white"
                       :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
                       prepend-icon="mdi-text-short"/>
-          <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton">Seleccionar imagen</v-btn>
+          <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton">
+            Agregar imagen o video</v-btn>
         </v-form>
       </v-card-text>
 

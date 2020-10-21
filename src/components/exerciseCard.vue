@@ -4,6 +4,13 @@
       <p class="nombre">{{ nombre }}</p>
     </div>
     <v-img :src="require('../assets/images/workout.png')" alt="Imagen rutina" class="ma-5"></v-img>
+
+    <v-btn large icon style="position: absolute; top: 2%; right: 5px; z-index: 1;">
+      <v-icon color="black">mdi-pencil</v-icon>
+    </v-btn>
+    <v-btn large icon style="position: absolute; top: 2%; left: 5px; z-index: 1;">
+      <v-icon color="black">mdi-trash-can-outline</v-icon>
+    </v-btn>
   </v-card>
 </template>
 
