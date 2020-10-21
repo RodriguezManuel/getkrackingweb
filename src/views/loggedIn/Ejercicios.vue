@@ -16,10 +16,6 @@
           </v-col>
 
           <v-col>
-            <v-select :items="categoria" label="Categoria" solo flat append-icon="mdi-menu-swap" class="opciones"/>
-          </v-col>
-
-          <v-col>
             <div>
               <v-text-field v-model="search" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
             </div>
@@ -53,7 +49,6 @@ export default {
     return {
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
-      categoria: ['Favoritos', 'No favoritos', 'Todos'],
       search: '',
     }
   }

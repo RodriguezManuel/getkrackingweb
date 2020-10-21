@@ -28,7 +28,8 @@ export default {
 
 /* Para las propiedades del boton, el div.aux me permite evitar que herede las propiedades del boton del padre(componente donde sea contenido) */
 .v-btn.v-size--default.aux {
-  font-family: GothamMedium;
+  font-family: GothamMedium, sans-serif;
+  word-spacing: 0;
   font-size: 26px;
   text-transform: none;
   text-decoration: none;

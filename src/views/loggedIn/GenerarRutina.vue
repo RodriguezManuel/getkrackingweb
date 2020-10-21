@@ -6,7 +6,7 @@
 
     <v-container>
       <v-row justify="space-around">
-        <v-card color="white" width="85%" style="border-radius: 25px">
+        <v-card color="white" min-width="85%" style="border-radius: 25px">
           <v-row justify="space-around" class=" mt-3">
             <p class="titulo">NUEVA RUTINA</p>
           </v-row>

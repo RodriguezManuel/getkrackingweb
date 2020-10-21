@@ -20,7 +20,7 @@
         </v-btn>
       </div>
 
-      <v-btn v-on:click="visibilityLogin = !visibilityLogin" width="338px" height="78px" depressed color=#3C3C3C
+      <v-btn @click="visibilityLogin = !visibilityLogin" width="338px" height="78px" depressed color=#3C3C3C
              class="white--text rounded-pill">
         Iniciar sesión
       </v-btn>

@@ -21,7 +21,7 @@
         </v-col>
 
         <v-col cols="auto">
-          <router-link to="/implementar">
+          <router-link to="/perfil">
             <div>
               <v-avatar size="100" style="margin: 15px">
                 <v-img
@@ -32,9 +32,11 @@
         </v-col>
 
         <v-col cols="auto" class="my-auto">
-          <p class="my-auto" style=" color: white; font-size: 18px; right: 10px">
-            Julian Nicolas Sicardi
-          </p>
+          <router-link to="/perfil">
+            <p class="my-auto" style=" color: white; font-size: 18px; right: 10px">
+              Julian Nicolas Sicardi
+            </p>
+          </router-link>
         </v-col>
 
       </v-row>
