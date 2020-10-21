@@ -4,7 +4,7 @@
 
 
     <p class="titulo" style="margin-top: 17px; margin-left: 1px;">Iniciar sesión</p>
-    <v-container class="inputCustom ml-auto mr-auto">
+    <v-container class="ml-auto mr-auto">
       <v-text-field v-model="username" solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
                     :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
                     style="font-size: 18px;" height="34%"/>
@@ -20,6 +20,12 @@
       <div class="text-center">
         <v-btn v-on:click="login"  height="32px" class="rounded-pill white black--text CustomButton" >Ingresar</v-btn>
       </div>
+
+
+      <p v-if="log_suc === false" style="color: #ff5252; margin: 7px" >
+        Error en el inicio: no se reconoce su usuario o contraseña
+      </p>
+
 
       <v-row justify="space-around">
         <v-col v-for="icon in icons" :key="icon.name" class="text-center">
@@ -42,6 +48,7 @@ export default {
   name: "Login",
   data() {
     return {
+      log_suc: true,
       visibility: false,
       username: '',
       password: '',
@@ -69,14 +76,15 @@ export default {
                 method: "POST",
                 headers: {"content-type": "application/json"},
                 body: infoLogin,
-              }
-              );//este es mi puerto de AP
+              });//este es mi puerto de AP
         if ( response.ok ){
+          this.log_suc = true;
           console.log("Funciono");
           location.assign("./loggedhome");
         }
         else {
           console.log("MBERTO");
+          this.log_suc = false;
         }
       }
     },
