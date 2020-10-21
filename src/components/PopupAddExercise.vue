@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="700px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn slot="activator" v-bind="attrs" v-on="on" color="#FBAC31" width="24%" min-width="350px" min-height="90px"
-             class="aux mx-auto white--text rounded-pill">
+             class="CustomButton2 mx-auto white--text rounded-pill">
         Generar nuevo ejercicio
       </v-btn>
     </template>
@@ -28,9 +28,12 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="#FBAC31" depressed min-width="280px" min-height="65px" @click="dialog = false"
+        <v-btn color="#FBAC31" depressed min-width="280px" min-height="65px" @click="dialog = true"
                class="rounded-pill white--text CustomButton mb-7">
           Guardar rutina
+        </v-btn>
+        <v-btn icon @click="dialog = false" style="position: absolute; top: 17px; left: 4%;">
+          <v-icon x-large color="gray darken-2">mdi-close</v-icon>
         </v-btn>
         <v-spacer/>
       </v-card-actions>
@@ -67,17 +70,11 @@ export default {
   letter-spacing: 4px;
 }
 
-/* Para las propiedades del boton flotante que abre el popup,
- el div.aux me permite evitar que herede las propiedades del boton del padre(componente donde sea contenido) */
-.v-btn.v-size--default.aux {
-  font-family: NotoSans-Regular, sans-serif;
-  font-size: 26px;
-  text-transform: none;
-  text-decoration: none;
-}
-
-/* Para que no tome el default que es relative y pueda seguir el scrolleo de la pantalla*/
-.aux {
+/* Para las propiedades del boton flotante que abre el popup */
+.CustomButton2 {
+  font-family: NotoSans-Regular, sans-serif !important;
+  font-size: 26px !important;
+  text-transform: none !important;
   position: -webkit-sticky;
   position: sticky;
   left: 48.2%;

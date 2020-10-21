@@ -21,7 +21,7 @@
       </div>
 
       <v-btn @click="visibilityLogin = !visibilityLogin" width="338px" height="78px" depressed color=#3C3C3C
-             class="white--text rounded-pill">
+             class="white--text rounded-pill CustomButton">
         Iniciar sesión
       </v-btn>
     </v-toolbar>
@@ -64,12 +64,11 @@ export default {
   margin: 50px;
 }
 
-/* Para las propiedades del boton de iniciar sesion */
-.v-btn.v-size--default {
-  font-family: NotoSansSemiBold;
-  font-size: 30px;
-  text-transform: none;
-  text-decoration: none;
+/*Para que el boton tenga las propiedades buscadas*/
+.CustomButton {
+  font-family: NotoSansSemiBold, sans-serif !important;
+  font-size: 30px !important;
+  text-transform: none !important;
 }
 
 /*Logo get krackin*/
