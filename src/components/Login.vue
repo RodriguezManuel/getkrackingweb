@@ -35,6 +35,9 @@
 </template>
 
 <script>
+
+import urlApi from '../paths.js'
+
 export default {
   name: "Login",
   data() {
@@ -61,7 +64,7 @@ export default {
           "password": this.password
         });
         console.log("trying :" + infoLogin);
-          const response = await fetch("http://localhost:6900/api/user/login" ,
+          const response = await fetch(urlApi + "/api/user/login" ,
               {
                 method: "POST",
                 headers: {"content-type": "application/json"},
