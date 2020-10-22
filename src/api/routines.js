@@ -102,14 +102,85 @@ class RoutineApi {
                         "id": 1
                          }
         };
+        const data1 = {
+            "name": "Biceps",
+            "detail": "Biceps",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+
+        const data2 = {
+            "name": "Triceps",
+            "detail": "Triceps",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+
+        const data3 = {
+            "name": "Pecho",
+            "detail": "Pecho",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+
+        const data4 = {
+            "name": "Espalda",
+            "detail": "Espalda",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+
+        const data5 = {
+            "name": "Abdominales",
+            "detail": "Abdominales",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+
+        const data6 = {
+            "name": "piernas",
+            "detail": "piernas",
+            "isPublic": true,
+            "difficulty": "rookie",
+            "category": {
+                "id": 1
+            }
+        };
+        const vec = [];
+        vec.push(data);
+        vec.push(data1);
+        vec.push(data2);
+        vec.push(data3);
+        vec.push(data4);
+        vec.push(data5);
+        vec.push(data6);
         console.log("new category");
         await Api.post(Api.baseUrl+'/categories' , true , categoryData , null);
-        console.log("new routine");
-        await Api.post( this.url , true , data , null);
-        console.log("new cycle");
-        const result = await Api.post( this.url + '/1/cycles' , true , cycleData , null);
-        console.log("result:" + result);
-        return result;
+        for( let i = 0 ; i < vec.length ; i++){
+            console.log("new routine");
+            await Api.post( this.url , true , vec[i] , null);
+            console.log("new cycle");
+            await Api.post( this.url + '/' + (i+1) + '/cycles' , true , cycleData , null);
+        }
+        const ready = {
+            flag:true,
+        }
+        return ready
 
     }
 
