@@ -40,7 +40,7 @@
 
     </v-container>
 
-    <boton-generar />
+    <boton-generar texto="Generar nueva rutina" path="/generar_rutina"/>
   </div>
 </template>
 
@@ -57,8 +57,9 @@ export default {
   data() {
     return {
       routines: [],
-      tipos: ['Todos', 'Cardio', 'Tonificacion', 'Yoga', 'Calentamiento', 'Estiramientos'],
+      tipos: ['Propias', 'Generales', 'Favoritas'],
       dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
+      puntuacion: ['5', '4', '3', '2', '1'],
       flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
       categoria: ['Favoritos', 'No favoritos', 'Todos'],
       search: '',
@@ -87,4 +88,5 @@ export default {
   font-size: 20px;
   font-family: NotoSans-Regular,sans-serif;
 }
+
 </style>

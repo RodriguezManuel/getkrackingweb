@@ -31,7 +31,7 @@
 
     </v-container>
 
-    <PopupAddExercise/>
+    <boton-generar texto="Generar nuevo ejercicio" path="/generar_ejercicio"/>
   </div>
 </template>
 
@@ -39,16 +39,16 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
-import PopupAddExercise from "@/components/PopupAddExercise";
 import { ExercisesApi } from "@/api/exercises";
+import BotonGenerar from "@/components/BotonGenerar";
 
 export default {
   name: "exercises",
-  components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
+  components: {BotonGenerar, ExerciseCard, TopBar, SideBar},
   data() {
     return {
       exercises : [],
-      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
+      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
     }
@@ -64,10 +64,6 @@ export default {
 @font-face {
   font-family: "NotoSans-Regular";
   src: url("../../assets/fonts/NotoSans-Regular.ttf");
-}
-
-.v-text-field {
-  padding-top: 3px;
 }
 
 .opciones {
