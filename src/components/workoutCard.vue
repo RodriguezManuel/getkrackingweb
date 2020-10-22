@@ -35,7 +35,7 @@
       <p class="texto">{{ routine.detail }}</p>
     </v-row>
 
-    <v-btn x-large icon @click="routine.fav = !routine.fav" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
+    <v-btn x-large icon @click="toggleFav" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
       <v-icon color="pink">{{ (routine.fav === true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
     </v-btn>
 
@@ -55,7 +55,7 @@
 
 <script>
 import '@fortawesome/fontawesome-free/css/all.css'
-
+import { RoutineApi } from '@/api/routines'
 export default {
   props: [ "routine" ],
   name: "workoutCard",
@@ -65,6 +65,22 @@ export default {
       flex: 3,
       instrumentos: true,
     }
+  },
+  methods: {
+    async toggleFav(){
+      if ( !this.routine.fav ){
+        let result = await RoutineApi.addFav(this.routine.id , null);
+        console.log("makeFav");
+        console.log(result);
+      }else{
+        console.log("Deleting");
+        let result = await RoutineApi.deleteFav( this.routine.id , null );
+        console.log(result);
+      }
+
+      this.routine.fav = !this.routine.fav;
+      return 'yes';
+    },
   }
 }
 </script>

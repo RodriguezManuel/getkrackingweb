@@ -8,11 +8,12 @@ level[string_level[3]]=4;
 level[string_level[4]]=5;
 
 class Routine{
-    constructor(name , detail , level , fav) {
+    constructor(name , detail , level , fav ,id) {
         this.name = name;
         this.detail = detail;
         this.level=level;
         this.fav = fav;
+        this.id = id;
     }
 }
 class RoutineApi {
@@ -46,13 +47,20 @@ class RoutineApi {
         for (let i = 0; i < routines.length; i++) {
             if (routines[i].creator.id === id && routines[i].id !== 1) {
                 fav_flag = this.isFav((routines[i].id) , favourites);
-                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], fav_flag));
+                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], fav_flag , routines[i].id));
             }
         }
         console.log(vector);
         return vector;
     }
 
+    static async deleteFav( id , controller){
+        return await Api.delete(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
+    }
+
+    static async addFav( id , controller){
+        return await Api.post(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
+    }
 
 }
 
