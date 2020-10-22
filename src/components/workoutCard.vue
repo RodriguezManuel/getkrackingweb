@@ -1,7 +1,7 @@
 <template>
   <v-card width="380px" height="100%" color="#4DB6AC" style="border-radius:25px">
     <div style="height: 30px">
-      <p class="nombre">{{ nombre }}</p>
+      <p class="nombre">{{ routine.name }}</p>
     </div>
     <v-row >
       <v-col cols="7">
@@ -17,7 +17,7 @@
         <p class="texto" style="margin-bottom: 0;">Dificultad</p>
         <div>
           <a v-for="n in 5" :key="n">
-            <v-icon small v-if="n <= dif">mdi-checkbox-blank-circle</v-icon>
+            <v-icon small v-if="n <= routine.level">mdi-checkbox-blank-circle</v-icon>
             <v-icon small v-else>mdi-checkbox-blank-circle-outline</v-icon>
           </a>
         </div>
@@ -32,23 +32,15 @@
     </v-row>
 
     <v-row class="mx-3" style="margin-top:-10px">
-      <p class="texto">{{ descripcion }}</p>
+      <p class="texto">{{ routine.detail }}</p>
     </v-row>
 
-    <v-btn x-large icon @click="favorite = !favorite" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
-      <v-icon color="pink">{{ (favorite === true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
+    <v-btn x-large icon @click="routine.fav = !routine.fav" style="position: absolute; top: 4%; right: 3px; z-index: 1;">
+      <v-icon color="pink">{{ (routine.fav === true) ? 'mdi-heart' : 'mdi-heart-plus-outline' }}</v-icon>
     </v-btn>
 
     <v-btn small icon v-if="instrumentos" style="position: absolute; top: 20%; right: 13px; z-index: 1;">
       <v-icon color="black">fas fa-dumbbell</v-icon>
-    </v-btn>
-
-    <v-btn large icon style="position: absolute; top: 29%; right: 7px; z-index: 1;">
-      <v-icon color="black">mdi-pencil</v-icon>
-    </v-btn>
-
-    <v-btn large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;">
-      <v-icon color="black">mdi-trash-can-outline</v-icon>
     </v-btn>
   </v-card>
 </template>
@@ -57,16 +49,13 @@
 import '@fortawesome/fontawesome-free/css/all.css'
 
 export default {
+  props: [ "routine" ],
   name: "workoutCard",
   data() {
     return {
-      nombre: 'NOMBRE RUTINA',
       time: 5,
-      dif: 3,
-      flex: 1,
-      descripcion: 'Gana resistencia muscular y energizate con esta rutina de abdominales y piernas.',
+      flex: 3,
       instrumentos: true,
-      favorite: false,
     }
   }
 }
