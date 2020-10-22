@@ -61,6 +61,9 @@ class RoutineApi {
     static async addFav( id , controller){
         return await Api.post(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
     }
+    static async deleteRoutine( id , controller){
+        return await Api.delete( this.url + '/' + id  , true , controller);
+    }
 
 }
 

@@ -47,7 +47,7 @@
       <v-icon color="black">mdi-pencil</v-icon>
     </v-btn>
 
-    <v-btn large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;">
+    <v-btn v-on:click="deleteRoutine" large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;">
       <v-icon color="black">mdi-trash-can-outline</v-icon>
     </v-btn>
   </v-card>
@@ -81,7 +81,15 @@ export default {
       this.routine.fav = !this.routine.fav;
       return 'yes';
     },
+    async deleteRoutine(){
+    let result = await RoutineApi.deleteRoutine(this.routine.id, null);
+      if ( !result.code){
+        location.assign("/rutinas");
+      }else{
+        console.log("ERROR");
+      }
   }
+}
 }
 </script>
 
