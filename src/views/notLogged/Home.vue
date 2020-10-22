@@ -36,22 +36,27 @@
                                     type="text"
                                     placeholder="Email" size="27%" outlined
                                     style="font-size: 18px;"/>
-                      <p v-if="mail_used === true" style="color: #ff5252">
-                        Email ya registrado
-                      </p>
                       <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
                                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                                     placeholder="Contraseña"
                                     size="24%" outlined style="font-size: 18px"
                                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                                     @click:append="visibility = !visibility"/>
-
+                      <div style="min-height: 30px">
+                        <p v-if="emailUsed === true" class="textoRespuesta" style="color: #ff5252">
+                          Email ya registrado
+                        </p>
+                        <p v-else-if="emailReceived === true" class="textoRespuesta" style="color: #4BB543">
+                          Email de confirmacion enviado
+                        </p>
+                      </div>
                       <router-link to="/mbhert">
                         <p id="EcharleUnVistazo">
                           Echarle un vistazo
                         </p>
                       </router-link>
-                      <v-btn v-on:click="register" width="100%" height="48px" depressed color="#3C3C3C" class="CustomButton white--text">
+                      <v-btn v-on:click="register" width="100%" height="48px" depressed color="#3C3C3C"
+                             class="CustomButton white--text">
                         Registrarse
                       </v-btn>
                       <p id="LineasDeFondo">
@@ -88,7 +93,8 @@
         <v-row justify="center">
           <v-col>
             <div style="text-align: right;">
-              <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 white--text rounded-pill" depressed
+              <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 white--text rounded-pill"
+                     depressed
                      color="#3C3C3C">
                 <v-icon medium style="position: relative; left: -12px;">fab fa-google-play</v-icon>
                 Descargar en Google Play
@@ -96,7 +102,8 @@
             </div>
           </v-col>
           <v-col>
-            <v-btn to="/implementar" height="64px" width="350px" class="CustomButton ml-2 white--text rounded-pill" depressed
+            <v-btn to="/implementar" height="64px" width="350px" class="CustomButton ml-2 white--text rounded-pill"
+                   depressed
                    color="#3C3C3C" left>
               <v-icon large style="position: relative; left: -12px;">fab fa-app-store</v-icon>
               Descargar en App Store
@@ -141,7 +148,8 @@ export default {
         {name: 'fab fa-facebook'},
         {name: 'fab fa-instagram'},
       ],
-      mail_used: false,
+      emailUsed: false,
+      emailReceived: false,
       username: '',
       email: '',
       password: '',
@@ -182,23 +190,23 @@ export default {
   icons: {
     iconfont: 'fa',
   },
-  methods:{
-    async register(){
-      const result = await UserApi.register(this.username , this.password, this.email , null);
-      console.log(result);
-      if ( result.id ) {
+  methods: {
+    async register() {
+      const result = await UserApi.register(this.username, this.password, this.email, null);
+      if (result === null) {
+        console.log("Nada recibido");
+      } else if (result.id) {
         const log = new Credentials(this.username, this.password);
+        this.emailUsed = false;
+        this.emailReceived = true;
         console.log(log);
-      }else if ( result.code === 2 ){
-          this.mail_used = true;
-          console.log("email used");
-        }
-      if ( result === null){
-        console.log("no llego nada");
+      } else if (result.code === 2) {
+        this.emailReceived = false;
+        this.emailUsed = true;
       }
-      }
-
     }
+
+  }
 }
 </script>
 
@@ -242,6 +250,12 @@ export default {
   color: #707070;
   font-family: NotoSansRegular, sans-serif;
   font-size: 20px;
+}
+
+.textoRespuesta {
+  font-family: NotoSansRegular, sans-serif;
+  font-size: 20px;
+  margin-bottom: 0 !important;
 }
 
 #registerTitle {
@@ -307,7 +321,7 @@ export default {
 
 .reg {
   padding-left: 15%;
-  padding-top: 10%;
+  padding-top: 10px;
   vertical-align: middle;
 }
 
