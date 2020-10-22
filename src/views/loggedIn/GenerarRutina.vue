@@ -149,7 +149,7 @@
           </v-container>
 
           <v-btn fab text color="grey darken-2" @click="$router.go(-1)"
-                 style="position: absolute; top: 3%; left: 5%; z-index: 1;">
+                 style="position: absolute; top: 1%; left: 5%; z-index: 1;">
             <v-icon size="85">
               mdi-chevron-left
             </v-icon>
