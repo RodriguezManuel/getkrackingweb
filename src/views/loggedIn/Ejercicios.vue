@@ -23,8 +23,8 @@
         </v-row>
       </v-card>
       <v-row class="my-10" justify="space-around">
-        <v-col  v-for="n in exercises" :key="n">
-          <exercise-card  :exercise_object='n' class="mx-auto"/>
+        <v-col  v-for="n in exercises.length" :key="n">
+          <exercise-card  :exercise_object='exercises[n-1]' class="mx-auto"/>
         </v-col>
       </v-row>
 

@@ -32,8 +32,8 @@
       </v-card>
 
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in routines" :key="n">
-          <workout-card :routine='n' class="mx-auto"/>
+        <v-col v-for="n in routines.length" :key="n">
+          <workout-card :routine='routines[n - 1]' class="mx-auto"/>
         </v-col>
       </v-row>
 
