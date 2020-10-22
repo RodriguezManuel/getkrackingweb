@@ -70,7 +70,7 @@ export default {
       const response = await UserApi.login(credentials);
       console.log();
       if ( response != null ){
-        location.assign("./loggedhome");
+        //location.assign("./loggedhome");
       }
       else {
         console.log("MBERTO");

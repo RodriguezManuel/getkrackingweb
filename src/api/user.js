@@ -30,14 +30,15 @@ class UserApi {
         console.log(credentials.username);
         console.log(credentials.password);
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
+        sessionStorage.setItem('token', result.token);
         Api.token = result.token;
-        console.log(Api.token);
         return result;
     }
 
     static async logout(controller) {
         await Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
+        sessionStorage.setItem('token', Api.token);
     }
 }
 

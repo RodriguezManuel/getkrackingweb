@@ -1,8 +1,7 @@
 export { Api };
 import urlApi from '../api/paths.js'
-
 class Api {
-  static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYwMzM5MTY4NzA5MywiZXhwIjoxNjAzMzk0Mjc5MDkzfQ._u38xgy2CTBSQ_qSIOlkqOo8dJwDm2KnH0juz7xalbc'
+  static token;
   static get baseUrl() {
     return urlApi + '/api';
   }
@@ -12,6 +11,7 @@ class Api {
   }
 
   static async fetch(url, secure, init = {}, controller) {
+   Api.token = sessionStorage.getItem('token');
     if (secure && Api.token) {
       if (!init.headers)
         init.headers = {};
