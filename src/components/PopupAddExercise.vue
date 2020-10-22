@@ -54,6 +54,8 @@ export default {
       counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
     },
   }),
+  methods: {
+  }
 }
 </script>
 

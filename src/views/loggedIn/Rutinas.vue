@@ -32,8 +32,8 @@
       </v-card>
 
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in 11" :key="n">
-          <workout-card class="mx-auto"/>
+        <v-col v-for="n in routines" :key="n">
+          <workout-card :routine='n' class="mx-auto"/>
         </v-col>
       </v-row>
 
@@ -48,19 +48,20 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import WorkoutCard from "@/components/workoutCard"
-import BotonGenerar from "@/components/BotonGenerar";
+import BotonGenerar from "@/components/BotonGenerar"
+import {RoutineApi} from "@/api/routines";
 
 export default {
   name: "Rutinas",
   components: {WorkoutCard, TopBar, SideBar, BotonGenerar},
   data() {
     return {
+      routines: [],
       tipos: ['Todos', 'Cardio', 'Tonificacion', 'Yoga', 'Calentamiento', 'Estiramientos'],
       dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
       flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
       categoria: ['Favoritos', 'No favoritos', 'Todos'],
       search: '',
-      rutinas: [],
     }
   },
   computed: {
@@ -69,6 +70,9 @@ export default {
         return rutina.name.toLocaleLowerCase().match(this.search.toLowerCase());
       })
     }
+  },
+  async created(){
+    this.routines = await RoutineApi.getRoutines(null);
   }
 }
 </script>
