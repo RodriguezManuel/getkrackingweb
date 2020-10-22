@@ -24,9 +24,9 @@
       </v-card>
 
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in 11" :key="n">
-          <exercise-card class="mx-auto"/>
-        </v-col>
+        <v-col v-for="n in getExercises" :key="n">
+          <exercise-card  :exercise_object='n.name' class="mx-auto"/>
+        </v-col>s
       </v-row>
 
 
@@ -41,6 +41,7 @@ import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
 import PopupAddExercise from "@/components/PopupAddExercise";
+import { ExercisesApi, Exercise } from "@/api/exercises";
 
 export default {
   name: "exercises",
@@ -50,6 +51,23 @@ export default {
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
+    }
+  },
+  methods:{
+    async getExercises(){
+      const result = await ExercisesApi.getAll(null);
+      if (result.code){
+        console.log("ERROR");
+      }else{
+        let vector = [];
+        let aux;
+        for( let i = 0 ; i <  result.results.length ; i++){
+          aux = new Exercise(result.results[i].name);
+          vector.push( aux);
+        }
+        console.log(vector);
+        return vector;
+      }
     }
   }
 }

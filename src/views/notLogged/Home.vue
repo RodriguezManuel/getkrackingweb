@@ -36,7 +36,9 @@
                                     type="text"
                                     placeholder="Email" size="27%" outlined
                                     style="font-size: 18px;"/>
-
+                      <p v-if="mail_used === true" style="color: #ff5252">
+                        Email ya registrado
+                      </p>
                       <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
                                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                                     placeholder="Contraseña"
@@ -49,7 +51,7 @@
                           Echarle un vistazo
                         </p>
                       </router-link>
-                      <v-btn width="100%" height="48px" depressed color="#3C3C3C" class="CustomButton white--text">
+                      <v-btn v-on:click="register" width="100%" height="48px" depressed color="#3C3C3C" class="CustomButton white--text">
                         Registrarse
                       </v-btn>
                       <p id="LineasDeFondo">
@@ -124,6 +126,7 @@
 <script>
 import '@fortawesome/fontawesome-free/css/all.css'
 import NavBar from "@/components/NavBar"
+import {UserApi, Credentials} from "@/api/user";
 
 export default {
   name: 'Home',
@@ -138,6 +141,7 @@ export default {
         {name: 'fab fa-facebook'},
         {name: 'fab fa-instagram'},
       ],
+      mail_used: false,
       username: '',
       email: '',
       password: '',
@@ -177,7 +181,24 @@ export default {
   },
   icons: {
     iconfont: 'fa',
-  }
+  },
+  methods:{
+    async register(){
+      const result = await UserApi.register(this.username , this.password, this.email , null);
+      console.log(result);
+      if ( result.id ) {
+        const log = new Credentials(this.username, this.password);
+        console.log(log);
+      }else if ( result.code === 2 ){
+          this.mail_used = true;
+          console.log("email used");
+        }
+      if ( result === null){
+        console.log("no llego nada");
+      }
+      }
+
+    }
 }
 </script>
 
