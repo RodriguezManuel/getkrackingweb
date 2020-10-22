@@ -11,12 +11,6 @@
 export default {
   name: "exerciseCard",
   props: [ "exercise_object" ],
-  data() {/*
-    return {
-      nombre:.nombre,
-      favorite: false,
-    }*/
-  }
 }
 </script>
 

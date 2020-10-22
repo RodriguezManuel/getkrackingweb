@@ -22,11 +22,10 @@
           </v-col>
         </v-row>
       </v-card>
-
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in getExercises" :key="n">
+        <v-col  v-for="n in exercises" :key="n">
           <exercise-card  :exercise_object='n.name' class="mx-auto"/>
-        </v-col>s
+        </v-col>
       </v-row>
 
 
@@ -41,35 +40,23 @@ import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
 import PopupAddExercise from "@/components/PopupAddExercise";
-import { ExercisesApi, Exercise } from "@/api/exercises";
+import { ExercisesApi } from "@/api/exercises";
 
 export default {
   name: "exercises",
   components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
   data() {
     return {
+      exercises : [],
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
     }
   },
-  methods:{
-    async getExercises(){
-      const result = await ExercisesApi.getAll(null);
-      if (result.code){
-        console.log("ERROR");
-      }else{
-        let vector = [];
-        let aux;
-        for( let i = 0 ; i <  result.results.length ; i++){
-          aux = new Exercise(result.results[i].name);
-          vector.push( aux);
-        }
-        console.log(vector);
-        return vector;
-      }
-    }
-  }
+  async created()  {
+    this.exercises = await ExercisesApi.getExercises()
+  },
+
 }
 </script>
 
