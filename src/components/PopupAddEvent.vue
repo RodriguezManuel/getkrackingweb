@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn slot="activator" color="primary" class="mr-4 rounded-pill white--text CustomButton2" v-bind="attrs" v-on="on" >
+      <v-btn slot="activator" color="#FBAC31" class="mr-4 rounded-pill white--text CustomButton2" v-bind="attrs" v-on="on" >
         Nuevo evento
       </v-btn>
     </template>

@@ -22,9 +22,8 @@
           </v-col>
         </v-row>
       </v-card>
-
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in getExercises()" :key="n">
+        <v-col  v-for="n in exercises" :key="n">
           <exercise-card  :exercise_object='n.name' class="mx-auto"/>
         </v-col>
       </v-row>
@@ -32,7 +31,7 @@
 
     </v-container>
 
-    <boton-generar texto="Generar nuevo ejercicio" path="/generar_ejercicio"/>
+    <PopupAddExercise/>
   </div>
 </template>
 
@@ -40,36 +39,24 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
-import { ExercisesApi, Exercise } from "@/api/exercises";
-import BotonGenerar from "@/components/BotonGenerar";
+import PopupAddExercise from "@/components/PopupAddExercise";
+import { ExercisesApi } from "@/api/exercises";
 
 export default {
   name: "exercises",
-  components: {BotonGenerar, ExerciseCard, TopBar, SideBar},
+  components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
   data() {
     return {
-      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
+      exercises : [],
+      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
     }
   },
-  methods:{
-    async getExercises(){
-      const result = await ExercisesApi.getAll(null);
-      if (result.code){
-        console.log("ERROR");
-      }else{
-        let vector = [];
-        let aux;
-        for( let i = 0 ; i <  result.results.length ; i++){
-          aux = new Exercise(result.results[i].name);
-          vector.push( aux);
-        }
-        console.log(vector);
-        return vector;
-      }
-    }
-  }
+  async created()  {
+    this.exercises = await ExercisesApi.getExercises()
+  },
+
 }
 </script>
 
@@ -77,6 +64,10 @@ export default {
 @font-face {
   font-family: "NotoSans-Regular";
   src: url("../../assets/fonts/NotoSans-Regular.ttf");
+}
+
+.v-text-field {
+  padding-top: 3px;
 }
 
 .opciones {

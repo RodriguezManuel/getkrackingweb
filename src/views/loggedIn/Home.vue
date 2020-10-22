@@ -23,7 +23,7 @@
               </v-col>
 
               <v-col cols="3">
-                <v-avatar v-bind:size="($vuetify.breakpoint.lgAndUp)? 100: 60" color="primary"
+                <v-avatar v-bind:size="($vuetify.breakpoint.lgAndUp)? 100: 60" color="#FBAC31"
                           style="top: 20px; left: -25px;">
                       <span class="white--text" style="font-size: 30px;">
                         {{ tarjeta.numero }}
@@ -97,7 +97,7 @@
       </v-row>
     </v-container>
 
-    <boton-generar texto="Generar nueva rutina" path="/generar_rutina"/>
+    <boton-generar />
 
   </div>
 </template>

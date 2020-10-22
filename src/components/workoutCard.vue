@@ -42,14 +42,6 @@
     <v-btn small icon v-if="instrumentos" style="position: absolute; top: 20%; right: 13px; z-index: 1;">
       <v-icon color="black">fas fa-dumbbell</v-icon>
     </v-btn>
-
-    <v-btn large icon style="position: absolute; top: 29%; right: 7px; z-index: 1;">
-      <v-icon color="black">mdi-pencil</v-icon>
-    </v-btn>
-
-    <v-btn large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;">
-      <v-icon color="black">mdi-trash-can-outline</v-icon>
-    </v-btn>
   </v-card>
 </template>
 

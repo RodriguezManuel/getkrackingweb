@@ -27,7 +27,7 @@ export default {
         {icon: 'mdi-home-outline', desc: 'Home', path: '/loggedhome'},
         {icon: 'mdi-email-outline', desc: 'Notificaciones', path: '/notificaciones'},
         {icon: 'mdi-dumbbell', desc: 'Ejercicios', path: '/ejercicios'},
-        {icon: 'mdi-file-document-outline', desc: 'Rutinas', path: '/rutinas'},
+        {icon: 'mdi-file-document-outline', desc: 'Mis rutinas', path: '/rutinas'},
         {icon: 'mdi-message-outline', desc: 'Mensajes', path: '/mensajes'},
         {icon: 'mdi-calendar', desc: 'Calendario', path: '/calendario'},
         {icon: 'mdi-account-outline', desc: 'Clientes', path: '/clientes'},
