@@ -57,10 +57,16 @@ const routes = [
         path: '/generar_rutina',
         name: 'Generar rutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
-    }, {
+    },
+    {
         path: '/generar_ejercicio',
         name: 'Generar ejercicio',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarEjercicio.vue')
+    },
+    {
+        path: '/editar_ejercicio',
+        name: 'Editar ejercicio',
+        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/EditarEjercicio.vue')
     },
     {
         path: '/perfil',
