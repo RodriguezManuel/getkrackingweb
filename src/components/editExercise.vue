@@ -24,7 +24,7 @@
         </v-row>
 
         <v-row justify="center">
-          <v-btn depressed color="primary" min-width="290px" min-height="75px"
+          <v-btn v-on:click="editCard()" depressed color="primary" min-width="290px" min-height="75px"
                  class="rounded-pill ma-4 CustomButton2 white--text">
             <v-icon>mdi-content-save-outline</v-icon>
             Guardar cambios
@@ -40,9 +40,11 @@
 </template>
 
 <script>
+import { ExercisesApi} from "@/api/exercises";
+
 export default {
   name: "editExercise",
-  props: ['title'],
+  props: ['title' , 'id'],
   data: () => ({
     nombre: '',
     descripcion: '',
@@ -53,6 +55,32 @@ export default {
       counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
     },
   }),
+  methods: {
+    async editCard() {
+      let result = null;
+      if (this.title === "CREAR NUEVO EJERCICIO") {
+        const data = {
+          name: this.nombre,
+          detail: this.descripcion,
+        }
+        console.log("trying to send");
+        result = await ExercisesApi.postMasterExercise(data, null);
+        console.log(result);
+      } else {
+        const data = {
+          name: this.nombre,
+          detail: this.descripcion,
+          id: this.id
+        }
+        result = await ExercisesApi.editMasterExercise(data, null);
+        console.log("yass queen");
+      }
+      if (!result.code) {
+        location.assign("../ejercicios");
+      } else
+        console.log("ERROR");
+      }
+    },
 }
 </script>
 

@@ -64,7 +64,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarEjercicio.vue')
     },
     {
-        path: '/editar_ejercicio',
+        path: '/editar_ejercicio/:id',
         name: 'Editar ejercicio',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/EditarEjercicio.vue')
     },

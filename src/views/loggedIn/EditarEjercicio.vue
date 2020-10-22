@@ -2,7 +2,7 @@
   <div>
     <side-bar/>
     <top-bar/>
-    <edit-exercise class="mx-auto mt-16" title="EDITAR EJERCICIO" style="width: 75%;"/>
+    <edit-exercise class="mx-auto mt-16" :id=id title="EDITAR EJERCICIO" style="width: 75%;"/>
   </div>
 </template>
 
@@ -12,8 +12,19 @@ import TopBar from "@/components/TopBar";
 import SideBar from "@/components/SideBar";
 
 export default {
-name: "EditarEjercicio",
+  name: "EditarEjercicio",
   components: {EditExercise, TopBar, SideBar},
+
+  data() {
+    return{
+      id:'',
+    }
+  },
+
+  created() {
+    this.id = this.$route.params.id;
+    console.log(this.id);
+  }
 }
 </script>
 

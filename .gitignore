@@ -21,6 +21,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-src/api/paths.js
-
-src/api/paths.js
+src/paths.js
+*.js
+*.js
+src/paths.js
+src/paths.js

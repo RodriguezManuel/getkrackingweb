@@ -31,6 +31,7 @@ class UserApi {
         console.log(credentials.password);
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         Api.token = result.token;
+        console.log(Api.token);
         return result;
     }
 
