@@ -5,26 +5,29 @@
 
     <p class="titulo" style="margin-top: 17px; margin-left: 1px;">Iniciar sesión</p>
     <v-container class="ml-auto mr-auto">
-      <v-text-field v-model="username" solo dense type="text" placeholder="Nombre de usuario o email" size="27%" outlined
+      <v-text-field v-model="username" solo dense type="text" placeholder="Nombre de usuario o email" size="27%"
+                    outlined
                     :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
                     style="font-size: 18px;" height="34%"/>
 
-      <v-text-field v-model="password" solo dense :type="(visibility === false)? 'password':'text'" placeholder="Contraseña"
+      <v-text-field v-model="password" solo dense :type="(visibility === false)? 'password':'text'"
+                    placeholder="Contraseña"
                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                     size="24%" outlined style="font-size: 18px"
                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                     @click:append="visibility = !visibility"/>
 
+      <div style="min-height: 30px">
+        <p v-if="wrongCredentials === true" class="textoRespuesta" style="color: #ff5252; text-align: center">
+          Algun valor es incorrecto
+        </p>
+      </div>
+
       <p class="olvidaste">Olvidaste tu contraseña?</p>
       <!--      DEBERIA APUNTAR A ALGUN LADO-->
       <div class="text-center">
-        <v-btn v-on:click="login"  height="32px" class="rounded-pill white black--text CustomButton" >Ingresar</v-btn>
+        <v-btn v-on:click="login" height="32px" class="rounded-pill white black--text CustomButton">Ingresar</v-btn>
       </div>
-
-
-      <p v-if="log_suc === false" style="color: #ff5252; margin: 7px" >
-        Error en el inicio: no se reconoce su usuario o contraseña
-      </p>
 
 
       <v-row justify="space-around">
@@ -48,10 +51,10 @@ export default {
   name: "Login",
   data() {
     return {
-      log_suc: true,
       visibility: false,
       username: '',
       password: '',
+      wrongCredentials: false,
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
@@ -66,14 +69,25 @@ export default {
   },
   methods: {
     async login() {
+      if(this.rules.required(this.username) !== true || this.rules.counterMIN(this.username) !== true
+          || this.rules.counterMAX(this.username) !== true || this.rules.required(this.password) !== true
+          || this.rules.counterMIN(this.password) !== true || this.rules.counterMAX(this.password) !== true ){
+        // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
+        return
+      }
+
       const credentials = new Credentials(this.username, this.password);
       const response = await UserApi.login(credentials);
-      console.log();
-      if ( response != null ){
-        //location.assign("./loggedhome");
+      if (response == null) {
+        console.log("ERROR: POST NO RETORNO NADA");
+        return;
       }
+      if (response.code == null) {
+        location.assign("./loggedhome");
+      } else if (response.code == 4)
+        this.wrongCredentials = true;
       else {
-        console.log("MBERTO");
+        console.log("ERROR: EN LOGIN, NO MANEJADO: " + response.code);
       }
     }
   },
@@ -91,6 +105,12 @@ export default {
 @font-face {
   font-family: "NotoSans-SemiBold";
   src: url("../assets/fonts/NotoSans-SemiBold.ttf");
+}
+
+.textoRespuesta {
+  font-family: NotoSans-Regular, sans-serif;
+  font-size: 20px;
+  margin-bottom: 0 !important;
 }
 
 .olvidaste {

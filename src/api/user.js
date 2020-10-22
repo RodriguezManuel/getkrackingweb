@@ -23,8 +23,6 @@ class UserApi {
     }
 
     static async login(credentials, controller) {
-        console.log(credentials.username);
-        console.log(credentials.password);
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         sessionStorage.setItem('token', result.token);
         Api.token = result.token;

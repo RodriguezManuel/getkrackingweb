@@ -192,9 +192,17 @@ export default {
   },
   methods: {
     async register() {
+      if(this.rules.required(this.username) !== true || this.rules.counterMIN(this.username) !== true
+          || this.rules.counterMAX(this.username) !== true || this.rules.required(this.password) !== true
+          || this.rules.counterMIN(this.password) !== true || this.rules.counterMAX(this.password) !== true
+          || this.rules.required(this.email) !== true || this.rules.email(this.email) !== true ){
+        // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
+        return
+      }
+
       const result = await UserApi.register(this.username, this.password, this.email, null);
       if (result === null) {
-        console.log("Nada recibido");
+        console.log("ERROR: NADA RECIBIDO");
       } else if (result.id) {
         const log = new Credentials(this.username, this.password);
         this.emailUsed = false;
@@ -205,26 +213,30 @@ export default {
         this.emailUsed = true;
       }
     }
-
   }
 }
 </script>
 
 <style scoped>
 @font-face {
-  font-family: "NotoSansRegular";
+  font-family: "NotoSans-Regular";
   src: url("../../assets/fonts/NotoSans-Regular.ttf");
 }
 
 @font-face {
-  font-family: "NotoSansBold";
+  font-family: "NotoSans-Bold";
   src: url("../../assets/fonts/NotoSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "NotoSans-SemiBold";
+  src: url("../../assets/fonts/NotoSans-SemiBold.ttf");
 }
 
 .textoImg1yDescargaAPP {
   margin-top: 20px;
   color: #3E3E3E;
-  font-family: NotoSansSemiBold, sans-serif;
+  font-family: NotoSans-SemiBold, sans-serif;
   font-size: 30px;
   text-align: center;
 }
@@ -240,7 +252,7 @@ export default {
 
 #RegistrateCon {
   color: #3D3D3D;
-  font-family: NotoSansSemiBold, sans-serif;
+  font-family: NotoSans-SemiBold, sans-serif;
   font-size: 13px;
   background: #fff;
   padding: 0 10px;
@@ -248,19 +260,19 @@ export default {
 
 #EcharleUnVistazo {
   color: #707070;
-  font-family: NotoSansRegular, sans-serif;
+  font-family: NotoSans-Regular, sans-serif;
   font-size: 20px;
 }
 
 .textoRespuesta {
-  font-family: NotoSansRegular, sans-serif;
+  font-family: NotoSans-Regular, sans-serif;
   font-size: 20px;
   margin-bottom: 0 !important;
 }
 
 #registerTitle {
   color: #3D3D3D;
-  font-family: NotoSansBold, sans-serif;
+  font-family: NotoSans-Bold, sans-serif;
   font-size: 32px;
   margin-bottom: 5px;
 }
@@ -275,7 +287,7 @@ export default {
 
 .queOfrecemos {
   color: #3E3E3E;
-  font-family: NotoSansBold, sans-serif;
+  font-family: NotoSans-Bold, sans-serif;
   font-size: 45px;
   text-align: center;
   margin-top: 7%;
@@ -284,7 +296,7 @@ export default {
 
 .TituloDescripcion {
   color: #3E3E3E;
-  font-family: NotoSansBold, sans-serif;
+  font-family: NotoSans-Bold, sans-serif;
   margin-left: 10%;
   font-size: 36px;
   text-align: left;
@@ -292,7 +304,7 @@ export default {
 
 .TextoDescripcion {
   color: #3E3E3E;
-  font-family: NotoSansBold, sans-serif;
+  font-family: NotoSans-Bold, sans-serif;
   margin-left: 10%;
   font-size: 28px;
   text-align: left;
