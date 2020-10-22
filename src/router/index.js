@@ -64,10 +64,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Perfil.vue')
   },
   {
+    path: '/builder',
+    name: 'Build Master',
+    component: () => import('../views/Build.vue')
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: () => import(/* webpackChunkName: "about" */ '../views/NotFound.vue')
-  }
+  },
 ]
 
 const router = new VueRouter({

@@ -2,10 +2,10 @@ export { Api };
 import urlApi from '../api/paths.js'
 
 class Api {
-  static token;
+  static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYwMzMyNjA2MTMyNCwiZXhwIjoxNjAzMzI4NjUzMzI0fQ._Nfp9uECp5ePGG2rnJc_fN1aruHpGM742OQ74c04Udw';
 
   static get baseUrl() {
-    return urlApi;
+    return urlApi + '/api';
   }
 
   static get timeout() {
@@ -37,9 +37,11 @@ class Api {
       if (!error.code) {
         const error = { "code": 99, "description": error.message.toLowerCase() };
       }
-      throw error;
+      //throw error;
+      return error;
     } finally {
       clearTimeout(timer);
+
     }
   }
 
@@ -56,6 +58,7 @@ class Api {
       body: JSON.stringify(data)
     }, controller);
   }
+
 
   static async put(url, secure, data, controller) {
     return await Api.fetch(url, secure,{
