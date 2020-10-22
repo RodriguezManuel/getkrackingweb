@@ -2,8 +2,7 @@ export { Api };
 import urlApi from '../api/paths.js'
 
 class Api {
-  static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYwMzM4NTI5Mzg3OSwiZXhwIjoxNjAzMzg3ODg1ODc5fQ.R5GwhDTA502Q177dRybC1BPmXjpbdDaRNZuw-awE15c';
-
+  static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTYwMzM5MTY4NzA5MywiZXhwIjoxNjAzMzk0Mjc5MDkzfQ._u38xgy2CTBSQ_qSIOlkqOo8dJwDm2KnH0juz7xalbc'
   static get baseUrl() {
     return urlApi + '/api';
   }

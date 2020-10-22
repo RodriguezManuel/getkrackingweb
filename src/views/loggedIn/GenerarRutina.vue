@@ -71,7 +71,9 @@
                 </v-card>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">Publicar</v-btn>
+                <v-btn width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
+                  Publicar
+                </v-btn>
               </v-row>
               <v-row justify="space-around" class="mt-6">
                 <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Guardar borrador</v-btn>
@@ -85,11 +87,22 @@
           <v-spacer/>
           <p class="textoSecciones ml-12 mt-12">SECCIONES</p>
 
-          <v-container class="mx-12" v-for="section in sections" :key="section.name">
+          <v-container v-for="section in sections" :key="section.name">
             <v-row class="justify-space-between">
+
               <v-col>
-                <p class="textoCaracteristicas my-auto">{{ section.name }}</p>
+                <v-row>
+                  <v-col>
+                    <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6">
+                      <v-icon size="45" color="gray">mdi-delete</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col>
+                    <p class="textoCaracteristicas my-auto mx-auto">{{ section.name }}</p>
+                  </v-col>
+                </v-row>
               </v-col>
+
               <v-col>
                 <div style="width: 250px;">
                   <v-row justify="space-around">
@@ -103,50 +116,67 @@
                   </v-row>
                 </div>
               </v-col>
+
               <v-col>
                 <p class="textoCaracteristicas" style="text-align: center">Modo</p>
               </v-col>
+
               <v-col>
-                <p class="textoCaracteristicas" style="text-align: center">Cantidad</p>
+                <p class="textoCaracteristicas" style="text-align: center">quantity</p>
               </v-col>
-              <v-spacer/>
+
+              <v-col>
+                <popup-add-exercise class="mt-9" :added-exercises="section.exercises"/>
+              </v-col>
+
             </v-row>
-            <v-row v-for="ejercicio in section.ejercicios" :key="ejercicio.name">
+            <v-row v-for="exercise in section.exercises" :key="exercise.id">
               <v-col cols="5">
-                <v-text-field v-model="ejercicio.name" outlined prepend-icon="mdi-menu"/>
+                <v-text-field v-model="exercise.name" outlined prepend-icon="mdi-menu"/>
               </v-col>
               <v-col style="text-align: center">
-                <v-icon class="mt-3" x-large @click="ejercicio.repeticiones = false"
-                        :color="(!ejercicio.repeticiones)? 'black':'gray'">
+                <v-icon class="mt-3" x-large @click="exercise.repetitions = false"
+                        :color="(!exercise.repetitions)? 'black':'gray'">
                   mdi-sync
                 </v-icon>
-                <v-icon class="mt-3" x-large @click="ejercicio.repeticiones = true"
-                        :color="(ejercicio.repeticiones)? 'black':'gray'">
+                <v-icon class="mt-3" x-large @click="exercise.repetitions = true"
+                        :color="(exercise.repetitions)? 'black':'gray'">
                   mdi-timer-outline
                 </v-icon>
               </v-col>
               <v-col>
                 <div style="width: 250px;">
                   <v-row justify="space-around">
-                    <v-icon class="mb-6" x-large @click="(ejercicio.cantidad > 1)? ejercicio.cantidad-- : null">fas
+                    <v-icon class="mb-6" x-large @click="(exercise.quantity > 1)? exercise.quantity-- : null">fas
                       fa-minus
                     </v-icon>
                     <div style="width: 110px;">
-                      <v-text-field v-model="ejercicio.cantidad" type="numeric" min="1" outlined
-                                    :rules="[rules.required(ejercicio.cantidad), rules.valorMIN(ejercicio.cantidad)]"/>
+                      <v-text-field v-model="exercise.quantity" type="numeric" min="1" outlined
+                                    :rules="[rules.required(exercise.quantity), rules.valorMIN(exercise.quantity)]"/>
                     </div>
-                    <v-icon class="mb-6" x-large @click="ejercicio.cantidad++">fas fa-plus</v-icon>
+                    <v-icon class="mb-6" x-large @click="exercise.quantity++">fas fa-plus</v-icon>
                   </v-row>
                 </div>
               </v-col>
               <v-col>
-                <v-icon x-large class="mt-3">mdi-close</v-icon>
+                <v-icon x-large class="mt-3" @click="removeExercise(exercise, section.exercises)">mdi-close</v-icon>
               </v-col>
             </v-row>
-            <v-row justify="space-around">
-              <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Agregar</v-btn>
-            </v-row>
           </v-container>
+
+          <v-row justify="center">
+            <div style="width: 300px; height: 60px" class="mr-4">
+              <v-select
+                  :items="possibleSections"
+                  label="Tipo de seccion"
+                  v-model="selectedSection"
+                  outlined class="textoRutina"
+              ></v-select>
+            </div>
+            <v-btn @click="addSection()" width="300px" height="60px" class="CustomButton rounded-pill ml-4 mb-7">
+              Agregar
+            </v-btn>
+          </v-row>
 
           <v-btn fab text color="grey darken-2" @click="$router.go(-1)"
                  style="position: absolute; top: 1%; left: 5%; z-index: 1;">
@@ -164,10 +194,11 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import '@fortawesome/fontawesome-free/css/all.css'
+import PopupAddExercise from "@/components/PopupAddExercise";
 
 export default {
   name: "GenerarRutina",
-  components: {SideBar, TopBar},
+  components: {PopupAddExercise, SideBar, TopBar},
   data() {
     return {
       nombre: '',
@@ -180,28 +211,9 @@ export default {
         name: 'far fa-futbol',
         value: false
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
-      sections: [{
-        name: 'Entrada en calor', series: 1, ejercicios: [
-          {name: 'Correr', repeticiones: false, cantidad: 15}, {name: 'Saltos', repeticiones: true, cantidad: 20},
-          {name: 'Abdominales', repeticiones: true, cantidad: 30}]
-      }, {
-        name: 'Ejercitacion principal', series: 2, ejercicios: [
-          {name: 'Pecho plano', repeticiones: true, cantidad: 10}, {
-            name: 'Bicep con mancuerna',
-            repeticiones: true,
-            cantidad: 20
-          },
-          {name: 'Patada de burro', repeticiones: true, cantidad: 20}, {
-            name: 'Dominadas',
-            repeticiones: false,
-            cantidad: 40
-          },]
-      }, {
-        name: 'Elongacion', series: 1, ejercicios: [
-          {name: 'Brazos', repeticiones: false, cantidad: 30}, {name: 'Pecho', repeticiones: false, cantidad: 40}]
-      }
-      ]
-      ,
+      possibleSections: ['warmup', 'exercise', 'cooldown'],
+      selectedSection: 'exercise',
+      sections: [],
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
@@ -209,6 +221,25 @@ export default {
         counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
         valorMIN: value => value > 0 || 'Duracion invalida.'
       },
+    }
+  },
+  methods: {
+    addSection() {
+      this.sections.push({name: this.selectedSection, series: 1, exercises: []});
+    },
+    removeSection(section, sections) {
+      const index = sections.indexOf(section);
+      if (index > -1)
+        sections.splice(index, 1);
+      else
+        console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
+    },
+    removeExercise(exercise, exercises) {
+      const index = exercises.indexOf(exercise);
+      if (index > -1)
+        exercises.splice(index, 1);
+      else
+        console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
     }
   }
 }
