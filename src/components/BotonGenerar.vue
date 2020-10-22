@@ -1,13 +1,13 @@
 <template>
-  <v-btn to="/generar_rutina" color="primary" width="24%" min-width="350px" min-height="90px" class="CustomButtonGenerar mx-auto white--text rounded-pill">
-    Generar nueva rutina
+  <v-btn :to="path" color="primary" width="25%" min-width="350px" min-height="90px" class="CustomButtonGenerar mx-auto white--text rounded-pill">
+    {{ texto }}
   </v-btn>
 </template>
 
 <script>
 export default {
-  name: "BotonGenerarRutina",
-  props: ['texto']
+  name: "BotonGenerar",
+  props: ['texto', 'path']
 }
 </script>
 

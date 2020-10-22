@@ -24,15 +24,15 @@
       </v-card>
 
       <v-row class="my-10" justify="space-around">
-        <v-col v-for="n in getExercises" :key="n">
+        <v-col v-for="n in getExercises()" :key="n">
           <exercise-card  :exercise_object='n.name' class="mx-auto"/>
-        </v-col>s
+        </v-col>
       </v-row>
 
 
     </v-container>
 
-    <PopupAddExercise/>
+    <boton-generar texto="Generar nuevo ejercicio" path="/generar_ejercicio"/>
   </div>
 </template>
 
@@ -40,12 +40,12 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
-import PopupAddExercise from "@/components/PopupAddExercise";
 import { ExercisesApi, Exercise } from "@/api/exercises";
+import BotonGenerar from "@/components/BotonGenerar";
 
 export default {
   name: "exercises",
-  components: {PopupAddExercise, ExerciseCard, TopBar, SideBar},
+  components: {BotonGenerar, ExerciseCard, TopBar, SideBar},
   data() {
     return {
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
@@ -77,10 +77,6 @@ export default {
 @font-face {
   font-family: "NotoSans-Regular";
   src: url("../../assets/fonts/NotoSans-Regular.ttf");
-}
-
-.v-text-field {
-  padding-top: 3px;
 }
 
 .opciones {

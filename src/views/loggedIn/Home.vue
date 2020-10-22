@@ -97,7 +97,7 @@
       </v-row>
     </v-container>
 
-    <boton-generar />
+    <boton-generar texto="Generar nueva rutina" path="/generar_rutina"/>
 
   </div>
 </template>

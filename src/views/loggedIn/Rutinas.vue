@@ -17,11 +17,6 @@
           </v-col>
 
           <v-col>
-            <v-select :items="flexibilidad" label="Flexibilidad" solo flat append-icon="mdi-menu-swap"
-                      class="opciones"/>
-          </v-col>
-
-          <v-col>
             <v-select :items="categoria" label="Categoria" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
 
@@ -42,7 +37,7 @@
 
     </v-container>
 
-    <boton-generar/>
+    <boton-generar texto="Generar nueva rutina" path="/generar_rutina"/>
   </div>
 </template>
 
