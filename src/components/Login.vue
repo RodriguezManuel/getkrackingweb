@@ -42,7 +42,7 @@
 
 <script>
 
-import urlApi from '../api/paths.js'
+import { UserApi, Credentials } from '../api/user.js'
 
 export default {
   name: "Login",
