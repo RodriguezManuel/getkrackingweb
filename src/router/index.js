@@ -59,14 +59,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
   },
   {
-    path: '/generar_ejercicio',
-    name: 'Generar ejercicio',
-    component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarEjercicio.vue')
-  },
-  {
     path: '/perfil',
     name: 'Perfil',
     component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Perfil.vue')
+  },
+  {
+    path: '/builder',
+    name: 'Build Master',
+    component: () => import('../views/Build.vue')
   },
   {
     path: '*',
