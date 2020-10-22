@@ -92,11 +92,13 @@
         </v-row>
 
         <div style="text-align: center;" class="mb-8">
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill" depressed>
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+                 depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed color="#FBAC31">
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
+                 color="primary">
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
