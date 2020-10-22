@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { UserApi, Credentials };
+export { UserApi, Credentials, ToVerify };
 
 class UserApi {
     static get url() {
@@ -22,10 +22,6 @@ class UserApi {
         return result;
     }
 
-
-
-
-
     static async login(credentials, controller) {
         console.log(credentials.username);
         console.log(credentials.password);
@@ -33,6 +29,11 @@ class UserApi {
         sessionStorage.setItem('token', result.token);
         Api.token = result.token;
         return result;
+    }
+    static async verify(v, controller){
+        const result = await Api.post(`${UserApi.url}/verify_email`, false, v, controller);
+        sessionStorage.setItem('token', result.token);
+        Api.token = result.token;
     }
 
     static async logout(controller) {
@@ -46,5 +47,11 @@ class Credentials {
     constructor(username, password) {
         this.username = username;
         this.password = password;
+    }
+}
+class ToVerify{
+    constructor(email, code){
+        this.email = email;
+        this.code = code;
     }
 }

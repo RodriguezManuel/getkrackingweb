@@ -48,6 +48,10 @@ class Api {
     return await Api.fetch(url, secure, {}, controller)
   }
 
+  static setToken(token){
+    this.token = token;
+  }
+
   static async post(url, secure, data, controller) {
     return await Api.fetch(url, secure, {
       method: 'POST',
