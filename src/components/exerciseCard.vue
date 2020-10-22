@@ -1,7 +1,7 @@
 <template>
   <v-card width="380px" height="100%" color="#4DB6AC" style="border-radius:25px">
     <div style="height: 35px">
-      <p class="nombre">{{ nombre }}</p>
+      <p class="nombre">{{ exercise_object }}</p>
     </div>
     <v-img :src="require('../assets/images/workout.png')" alt="Imagen rutina" class="ma-5"></v-img>
 
@@ -18,11 +18,6 @@
 export default {
   name: "exerciseCard",
   props: ["exercise_object"],
-  data() {
-    return {
-      nombre: "ASDASDAS"
-    }
-  }
 }
 </script>
 
