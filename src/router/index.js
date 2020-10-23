@@ -16,7 +16,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Perfil.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Ayuda.vue')
     },
     {
         path: '/quienes_somos',
@@ -58,11 +58,7 @@ const routes = [
         name: 'Mensajes',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/NoImplementado.vue')
     },
-    {
-        path: '/ajustes',
-        name: 'Ajustes',
-        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Ajustes.vue')
-    },
+        //Acá habia una configuracion que desde not logged te llevaba a un tal ajustes que no existe
     {
         path: '/generar_rutina',
         name: 'Generar rutina',

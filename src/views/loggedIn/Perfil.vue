@@ -122,11 +122,12 @@
         </v-row>
 
         <div style="text-align: center;" class="my-8">
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+          <v-btn v-on:click="update()"  height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
+
           <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
                  color=primary>
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
@@ -148,7 +149,7 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
-import { UserApi} from "@/api/user";
+import { UserApi, AllData} from "@/api/user";
 
 export default {
   name: "Perfil",
@@ -161,7 +162,7 @@ export default {
       editUsername: false,
       email: '',
       editEmail: false,
-      password: 'pastaconfrutidimare',
+      password: '',
       editPassword: false,
       visibility: false,
       date: new Date().toISOString().substr(0, 10),
@@ -181,9 +182,11 @@ export default {
     }
   },
   methods: {
-    async getName(){
-      const rta = UserApi.getCurrent(null);
-      return rta.fullName;
+    async update(){
+      console.log("entre a update");
+      const data = new AllData(this.username, this.nombre, this.date, this.email, this.password);
+      UserApi.update(data, null);
+      console.log("update successful");
     }
 
   },

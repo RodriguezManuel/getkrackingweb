@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { UserApi, Credentials, ToVerify };
+export { UserApi, Credentials, ToVerify, AllData };
 
 class UserApi {
     static get url() {
@@ -33,7 +33,7 @@ class UserApi {
     }
 
     static async getCurrent(controller){
-    return await Api.get(`${UserApi.url}/current`, true, controller);
+        return await Api.get(`${UserApi.url}/current`, true, controller);
     }
 
     static async logout(controller) {
@@ -48,6 +48,11 @@ class UserApi {
         let aux = {email: email};
         await Api.post(`${UserApi.url}/resend_verification`, false, aux, controller);
     }
+
+    static async update(data, controller){
+        console.log(data);
+        await Api.put(`${UserApi.url}/current`, true, data, controller);
+    }
 }
 
 class Credentials {
@@ -60,5 +65,18 @@ class ToVerify{
     constructor(email, code){
         this.email = email;
         this.code = code;
+    }
+}
+class AllData{
+    constructor(username, fullName, birthdate, email){
+        const userData = UserApi.getUserData(null);
+        this.username = username;
+        this.password = userData.password;
+        this.fullName = fullName;
+        this.gender = userData.gender;
+        this.birthdate = birthdate;
+        this.email = email
+        this.phone= userData.phone;
+        this.avatarURL = userData.avatarURL;
     }
 }
