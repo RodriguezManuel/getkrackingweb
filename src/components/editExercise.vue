@@ -52,8 +52,8 @@ export default {
   data: () => ({
     name: '',
     descripcion: '',
-    categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
-    categorieSelected: 'Todos',
+    categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
+    categorieSelected: null,
     images: [],
     rules: {
       required: value => !!value || 'Requerido.',
@@ -71,13 +71,20 @@ export default {
 
       let result = null;
       if (this.title === "CREAR NUEVO EJERCICIO") {
+        if ( this.categorieSelected == null ){
+          return;
+        }
         const data = {
           name: this.name,
           detail: this.descripcion,
-        }
+          type: this.categorieSelected,
+        },
         result = await ExercisesApi.postMasterExercise(data, null);
         console.log(result);
       } else {
+        if ( this.categorieSelected != null){
+          return;
+        }
         const data = {
           name: this.name,
           detail: this.descripcion,

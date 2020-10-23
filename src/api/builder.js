@@ -13,11 +13,11 @@ class Builder {
         return vector;
     }
     static async buildMaster() {
-        await Api.delete(RoutineApi.url + '/1', true, null);
+       // await Api.delete(RoutineApi.url + '/1', true, null);
         const routines = await this.getAllRoutines(null);
         for (let i = 0; i < routines.length; i++) {
             console.log("deleting routine:" + routines[i].id);
-            await Api.delete(RoutineApi.url + '/' + routines[i].id, true, null);
+            await RoutineApi.deleteRoutine(routines[i].id , null);
         }
         const categoryData = {
             "name": "Master",

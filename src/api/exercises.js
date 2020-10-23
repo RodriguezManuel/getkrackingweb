@@ -1,5 +1,20 @@
 import { Api } from './api.js';
 
+
+const string_type= [ 'Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos' ];
+
+
+let tipos= {};
+tipos[string_type[0]] = 2;
+tipos[string_type[1]] = 3;
+tipos[string_type[2]] = 4;
+tipos[string_type[3]] = 5;
+tipos[string_type[4]] = 6;
+tipos[string_type[5]] = 7;
+tipos[string_type[6]] = 1;
+
+
+
 class Exercise{
     constructor(name , detail , id) {
         this.name = name;
@@ -12,13 +27,16 @@ class ExercisesApi {
         return Api.baseUrl;
     }
 
-    static async getAll(controller) {
-        const result = await Api.get(Api.baseUrl + '/routines/1/cycles/1/exercises?page=0&size=99&orderBy=id&direction=asc', true, controller);
-        return result;
+    static async getFromDefaultRutine( type ,controller) {
+        return await Api.get(Api.baseUrl + '/routines/' + tipos[type] + '/cycles/' + tipos[type] +'/exercises?page=0&size=99&orderBy=id&direction=asc', true, controller);
     }
-
-    static async getExercises() {
-        const result = await ExercisesApi.getAll(null);
+    static async getByType( type , controller ){
+        console.log("getting routine type:" + type);
+        if ( !string_type.includes(type)){
+            return []
+        }
+        console.log("with the id: " + tipos[type]);
+        const result = await ExercisesApi.getFromDefaultRutine(type , controller);
         if (result.code) {
             console.log("ERROR");
         } else {
@@ -31,15 +49,22 @@ class ExercisesApi {
             return vector;
         }
     }
+
+    static async getExercises( controller) {
+        return this.getByType('Todos' , controller);
+    }
     static async postMasterExercise( data , controller){
-        const send = {
-            'name': data.name,
-            'detail': data.detail,
-            'type': "exercise",
-            'duration': 0,
-            'repetitions': 50
-        };
-        return await Api.post( Api.baseUrl+ '/routines/1/cycles/1/exercises', true , send , controller)
+        if ( !string_type.includes(data.type)){
+            return [];
+        }
+        let routineId = tipos[data.type];
+        if( routineId !== 1) {
+            let result = await this.addExercise(data ,routineId , routineId ,controller);
+            if (result.code) {
+                return result;
+            }
+        }
+        return this.addExercise( data , 1 , 1 ,controller);
     }
 
     static async editMasterExercise( data , controller){

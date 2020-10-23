@@ -34,6 +34,29 @@ class RoutineApi {
         }
         return false;
     }
+    static async getTypeRoutine(type , controller){
+        const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
+        if (self.code) {
+            console.log("ERROR");
+            return self;
+        }
+        let favourites = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
+        let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
+        routines = routines.results;
+        let vector = [];
+        let favFlag;
+        let isOwner;
+        for (let i = 0 ; i < routines.length; i++ ) {
+            if ( routines[i].id >= 8 ) {
+                isOwner = routines[i].creator.id === self.id;
+                favFlag = this.isFav(routines[i].id, favourites.results);
+                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
+                    favFlag, routines[i].id , isOwner, routines[i].creator));
+            }
+        }
+        return vector;
+    }
+
     static async getRoutines(controller) {
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
         if (self.code) {
@@ -68,7 +91,9 @@ class RoutineApi {
         const result = await Api.get(this.url+ '/' + id ,true , null);
         const myInfo = await UserApi.getUserData();
         if ( result.creator.id === myInfo.id) {
+            console.log("tryna delete");
             await CycleApi.deleteAllCycles(id , controller);
+            console.log("cycle failed");
             return await Api.delete(this.url + '/' + id, true, controller);
         }
         return {

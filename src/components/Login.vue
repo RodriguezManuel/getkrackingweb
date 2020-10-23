@@ -93,7 +93,7 @@ export default {
       if (response.code == null) {
         this.wrongCredentials = false;
         location.assign("./loggedhome");
-      } else if (response.code == 4)
+      } else if (response.code === 4)
         this.wrongCredentials = true;
       else {
         console.log("ERROR: EN LOGIN, NO MANEJADO: " + response.code);
