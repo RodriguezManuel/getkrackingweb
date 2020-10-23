@@ -27,6 +27,7 @@ class RoutineApi {
     static isFav(routineid, favs){
         for ( let i = 0 ; i < favs.length; i++){
             if ( routineid === favs[i].id){
+                console.log("match!");
                 return true;
             }
         }
@@ -57,7 +58,7 @@ class RoutineApi {
         for (let i = 0 ; i < routines.length; i++ ) {
             if ( routines[i].id >= 8 ) {
                 isOwner = routines[i].creator.id === self.id;
-                favFlag = this.isFav(routines[i].id, favourites);
+                favFlag = this.isFav(routines[i].id, favourites.results);
                 vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
                     favFlag, routines[i].id , isOwner, routines[i].creator));
             }
