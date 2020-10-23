@@ -34,7 +34,7 @@
         <v-col cols="auto" class="my-auto">
           <router-link to="/perfil">
             <p class="my-auto" style=" color: white; font-size: 18px; right: 10px">
-              Julian Nicolas Sicardi
+              {{this.nombre}}
             </p>
           </router-link>
         </v-col>
@@ -51,9 +51,19 @@
 
 <script>
 import '@mdi/font/css/materialdesignicons.css'
+import {UserApi} from "@/api/user";
 
 export default {
-  name: "TopBar"
+  name: "TopBar",
+  data() {
+    return{
+      nombre: '',
+    }
+  },
+  async created(){
+    this.userInfo = await UserApi.getUserData(null);
+    this.nombre = this.userInfo.fullName;
+  }
 }
 </script>
 
