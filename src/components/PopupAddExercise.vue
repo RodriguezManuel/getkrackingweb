@@ -9,7 +9,12 @@
     <v-card style="border-radius:25px">
       <v-card-title>
         <p class="titulo mx-auto mt-5">SELECCIONAR EJERCICIOS</p>
-        <v-row class="my-10" justify="space-around">
+        <div class="text-center my-15" v-if="loading">
+          <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
+                               indeterminate
+                               color="primary"/>
+        </div>
+        <v-row class="my-10" justify="space-around" v-else>
           <v-col v-for="n in exercises.length" :key="n">
             <add-exercise-card :exercise_object='exercises[n-1]' :addedExercises='addedExercises' class="mx-auto"/>
           </v-col>
@@ -40,19 +45,17 @@ export default {
   props: ["addedExercises"],
   data() {
     return {
+      loading: true,
       dialog: false,
       exercises: [],
     }
   },
   async created() {
-    this.exercises = await ExercisesApi.getExercises()
+    this.exercises = await ExercisesApi.getExercises();
+    this.loading = false,
   },
   methods: {
-    cancel() {
-      this.dialog = false;
-    },
     save() {
-      console.log("GUARDADO");
       console.log(this.addedExercises);
       this.dialog = false;
     }

@@ -69,7 +69,6 @@ export default {
           name: this.nombre,
           detail: this.descripcion,
         }
-        console.log("trying to send");
         result = await ExercisesApi.postMasterExercise(data, null);
         console.log(result);
       } else {
@@ -79,7 +78,6 @@ export default {
           id: this.id
         }
         result = await ExercisesApi.editMasterExercise(data, null);
-        console.log("yass queen");
       }
       if (!result.code) {
         location.assign("../ejercicios");

@@ -40,9 +40,6 @@
                   </v-row>
                 </v-col>
                 <v-col class="my-auto ml-4">
-                  <v-btn class="rounded-pill CustomButton" x-large>
-                    Agregar etiqueta
-                  </v-btn>
                 </v-col>
               </v-row>
               <v-row justify="space-around">
