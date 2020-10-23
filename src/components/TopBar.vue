@@ -58,14 +58,17 @@ export default {
   data() {
     return{
       nombre: '',
+      avatarURL:'123',
+      userInfo:'',
     }
   },
   async created(){
     this.userInfo = await UserApi.getUserData(null);
+    console.log(this.avatarURL);
     this.nombre = this.userInfo.fullName;
-    this.avatarURL = this.userInfo.avatarURL;
+    this.avatarURL = this.userInfo.avatarUrl;
     console.log("AAAAA");
-    console.log(this.userInfo.avatarURL);
+    console.log(this.userInfo.avatarUrl);
   }
 }
 </script>
