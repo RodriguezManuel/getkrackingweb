@@ -57,6 +57,19 @@ class ExercisesApi {
         return  await Api.delete( path , true, controller);
 
     }
+    static async addExercise(data, id , cycle_id , controller){
+        console.log("Adding to rutine id: " + id);
+        console.log("Addint to cycle_id: " + cycle_id);
+        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises';
+        const send = {
+            'name': data.name,
+            'detail': data.detail,
+            'type':'exercise',
+            'duration': 0,
+            'repetitions': 50,
+        }
+        return await Api.post( path , true , send , controller);
+    }
 }
 
 

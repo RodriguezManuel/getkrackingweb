@@ -31,9 +31,10 @@ class RoutineApi {
     }
     static async getAllRoutines( controller){
             let routines = await Api.get(this.url, true, controller);
-            routines = routines.results;
+        let count = routines.totalCount
+        routines = routines.results;
             let vector = [];
-            for (let i = 0 ; i < routines.length; i++ ) {
+            for (let i = 0 ; i < count; i++ ) {
                 vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id));
             }
             console.log(vector);
@@ -49,15 +50,17 @@ class RoutineApi {
         console.log("my id is:" + id);
         let favourites = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
         favourites = favourites.results
-        let routines = await Api.get(this.url, true, controller);
+        let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
         routines = routines.results;
         let vector = [];
         let fav_flag;
         for (let i = 0 ; i < routines.length; i++ ) {
-
+            console.log('vuelta: ' + (i+1)  );
             if (routines[i].creator.id === id && routines[i].id !== 1) {
-                fav_flag = this.isFav((routines[i].id) , favourites);
-                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], fav_flag , routines[i].id));
+                fav_flag = this.isFav((routines[i].id), favourites);
+
+
+                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty], fav_flag, routines[i].id));
             }
         }
         console.log(vector);
@@ -74,7 +77,35 @@ class RoutineApi {
     static async deleteRoutine( id , controller){
         return await Api.delete( this.url + '/' + id  , true , controller);
     }
-
+    static async newRoutine( name , detail , dif , controller){
+        const data = {
+            "name": name,
+            "detail": detail,
+            "isPublic": true,
+            "difficulty": string_level[dif - 1],
+            "category": {
+                "id": 1
+            }
+        };
+        console.log("creando una nueva rutina:" + data.detail + ' name: ' +data.name + 'dif :' +data.difficulty );
+        const result = await Api.post( this.url , true , data , controller);
+        console.log(result.id);
+        return result.id
+    }
+    static async addCycle( type , number , reps , id , controller){
+        const cycleData= {
+            "name": type,
+            "detail": type,
+            "type": type,
+            "order": number,
+            "repetitions": reps
+        };
+       const result = await Api.post( this.url + '/' + id + '/cycles' , true , cycleData , controller);
+        if(result.code){
+            console.log(result.detail);
+        }
+       return result.id;
+    }
     static async buildMaster(){
         await Api.delete(this.url+'/1' , true , null);
         const routines = await this.getRoutines( null);

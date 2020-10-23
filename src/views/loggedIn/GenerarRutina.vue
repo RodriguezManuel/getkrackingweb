@@ -71,7 +71,7 @@
                 </v-card>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
+                <v-btn v-on:click="generateRoutine()" width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
                   Publicar
                 </v-btn>
               </v-row>
@@ -195,6 +195,8 @@ import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import '@fortawesome/fontawesome-free/css/all.css'
 import PopupAddExercise from "@/components/PopupAddExercise";
+import { RoutineApi} from "@/api/routines";
+import { ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "GenerarRutina",
@@ -240,6 +242,26 @@ export default {
         exercises.splice(index, 1);
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
+    },
+    async generateRoutine(){
+      console.log(this.categories[0].value);
+      const id = await RoutineApi.newRoutine(this.nombre, this.descripcion , this.categories[0].value , null);
+      let cycle_id;
+      let i , j ;
+      let data_exercise = {
+        name: '',
+        detail: '',
+      }
+      for( i = 0  ; i < this.sections.length;i++ ){
+        cycle_id = await RoutineApi.addCycle(this.sections[i].name , i +1 , this.sections[i].series , id , null);
+        for ( j = 0 ; j < this.sections[i].exercises.length ; j++){
+          data_exercise.name = this.sections[i].exercises[j].name;
+          data_exercise.detail = this.sections[i].exercises[j].detail;
+          console.log( 'Adding exercise: ' + data_exercise.name + ' With details: ' + data_exercise.detail);
+          await ExercisesApi.addExercise( data_exercise , id , cycle_id , null);
+        }
+      }
+      console.log("sent routine id: " +id);
     }
   }
 }
