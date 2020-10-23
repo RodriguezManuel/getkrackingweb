@@ -6,8 +6,7 @@
       <v-card class="my-16" style="min-width: 70%; border-radius: 20px;">
         <v-layout column align-center>
           <v-avatar size="220" class="mt-4">
-            <v-img
-                src="https://scontent-eze1-1.cdninstagram.com/v/t51.2885-19/s320x320/35505554_625607187813190_379991596516507648_n.jpg?_nc_ht=scontent-eze1-1.cdninstagram.com&_nc_ohc=UjdKgHIS_VAAX9SWjPg&oh=8e11b06d9807949d397e9d464ae6811c&oe=5FAD723C"/>
+            <v-img src="@/assets/images/default.png" />
           </v-avatar>
           <v-row>
             <v-text-field v-model="nombre" outlined class="textoNombre mt-7"
@@ -115,6 +114,7 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
+import { UserApi} from "@/api/user";
 
 export default {
   name: "Perfil",
@@ -131,6 +131,8 @@ export default {
       visibility: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
+      userInfo: '',
+      image: '',
       rules: {
         required: value => !!value || 'Requerido.',
         counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
@@ -142,7 +144,11 @@ export default {
         },
       },
     }
-
+  },
+  async created(){
+    this.userInfo = await UserApi.getUserData(null);
+    this.image = this.userInfo.avatarUrl;
+    console.log(this.image);
   }
 }
 </script>

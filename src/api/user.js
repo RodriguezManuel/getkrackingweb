@@ -39,6 +39,9 @@ class UserApi {
         Api.token = undefined;
         sessionStorage.setItem('token', Api.token);
     }
+    static async getUserData(controller){
+        return await Api.get( UserApi.url + '/current' , true , controller);
+    }
 }
 
 class Credentials {

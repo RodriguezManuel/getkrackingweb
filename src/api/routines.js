@@ -208,10 +208,7 @@ class RoutineApi {
             console.log("new cycle");
             await Api.post( this.url + '/' + (i+1) + '/cycles' , true , cycleData , null);
         }
-        const ready = {
-            flag:true,
-        }
-        return ready
+
 
     }
 
