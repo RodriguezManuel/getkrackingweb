@@ -155,11 +155,11 @@ export default {
   components: {SideBar, TopBar},
   data() {
     return {
-      nombre: 'Julian Sicardi',
+      nombre:'',
       editNombre: false,
-      username: 'juliansicardi99',
+      username: '',
       editUsername: false,
-      email: 'juliansicardicabjcasla@yahoort.com',
+      email: '',
       editEmail: false,
       password: 'pastaconfrutidimare',
       editPassword: false,
@@ -180,9 +180,21 @@ export default {
       },
     }
   },
+  methods: {
+    async getName(){
+      const rta = UserApi.getCurrent(null);
+      return rta.fullName;
+    }
+
+  },
   async created(){
     this.userInfo = await UserApi.getUserData(null);
     this.image = this.userInfo.avatarUrl;
+    this.nombre = this.userInfo.fullName;
+    this.username = this.userInfo.username;
+    this.email = this.userInfo.email;
+    console.log("AAAAAAA");
+    console.log(this.nombre);
     console.log(this.image);
   }
 }
