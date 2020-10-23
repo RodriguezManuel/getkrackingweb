@@ -90,7 +90,6 @@ class RoutineApi {
         location.assign('/rutinas');
         return result.id;
     }
-       return result.id;
 
 }
 
