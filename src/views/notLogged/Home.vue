@@ -71,11 +71,12 @@
 
                       </div>
 
-                      <router-link>
+                      <router-link to="/noimplementado">
                         <p id="EcharleUnVistazo">
                           Echarle un vistazo
                         </p>
                       </router-link>
+                      
                       <v-btn v-on:click="register" width="100%" height="48px" depressed color="#3C3C3C"
                              class="CustomButton white--text">
                         Registrarse

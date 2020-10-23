@@ -52,7 +52,7 @@ export default {
   },
   async created() {
     this.exercises = await ExercisesApi.getExercises();
-    this.loading = false,
+    this.loading = false;
   },
   methods: {
     save() {
