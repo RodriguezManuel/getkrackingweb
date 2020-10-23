@@ -8,7 +8,7 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select :items="tipos" label="Tipo" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select v-on:input="sortByType()" :items="tipos" label="Tipo" v-model="type" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
 
           <v-col>
@@ -63,6 +63,8 @@ export default {
     return {
       loading: true,
       routines: [],
+      allRoutines:[],
+      type:'',
       tipos: ['Propias', 'Generales', 'Favoritas'],
       dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
       puntuacion: ['5', '4', '3', '2', '1'],
@@ -78,8 +80,15 @@ export default {
       })
     }
   },
+  methods: {
+    sortByType(){
+      this.routines = RoutineApi.getByType(this.type, null);
+    }
+  },
+
   async created(){
     this.routines = await RoutineApi.getRoutines(null);
+    this.allRoutines = this.routines;
     this.loading = false;
   }
 }
