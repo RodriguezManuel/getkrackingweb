@@ -1,4 +1,5 @@
 import { Api } from './api.js';
+
 class Exercise{
     constructor(name , detail , id) {
         this.name = name;

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { RoutineApi } from "@/api/routines";
+import {Builder} from "@/api/builder";
 
 export default {
   name: "Builder",
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     async refreshMaster(){
-      const result = await RoutineApi.buildMaster();
+      const result = await Builder.buildMaster();
       if (!result.code){
         this.ready = true;
       }
