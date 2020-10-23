@@ -8,7 +8,7 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select :items="tipos" label="Tipo" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select v-bind="tipoSelect" :items="tipos" label="Tipo" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
 
           <v-col>
@@ -62,8 +62,11 @@ export default {
   data() {
     return {
       loading: true,
-      routines: [],
+      routinesDisplay: [],
+      allRoutines: [],
+      favRoutines: [],
       tipos: ['Propias', 'Generales', 'Favoritas'],
+      tipoSelect: 'Generales',
       dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
       puntuacion: ['5', '4', '3', '2', '1'],
       flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
@@ -78,9 +81,30 @@ export default {
       })
     }
   },
+  methods: {
+    async showFavs(){
+      var i;
+      for (i= 0; i < this.routines.length; i++){
+        if(this.routines[i].fav){
+          this.favRoutines.push(this.routines[i]);
+        }
+      }
+    },
+    async showMine(){
+      var i;
+      var rta;
+      for (i= 0; i < this.routines.length; i++){
+        if(this.routines[i].isOwner){
+          rta.push(this.routines[i]);
+        }
+      }
+      return rta;
+    }
+  },
   async created(){
-    this.routines = await RoutineApi.getRoutines(null);
+    this.routinesDisplay = await RoutineApi.getRoutines(null);
     this.loading = false;
+    this.allRoutines = this.routinesDisplay;
   }
 }
 </script>
