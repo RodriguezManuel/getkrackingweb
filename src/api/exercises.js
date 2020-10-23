@@ -26,7 +26,7 @@ class ExercisesApi {
     static get url() {
         return Api.baseUrl;
     }
-
+    //getters
     static async getFromDefaultRutine( type ,controller) {
         return await Api.get(Api.baseUrl + '/routines/' + tipos[type] + '/cycles/' + tipos[type] +'/exercises?page=0&size=99&orderBy=id&direction=asc', true, controller);
     }
@@ -53,6 +53,20 @@ class ExercisesApi {
     static async getExercises( controller) {
         return this.getByType('Todos' , controller);
     }
+    //Posters
+    static async addExercise(data, id , cycle_id , controller){
+        console.log("Adding to rutine id: " + id);
+        console.log("Addint to cycle_id: " + cycle_id);
+        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises';
+        const send = {
+            'name': data.name,
+            'detail': data.detail,
+            'type':'exercise',
+            'duration': 0,
+            'repetitions': 50,
+        }
+        return await Api.post( path , true , send , controller);
+    }
     static async postMasterExercise( data , controller){
         if ( !string_type.includes(data.type)){
             return [];
@@ -66,7 +80,7 @@ class ExercisesApi {
         }
         return this.addExercise( data , 1 , 1 ,controller);
     }
-
+    //Editers
     static async editMasterExercise( data , controller){
         const path = Api.baseUrl + '/routines/1/cycles/1/exercises/' + data.id;
         const send = {
@@ -78,23 +92,20 @@ class ExercisesApi {
         };
         return await Api.put( path , true , send , controller);
     }
-    static async deleteMasterExercise( id , controller){
-        const path = Api.baseUrl + '/routines/1/cycles/1/exercises/' + id;
-        return  await Api.delete( path , true, controller);
-
+    //Deleters
+    static async deleteExercise( routineId , cycleId , exerciseId, controller){
+        const path =  Api.baseUrl + '/routines/' + routineId + '/cycle/' + cycleId + '/exercises/' + exerciseId;
+        return Api.delete(path , true , controller);
     }
-    static async addExercise(data, id , cycle_id , controller){
-        console.log("Adding to rutine id: " + id);
-        console.log("Addint to cycle_id: " + cycle_id);
-        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises';
-        const send = {
-            'name': data.name,
-            'detail': data.detail,
-            'type':'exercise',
-            'duration': 0,
-            'repetitions': 50,
+    static async deleteMasterExercise( id , type , controller){
+        if ( !string_type.includes(type)){
+            return []
         }
-        return await Api.post( path , true , send , controller);
+        const result = this.deleteExercise( tipos[type] , tipos[type] , id , controller );
+        if ( result.code ){
+            return result;
+        }
+        return this.deleteExercise( 1 , 1 , id , controller);
     }
 }
 

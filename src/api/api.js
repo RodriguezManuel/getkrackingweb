@@ -53,7 +53,7 @@ class Api {
   }
 
   static getToken(){
-    return this.token;
+    return sessionStorage.getItem('token');
   }
 
   static async post(url, secure, data, controller) {
