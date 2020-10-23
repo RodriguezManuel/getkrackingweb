@@ -8,7 +8,7 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select :items="grupoMuscular" label="Grupo muscular" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select :items="categories" label="Categorias" v-model="categorySelected" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
 
           <v-col>
@@ -55,7 +55,8 @@ export default {
     return {
       loading: true,
       exercises : [],
-      grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
+      categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
+      categorySelected: 'Todos',
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
     }

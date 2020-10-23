@@ -87,13 +87,14 @@
           <v-spacer/>
           <p class="textoSecciones ml-12 mt-12">SECCIONES</p>
 
-          <v-container v-for="section in sections" :key="section.name">
+          <v-container v-for="(section, index) in sections" :key="index">
             <v-row class="justify-space-between">
 
               <v-col>
                 <v-row>
                   <v-col>
-                    <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6">
+                    <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6" v-if="section.name === 'exercise' && index !== 1">
+<!--                      solo se pueden remover las secciones exercise agregadas(arrancan desde el indice 2)-->
                       <v-icon size="45" color="gray">mdi-delete</v-icon>
                     </v-btn>
                   </v-col>
@@ -162,21 +163,14 @@
                 <v-icon x-large class="mt-3" @click="removeExercise(exercise, section.exercises)">mdi-close</v-icon>
               </v-col>
             </v-row>
-          </v-container>
 
-          <v-row justify="center">
-            <div style="width: 300px; height: 60px" class="mr-4">
-              <v-select
-                  :items="possibleSections"
-                  label="Tipo de seccion"
-                  v-model="selectedSection"
-                  outlined class="textoRutina"
-              ></v-select>
-            </div>
-            <v-btn @click="addSection()" width="300px" height="60px" class="CustomButton rounded-pill ml-4 mb-7">
-              Agregar
-            </v-btn>
-          </v-row>
+            <v-row justify="center" v-if="index === (sections.length-2)">
+<!--              solo se pueden agregar secciones de ejercicios-->
+              <v-btn @click="addSection()" width="450px" height="60px" class="CustomButton rounded-pill ml-4 mb-7">
+                Agregar otra seccion principal
+              </v-btn>
+            </v-row>
+          </v-container>
 
           <v-btn fab text color="grey darken-2" @click="$router.go(-1)"
                  style="position: absolute; top: 1%; left: 5%; z-index: 1;">
@@ -213,9 +207,13 @@ export default {
         name: 'far fa-futbol',
         value: false
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
-      possibleSections: ['warmup', 'exercise', 'cooldown'],
-      selectedSection: 'exercise',
-      sections: [],
+      sections: [{
+        name: 'warmup', series: 1, exercises: []
+      },{
+        name: 'exercise', series: 1, exercises: []
+      },{
+        name: 'cooldown', series: 1, exercises: []
+      },],
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
@@ -227,7 +225,8 @@ export default {
   },
   methods: {
     addSection() {
-      this.sections.push({name: this.selectedSection, series: 1, exercises: []});
+      this.sections.splice(this.sections.length-2, 0,{name: 'exercise', series: 1, exercises: []});
+      // agrego la seccion exercise antes de cooldown
     },
     removeSection(section, sections) {
       const index = sections.indexOf(section);

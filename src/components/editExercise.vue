@@ -7,13 +7,17 @@
 
     <v-card-text>
       <v-form class="mx-15">
-        <v-text-field v-model="nombre" class="texto mt-7" label="Nombre" height="60"
-                      :rules="[rules.required(nombre), rules.counterMAX(nombre)]"
+        <v-text-field v-model="name" class="texto mt-7" label="name" height="60"
+                      :rules="[rules.required(name), rules.counterMAX(name)]"
                       rounded background-color="white"/>
         <v-textarea label="Descripcion" v-model="descripcion" class="texto"
                     auto-grow rounded background-color="white" height="150"
                     :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
                     prepend-icon="mdi-text-short"/>
+        <div style="width: 300px;" class="mt-4">
+          <v-select :items="categories" label="Categoria" height="60" background-color="white" style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
+                    rounded v-model="categorieSelected"/>
+        </div>
         <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton">
           Agregar imagen o video
         </v-btn>
@@ -40,15 +44,17 @@
 </template>
 
 <script>
-import { ExercisesApi} from "@/api/exercises";
+import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "editExercise",
-  props: ['title' , 'id'],
+  props: ['title', 'id'],
   data: () => ({
-    nombre: '',
+    name: '',
     descripcion: '',
-    images: '',
+    categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
+    categorieSelected: 'Todos',
+    images: [],
     rules: {
       required: value => !!value || 'Requerido.',
       counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
@@ -57,8 +63,8 @@ export default {
   }),
   methods: {
     async editCard() {
-      if(this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true
-          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true ){
+      if (this.rules.required(this.name) !== true || this.rules.counterMAX(this.name) !== true
+          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
@@ -66,14 +72,14 @@ export default {
       let result = null;
       if (this.title === "CREAR NUEVO EJERCICIO") {
         const data = {
-          name: this.nombre,
+          name: this.name,
           detail: this.descripcion,
         }
         result = await ExercisesApi.postMasterExercise(data, null);
         console.log(result);
       } else {
         const data = {
-          name: this.nombre,
+          name: this.name,
           detail: this.descripcion,
           id: this.id
         }
@@ -83,8 +89,8 @@ export default {
         location.assign("../ejercicios");
       } else
         console.log("ERROR");
-      }
-    },
+    }
+  },
 }
 </script>
 

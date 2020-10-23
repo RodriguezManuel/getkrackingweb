@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <side-bar/>
     <top-bar/>
 
@@ -8,13 +7,13 @@
       <v-row justify="space-around">
         <v-card color="white" min-width="85%" style="border-radius: 25px">
           <v-row justify="space-around" class=" mt-3">
-            <p class="titulo">NUEVA RUTINA</p>
+            <p class="titulo">RUTINA DE {{ creador }}</p>
           </v-row>
 
           <v-row>
             <v-col cols="8">
               <div style="max-width: 500px" class="mx-15">
-                <v-text-field label="Nombre de rutina" type="text" v-model="nombre" class="textoRutina" disabled/>
+                <v-text-field label="Nombre" type="text" v-model="nombre" class="textoRutina" disabled/>
                 <v-textarea label="Descripcion" v-model="descripcion" class="textoRutina" rows="1" auto-grow disabled
                             prepend-icon="mdi-text-short"/>
                 <v-row>
@@ -158,6 +157,7 @@ export default {
   components: {SideBar, TopBar},
   data() {
     return {
+      creador: 'mbeh',
       nombre: '',
       descripcion: '',
       duracion: 5,
