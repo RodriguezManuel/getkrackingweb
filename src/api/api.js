@@ -1,7 +1,7 @@
 export { Api };
 import urlApi from '../api/paths.js'
 class Api {
-  static token;
+  static token = null;
   static get baseUrl() {
     return urlApi + '/api';
   }
@@ -50,6 +50,10 @@ class Api {
 
   static setToken(token){
     sessionStorage.setItem('token', token);
+  }
+
+  static getToken(){
+    return this.token;
   }
 
   static async post(url, secure, data, controller) {

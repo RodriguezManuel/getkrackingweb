@@ -1,14 +1,27 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="1500px">
+  <v-dialog v-model="dialog" scrollable max-width="1500px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn slot="activator" color="primary" height="40px" class="mr-4 rounded-pill white--text CustomButton"
              v-bind="attrs" v-on="on">
         Agregar ejercicio
       </v-btn>
     </template>
-    <v-card style="border-radius:25px">
+    <v-card style="border-radius:25px" height="100%">
       <v-card-title>
         <p class="titulo mx-auto mt-5">SELECCIONAR EJERCICIOS</p>
+      </v-card-title>
+      <v-card-actions>
+        <v-spacer/>
+        <v-btn
+            @click="save"
+            class="CustomButton2 white--text rounded-pill mb-5"
+            color="primary" width="300px" height="60px"
+        >
+          Guardar
+        </v-btn>
+        <v-spacer/>
+      </v-card-actions>
+      <v-card-title>
         <div class="text-center my-15" v-if="loading">
           <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
                                indeterminate
@@ -23,7 +36,7 @@
       <v-card-actions>
         <v-spacer/>
         <v-btn
-            @click="save()"
+            @click="save"
             class="CustomButton2 white--text rounded-pill mb-5"
             color="primary" width="300px" height="60px"
         >
@@ -32,6 +45,7 @@
         <v-spacer/>
       </v-card-actions>
     </v-card>
+
   </v-dialog>
 </template>
 

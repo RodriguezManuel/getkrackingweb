@@ -1,27 +1,32 @@
 <template>
-  <div style="vertical-align:middle; horiz-align: center; ">
-        <div>
-          <titulo>¡YA CASI ESTÁ LISTO!</titulo>
-        </div>
-        <texto> Insertá tu mail:</texto>
+  <div style="position: relative; top: 5%; left: 5%;">
+    <v-card align="center" width="600px" style="border-radius:25px">
+      <v-card-title>
+        <p class="titulo mt-7 mx-auto">¡YA CASI ESTÁ LISTO!</p>
+      </v-card-title>
+        <p class="texto"> Insertá tu mail:</p>
+      <div style="width: 400px;">
         <v-text-field
             label="Email"
-            placeholder="Email"
-            size="27%" outlined
+            placeholder="Email" outlined
             :rules="[rules.required(email), rules.email(email)]"
             hide-details="auto"
-            v-model="email"
-        ></v-text-field>
-        <texto> Insertá el codigo de verificación:</texto>
+            v-model="email"/>
+      </div>
+      <p class="texto mt-7"> Insertá el codigo de verificación:</p>
+      <div style="width: 400px; height: 80px">
         <v-text-field
-            label="Code"
-            placeholder="Code"
-            size="27%" outlined
+            label="Codigo"
+            placeholder="Code" outlined
             :rules="[rules.required(code), rules.counterCode(code)]"
             hide-details="auto"
             v-model="code"
-        ></v-text-field>
-    <v-btn v-on:click="verif()" style="color:#FBAC31"> verificar</v-btn>
+        />
+      </div>
+      <v-btn v-on:click="verif()" color="primary" class="black--text my-7 CustomButton rounded-pill">
+        Verificar
+      </v-btn>
+    </v-card>
   </div>
 </template>
 
@@ -36,10 +41,10 @@ export default {
       user: this.$route.query.user,
       token: this.$route.query.token,
       code: '',
-      email:'',
+      email: '',
       rules: {
         required: value => !!value || 'Requerido.',
-        counterCode: value => value.length ==6,
+        counterCode: value => value.length == 6,
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'
@@ -48,34 +53,41 @@ export default {
     }
   },
   methods: {
-    async verif(){
+    async verif() {
       // eslint-disable-next-line no-undef
       const v = new ToVerify(this.email, this.code);
-      UserApi.verify(v, null);
-      console.log("AAAAAAAA");
+      await UserApi.verify(v, null);
     }
   },
 }
 </script>
 
 <style scoped>
-
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("../../assets/fonts/NotoSans-Regular.ttf");
+}
+@font-face {
+  font-family: "NotoSans-Bold";
+  src: url("../../assets/fonts/NotoSans-Bold.ttf");
+}
 titulo {
   font-family: NotoSans-Bold;
   font-size: 35px;
-  color: #FBAC31;
-  text-align: center;
-  margin-top: 15px;
 }
+
 texto {
   font-family: NotoSans-Regular;
   font-size: 20px;
   color: #2B2B2B;
   text-align: left;
-  margin-left: 15px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+}
+
+/*Para que el boton tenga las propiedades buscadas*/
+.CustomButton {
+  font-family: NotoSans-Regular, sans-serif !important;
+  font-size: 20px !important;
+  text-transform: none !important;
 }
 
 </style>

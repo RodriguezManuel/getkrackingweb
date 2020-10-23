@@ -11,7 +11,7 @@
                     style="font-size: 18px;" height="34%"/>
 
       <v-text-field v-model="password" solo dense :type="(visibility === false)? 'password':'text'"
-                    placeholder="Contraseña"
+                    placeholder="Contraseña" v-on:keydown.enter="login"
                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                     size="24%" outlined style="font-size: 18px"
                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"

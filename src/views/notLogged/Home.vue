@@ -39,14 +39,14 @@
 
                       <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
                                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
-                                    placeholder="Contraseña"
+                                    placeholder="Contraseña" v-on:keydown.enter="register"
                                     size="24%" outlined style="font-size: 18px"
                                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                                     @click:append="visibility = !visibility"/>
 
                       <div style="min-height: 38px">
                         <p v-if="emailUsed === true" class="textoRespuesta" style="color: #ff5252">
-                          Email ya registrado
+                          Email o nombre de usuario ya registrado
                         </p>
 
                         <div v-else-if="emailReceived === true">

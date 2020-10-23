@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import notLoggedHome from '../views/notLogged/Home.vue'
+import {Api} from "@/api/api.js";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        name: 'notLoggedHome',
-        component: notLoggedHome
+        name: 'NotLoggedHome',
+        component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Home.vue')
     },
     {
         path: '/ayuda',
@@ -65,22 +65,22 @@ const routes = [
     },
     {
         path: '/generar_rutina',
-        name: 'Generar rutina',
+        name: 'GenerarRutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
     },
     {
         path: '/visualizar_rutina',
-        name: 'Visualizar rutina',
+        name: 'VisualizarRutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/VisualizarRutina.vue')
     },
     {
         path: '/generar_ejercicio',
-        name: 'Generar ejercicio',
+        name: 'GenerarEjercicio',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarEjercicio.vue')
     },
     {
         path: '/editar_ejercicio/:id',
-        name: 'Editar ejercicio',
+        name: 'EditarEjercicio',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/EditarEjercicio.vue')
     },
     {
@@ -109,6 +109,14 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+
+router.beforeEach( (to, from, next) =>{
+    if ((to.name !== 'NotLoggedHome' && to.name !== 'Ayuda' && to.name !== 'QuienesSomos' && to.name !== 'Verification')
+        && Api.getToken() === null)
+        next({name: 'NotLoggedHome'})
+    else
+        next()
 })
 
 export default router

@@ -1,5 +1,6 @@
 <template>
-  <v-btn :to="path" color="primary" width="25%" min-width="350px" min-height="90px" class="CustomButtonGenerar mx-auto white--text rounded-pill">
+  <v-btn :to="path" color="primary" width="25%" min-width="350px" min-height="90px"
+         class="CustomButtonGenerar mx-auto white--text rounded-pill">
     {{ texto }}
   </v-btn>
 </template>
@@ -24,7 +25,7 @@ export default {
   text-transform: none !important;
   position: -webkit-sticky;
   position: sticky;
-  left: 48.2%;
+  left: 47.5%;
   bottom: 25px;
   z-index: 3;
 }
