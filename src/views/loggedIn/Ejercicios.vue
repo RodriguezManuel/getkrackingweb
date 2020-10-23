@@ -22,7 +22,13 @@
           </v-col>
         </v-row>
       </v-card>
-      <v-row class="my-10" justify="space-around">
+
+      <div class="text-center my-15" v-if="loading">
+        <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
+            indeterminate
+            color="primary"/>
+      </div>
+      <v-row class="my-10" justify="space-around" v-else>
         <v-col  v-for="n in exercises.length" :key="n">
           <exercise-card  :exercise_object='exercises[n-1]' class="mx-auto"/>
         </v-col>
@@ -47,6 +53,7 @@ export default {
   components: {BotonGenerar, ExerciseCard, TopBar, SideBar},
   data() {
     return {
+      loading: true,
       exercises : [],
       grupoMuscular: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
@@ -54,7 +61,8 @@ export default {
     }
   },
   async created()  {
-    this.exercises = await ExercisesApi.getExercises()
+    this.exercises = await ExercisesApi.getExercises();
+    this.loading = false;
   },
 
 }

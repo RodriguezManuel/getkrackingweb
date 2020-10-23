@@ -31,7 +31,12 @@
         </v-row>
       </v-card>
 
-      <v-row class="my-10" justify="space-around">
+      <div class="text-center my-15" v-if="loading">
+        <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
+                             indeterminate
+                             color="primary"/>
+      </div>
+      <v-row class="my-10" justify="space-around" v-else>
         <v-col v-for="n in routines.length" :key="n">
           <workout-card :routine='routines[n - 1]' class="mx-auto"/>
         </v-col>
@@ -56,6 +61,7 @@ export default {
   components: {WorkoutCard, TopBar, SideBar, BotonGenerar},
   data() {
     return {
+      loading: true,
       routines: [],
       tipos: ['Propias', 'Generales', 'Favoritas'],
       dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
@@ -74,6 +80,7 @@ export default {
   },
   async created(){
     this.routines = await RoutineApi.getRoutines(null);
+    this.loading = false;
   }
 }
 </script>

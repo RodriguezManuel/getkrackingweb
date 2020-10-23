@@ -12,7 +12,6 @@ class Api {
 
   static async fetch(url, secure, init = {}, controller) {
    Api.token = sessionStorage.getItem('token');
-   console.log("ussing token: " +Api.token);
     if (secure && Api.token) {
       if (!init.headers)
         init.headers = {};

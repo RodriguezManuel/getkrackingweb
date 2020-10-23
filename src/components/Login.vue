@@ -17,10 +17,15 @@
                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                     @click:append="visibility = !visibility"/>
 
-      <div style="min-height: 30px">
-        <p v-if="wrongCredentials === true" class="textoRespuesta" style="color: #ff5252; text-align: center">
+      <div style="min-height: 38px">
+        <p v-if="wrongCredentials && !loading" class="textoRespuesta" style="color: #ff5252; text-align: center">
           Algun valor es incorrecto
         </p>
+        <div class="text-center" v-if="loading === true">
+          <v-progress-circular
+              indeterminate
+              color="primary"/>
+        </div>
       </div>
 
       <p class="olvidaste">Olvidaste tu contraseña?</p>
@@ -54,6 +59,7 @@ export default {
       visibility: false,
       username: '',
       password: '',
+      loading: false,
       wrongCredentials: false,
       rules: {
         required: value => !!value || 'Requerido.',
@@ -75,14 +81,17 @@ export default {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
+      this.loading = true;
 
       const credentials = new Credentials(this.username, this.password);
       const response = await UserApi.login(credentials);
+      this.loading = false;
       if (response == null) {
         console.log("ERROR: POST NO RETORNO NADA");
         return;
       }
       if (response.code == null) {
+        this.wrongCredentials = false;
         location.assign("./loggedhome");
       } else if (response.code == 4)
         this.wrongCredentials = true;

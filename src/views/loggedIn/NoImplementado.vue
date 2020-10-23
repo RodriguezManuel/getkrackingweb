@@ -2,9 +2,9 @@
   <div>
     <side-bar/>
     <top-bar/>
-      <v-card class="mx-auto mt-8" color="white" style="border-radius: 25px; width: 85%; height: 600px">
-        <h1 style="text-align: center;">NO SE LOGRO IMPLEMENTAR</h1>
-      </v-card>
+    <v-card class="mx-auto mt-8" color="white" style="border-radius: 25px; width: 85%; height: 600px">
+      <h1 style="text-align: center;position: relative;top: 45%;">NO SE LOGRO IMPLEMENTAR</h1>
+    </v-card>
   </div>
 </template>
 

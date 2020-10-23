@@ -51,7 +51,8 @@
                 </a>
               </v-row>
               <v-row justify="space-around">
-                <v-icon x-large class="mx-4" v-for="require in requires" :key="require.name" :color="(require.value)? 'black' : 'gray'">
+                <v-icon x-large class="mx-4" v-for="require in requires" :key="require.name"
+                        :color="(require.value)? 'black' : 'gray'">
                   {{ require.name }}
                 </v-icon>
               </v-row>
@@ -60,22 +61,20 @@
               <v-row justify="space-around">
                 <v-card style="height: 240px; width: 290px" outlined>
                   <div v-if="foto === false" style="height: 100%">
-                    <h1 @click="foto = true" class="textoFoto">Añadir foto</h1>
                   </div>
                   <v-img height="100%" width="100%" v-else
                          src="../../assets/images/workout.png"/>
                 </v-card>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn v-on:click="generateRoutine()" width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
-                  Publicar
+                <v-btn width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
+                  Reproducir
                 </v-btn>
               </v-row>
               <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" class="CustomButton rounded-pill">Guardar borrador</v-btn>
-              </v-row>
-              <v-row justify="space-around" class="mt-6">
-                <v-btn width="300px" height="60px" class="CustomButton rounded-pill" to="/rutinas">Eliminar</v-btn>
+                <v-btn width="300px" height="60px" class="CustomButton rounded-pill" @click="$router.go(-1)">
+                  Volver
+                </v-btn>
               </v-row>
             </v-col>
           </v-row>
@@ -207,16 +206,6 @@ export default {
   font-family: NotoSans-Regular, sans-serif;
   color: #8B8686;
   font-size: 28px;
-}
-
-.textoFoto {
-  font-family: NotoSans-Regular, sans-serif;
-  color: #8B8686;
-  font-size: 28px;
-  text-decoration: underline;
-  text-align: center;
-  position: relative;
-  top: 45%;
 }
 
 .textoSecciones {

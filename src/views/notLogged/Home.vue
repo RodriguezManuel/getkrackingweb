@@ -36,27 +36,42 @@
                                     type="text"
                                     placeholder="Email" size="27%" outlined
                                     style="font-size: 18px;"/>
+
                       <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
                                     :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                                     placeholder="Contraseña"
                                     size="24%" outlined style="font-size: 18px"
                                     :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                                     @click:append="visibility = !visibility"/>
-                      <div style="min-height: 30px">
+
+                      <div style="min-height: 38px">
                         <p v-if="emailUsed === true" class="textoRespuesta" style="color: #ff5252">
                           Email ya registrado
                         </p>
+
                         <div v-else-if="emailReceived === true">
-                          <p class="textoRespuesta" style="color: #4BB543">
-                            Email de confirmacion enviado
-                          </p>
-                          <p class="textoRespuesta" style="color: royalblue" v-on:click="resend_verification()">
-                            ¿No llegó? Clickeá aquí para reenviar.
-                          </p>
+                          <v-row class="mx-0">
+                            <p v-if="!loading" class="textoRespuesta" style="color: #4BB543; position: relative; bottom: -6px">
+                              Email de confirmacion enviado
+                            </p>
+
+                            <v-spacer/>
+
+                            <v-btn v-if="canResend" class="rounded-pill textoRespuesta" color="primary" v-on:click="resend_verification()">
+                              Reenviar
+                            </v-btn>
+                          </v-row>
+                        </div>
+
+                        <div class="text-center" v-if="loading === true">
+                          <v-progress-circular
+                              indeterminate
+                              color="primary"/>
                         </div>
 
                       </div>
-                      <router-link to="/mbhert">
+
+                      <router-link>
                         <p id="EcharleUnVistazo">
                           Echarle un vistazo
                         </p>
@@ -156,6 +171,8 @@ export default {
       ],
       emailUsed: false,
       emailReceived: false,
+      canResend: true,
+      loading: false,
       username: '',
       email: '',
       password: '',
@@ -198,15 +215,16 @@ export default {
   },
   methods: {
     async register() {
-      if(this.rules.required(this.username) !== true || this.rules.counterMIN(this.username) !== true
+      if (this.rules.required(this.username) !== true || this.rules.counterMIN(this.username) !== true
           || this.rules.counterMAX(this.username) !== true || this.rules.required(this.password) !== true
           || this.rules.counterMIN(this.password) !== true || this.rules.counterMAX(this.password) !== true
-          || this.rules.required(this.email) !== true || this.rules.email(this.email) !== true ){
+          || this.rules.required(this.email) !== true || this.rules.email(this.email) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
-
+      this.loading = true;
       const result = await UserApi.register(this.username, this.password, this.email, null);
+      this.loading = false;
       if (result === null) {
         console.log("ERROR: NADA RECIBIDO");
       } else if (result.id) {
@@ -219,8 +237,11 @@ export default {
         this.emailUsed = true;
       }
     },
-    async resend_verification(){
-      UserApi.resend(this.email, null);
+    async resend_verification() {
+      this.canResend = false;
+      this.loading = true;
+      await UserApi.resend(this.email, null);
+      this.loading = false;
     }
   }
 }
@@ -274,8 +295,9 @@ export default {
 }
 
 .textoRespuesta {
-  font-family: NotoSans-Regular, sans-serif;
-  font-size: 20px;
+  font-family: NotoSans-SemiBold, sans-serif !important;
+  font-size: 16px !important;
+  text-transform: none !important;
   margin-bottom: 0 !important;
 }
 
