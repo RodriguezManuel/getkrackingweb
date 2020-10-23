@@ -9,13 +9,14 @@ level[string_level[3]]=4;
 level[string_level[4]]=5;
 
 class Routine{
-    constructor(name , detail , level , fav ,id , owner) {
+    constructor(name , detail , level , fav ,id , isOwner, creator) {
         this.name = name;
         this.detail = detail;
         this.level=level;
         this.fav = fav;
         this.id = id;
-        this.owner = owner;
+        this.isOwner = isOwner;
+        this.creator = creator;
     }
 }
 class RoutineApi {
@@ -32,12 +33,11 @@ class RoutineApi {
         return false;
     }
     static async getAllRoutines( controller){
-            let routines = await Api.get(this.url, true, controller);
-        let count = routines.totalCount
+        let routines = await Api.get(this.url + '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
         routines = routines.results;
             let vector = [];
-            for (let i = 0 ; i < count; i++ ) {
-                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id) , routines[i].creator.id);
+            for (let i = 0 ; i < routines.length; i++ ) {
+                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id , false , routines[i].creator));
             }
             console.log(vector);
             return vector;
@@ -52,11 +52,14 @@ class RoutineApi {
         let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
         routines = routines.results;
         let vector = [];
-        let fav_flag;
+        let favFlag;
+        let isOwner;
         for (let i = 0 ; i < routines.length; i++ ) {
             if ( routines[i].id >= 8 ) {
-                fav_flag = this.isFav(routines[i].id, favourites)
-                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty], fav_flag, routines[i].id , routines[i].creator.id));
+                isOwner = routines[i].creator.id === self.id;
+                favFlag = this.isFav(routines[i].id, favourites);
+                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
+                    favFlag, routines[i].id , isOwner, routines[i].creator));
             }
         }
         return vector;
