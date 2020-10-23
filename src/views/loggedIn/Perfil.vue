@@ -107,22 +107,18 @@
               <div style="width: 650px">
                 <v-text-field v-model="password" outlined class="texto"
                               :type="(visibility === false)? 'password':'text'"
-                              placeholder="Contraseña" :disabled="(editPassword !== true)"
+                              placeholder="Ingrese su contraseña para continuar"
                               :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
                               rounded background-color="#F7F2F2"
                               :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
                               @click:append="visibility = !visibility" v-on:keydown.enter="update()"/>
               </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
-                      @click="editPassword = !editPassword">
-                mdi-pencil
-              </v-icon>
             </v-row>
           </v-col>
         </v-row>
 
         <div style="text-align: center;" class="my-8">
-          <v-btn v-on:click="saveChanges = !saveChanges" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+          <v-btn v-on:click="saveChanges = true" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
@@ -163,7 +159,6 @@ export default {
       email: '',
       editEmail: false,
       password: '',
-      editPassword: false,
       visibility: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
