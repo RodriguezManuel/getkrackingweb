@@ -7,7 +7,7 @@
 
         <v-row justify="center">
           <v-avatar size="220" class="mt-4">
-            <v-img src="@/assets/images/default.png" />
+            <v-img :src="avatarURLFUNC" lazy-src="@/assets/images/default.png" />
           </v-avatar>
         </v-row>
 
@@ -118,7 +118,7 @@
         </v-row>
 
         <div style="text-align: center;" class="my-8">
-          <v-btn v-on:click="saveChanges = true" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+          <v-btn v-on:click="update()" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
@@ -179,18 +179,29 @@ export default {
   },
   methods: {
     async update(){
-      const data = new AllData(this.username, this.nombre, this.date, this.email, this.password);
+      if(!this.saveChanges){
+        this.saveChanges = true;
+        return;
+      }
+
+      // ESPACIO DONDE SE VALIDARIA QUE LA CONSTRASENIA SEA LA CORRECTA
+
+      const data = new AllData(this.username, this.nombre, this.date, this.email);
       await UserApi.update(data, null);
     }
 
   },
-  async created(){
+  computed: {
+    avatarURLFUNC(){
+      return this.avatarURL;
+    },
+  },
+  async mounted(){
     this.userInfo = await UserApi.getUserData(null);
     this.image = this.userInfo.avatarUrl;
     this.nombre = this.userInfo.fullName;
     this.username = this.userInfo.username;
     this.email = this.userInfo.email;
-    console.log(this.userInfo);
   }
 }
 </script>

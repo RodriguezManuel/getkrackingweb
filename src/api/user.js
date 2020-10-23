@@ -71,7 +71,6 @@ class AllData{
     constructor(username, fullName, birthdate, email){
         const userData = UserApi.getUserData(null);
         this.username = username;
-        this.password = userData.password;
         this.fullName = fullName;
         this.gender = userData.gender;
         this.birthdate = birthdate;

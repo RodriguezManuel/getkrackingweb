@@ -24,8 +24,7 @@
           <router-link to="/perfil">
             <div>
               <v-avatar size="100" style="margin: 15px">
-                <v-img
-                    v-bind:src= "avatarURL"/>
+                <v-img :src="avatarURLFUNC" lazy-src="@/assets/images/default.png"/>
               </v-avatar>
             </div>
           </router-link>
@@ -58,17 +57,19 @@ export default {
   data() {
     return{
       nombre: '',
-      avatarURL:'123',
+      avatarURL:'',
       userInfo:'',
     }
   },
-  async created(){
+  computed: {
+    avatarURLFUNC(){
+      return this.avatarURL;
+    },
+  },
+  async mounted(){
     this.userInfo = await UserApi.getUserData(null);
-    console.log(this.avatarURL);
     this.nombre = this.userInfo.fullName;
     this.avatarURL = this.userInfo.avatarUrl;
-    console.log("AAAAA");
-    console.log(this.userInfo.avatarUrl);
   }
 }
 </script>
