@@ -16,7 +16,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Ayuda.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/notLogged/Perfil.vue')
     },
     {
         path: '/quienes_somos',
@@ -49,6 +49,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Calendario.vue')
     },
     {
+        path: '/notificaciones',
+        name: 'Notificaciones',
+        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/NoImplementado.vue')
+    },
+    {
+        path: '/mensajes',
+        name: 'Mensajes',
+        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/NoImplementado.vue')
+    },
+    {
         path: '/ajustes',
         name: 'Ajustes',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/Ajustes.vue')
@@ -57,6 +67,11 @@ const routes = [
         path: '/generar_rutina',
         name: 'Generar rutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
+    },
+    {
+        path: '/visualizar_rutina',
+        name: 'Visualizar rutina',
+        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/VisualizarRutina.vue')
     },
     {
         path: '/generar_ejercicio',

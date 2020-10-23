@@ -57,6 +57,12 @@ export default {
   }),
   methods: {
     async editCard() {
+      if(this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true
+          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true ){
+        // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
+        return
+      }
+
       let result = null;
       if (this.title === "CREAR NUEVO EJERCICIO") {
         const data = {

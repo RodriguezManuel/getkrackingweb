@@ -4,24 +4,55 @@
     <top-bar/>
     <v-row justify="center">
       <v-card class="my-16" style="min-width: 70%; border-radius: 20px;">
-        <v-layout column align-center>
+
+        <v-row justify="center">
           <v-avatar size="220" class="mt-4">
             <v-img src="@/assets/images/default.png" />
           </v-avatar>
-          <v-row>
-            <v-text-field v-model="nombre" outlined class="textoNombre mt-7"
-                          :disabled="(editNombre !== true)"
-                          :rules="[rules.required(nombre), rules.counterNameMAX(nombre)]"
-                          rounded background-color="#F7F2F2"/>
-            <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
-                    @click="editNombre = !editNombre">
-              mdi-pencil
-            </v-icon>
-          </v-row>
-          <a class="texto">@{{ username }}</a>
-        </v-layout>
+        </v-row>
 
         <v-row justify="center" class="mt-6">
+          <v-col cols="2">
+            <p class="texto mt-9" style="text-align: center">Nombre</p>
+          </v-col>
+          <v-col cols="8">
+            <v-row>
+              <div style="width: 650px">
+                <v-text-field v-model="nombre" outlined class="texto"
+                              :disabled="(editNombre !== true)"
+                              :rules="[rules.required(nombre), rules.counterNameMAX(nombre)]"
+                              rounded background-color="#F7F2F2"/>
+              </div>
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+                      @click="editNombre = !editNombre">
+                mdi-pencil
+              </v-icon>
+            </v-row>
+          </v-col>
+        </v-row>
+
+
+        <v-row justify="center" >
+          <v-col cols="2">
+            <p class="texto mt-9" style="text-align: center">Username</p>
+          </v-col>
+          <v-col cols="8">
+            <v-row>
+              <div style="width: 650px">
+                <v-text-field v-model="username" outlined class="texto"
+                              :disabled="(editUsername !== true)" prepend-icon=""
+                              :rules="[rules.required(username), rules.counterMIN(username),rules.counterNameMAX(username)]"
+                              rounded background-color="#F7F2F2"/>
+              </div>
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+                      @click="editUsername = !editUsername">
+                mdi-pencil
+              </v-icon>
+            </v-row>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
           <v-col cols="2">
             <p class="texto mt-2" style="text-align: center">Email</p>
           </v-col>
@@ -90,12 +121,14 @@
           </v-col>
         </v-row>
 
-        <div style="text-align: center;" class="mb-8">
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill" depressed>
+        <div style="text-align: center;" class="my-8">
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+                 depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed color=primary>
+          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
+                 color=primary>
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
@@ -106,6 +139,7 @@
         <v-icon size="62" to="/implementar" color="#8B8686"
                 style="position: absolute; top: 180px; right: 40%;z-index: 1">mdi-pencil-circle
         </v-icon>
+
       </v-card>
     </v-row>
   </div>
@@ -124,6 +158,7 @@ export default {
       nombre: 'Julian Sicardi',
       editNombre: false,
       username: 'juliansicardi99',
+      editUsername: false,
       email: 'juliansicardicabjcasla@yahoort.com',
       editEmail: false,
       password: 'pastaconfrutidimare',
@@ -157,12 +192,6 @@ export default {
 @font-face {
   font-family: "NotoSans-SemiBold";
   src: url("../../assets/fonts/NotoSans-SemiBold.ttf");
-}
-
-.textoNombre {
-  font-family: NotoSans-SemiBold, sans-serif;
-  font-size: 30px;
-  color: #8B8686;
 }
 
 .texto {

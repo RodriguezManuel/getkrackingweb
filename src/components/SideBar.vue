@@ -31,7 +31,7 @@ export default {
         {icon: 'mdi-message-outline', desc: 'Mensajes', path: '/mensajes'},
         {icon: 'mdi-calendar', desc: 'Calendario', path: '/calendario'},
         {icon: 'mdi-account-outline', desc: 'Clientes', path: '/clientes'},
-        {icon: 'mdi-cog-outline', desc: 'Ajustes', path: '/ajustes'},
+        {icon: 'mdi-cog-outline', desc: 'Ajustes', path: '/perfil'},
       ]
     }
   },

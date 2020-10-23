@@ -6,13 +6,13 @@
 
         <v-col cols="auto" class="my-auto">
 
-          <v-btn icon to="/implementar" style="margin-right: 15px;">
+          <v-btn icon to="/notificaciones" style="margin-right: 15px;">
             <v-icon size="45px" color="white">
               mdi-bell-circle-outline
             </v-icon>
           </v-btn>
 
-          <v-btn icon to="/implementar">
+          <v-btn icon to="/ajustes">
             <v-icon size="45px" color="white">
               mdi-help-circle-outline
             </v-icon>

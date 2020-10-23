@@ -23,7 +23,7 @@ class RoutineApi {
         return Api.baseUrl + '/routines';
     }
 
-    static isFav( routineid  , favs ){
+    static isFav(routineid, favs){
         for ( let i = 0 ; i < favs.length; i++){
             if ( routineid === favs[i].id){
                 return true;
@@ -48,22 +48,17 @@ class RoutineApi {
             console.log("ERROR");
             return self;
         }
-        const id = self.id;
-        console.log("my id is:" + id);
         let favourites = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
-        favourites = favourites.results
         let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
         routines = routines.results;
         let vector = [];
         let fav_flag;
         for (let i = 0 ; i < routines.length; i++ ) {
-            console.log('vuelta: ' + (i+1)  );
             if ( routines[i].id >= 8 ) {
-                fav_flag = this.isFav((routines[i].id), favourites)
+                fav_flag = this.isFav(routines[i].id, favourites)
                 vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty], fav_flag, routines[i].id , routines[i].creator.id));
             }
         }
-        console.log(vector);
         return vector;
     }
 
@@ -95,10 +90,9 @@ class RoutineApi {
                 "id": 1
             }
         };
-        console.log("creando una nueva rutina:" + data.detail + ' name: ' +data.name + 'dif :' +data.difficulty );
         const result = await Api.post( this.url , true , data , controller);
-        console.log(result.id);
-        return result.id
+        location.assign('/rutinas');
+        return result.id;
     }
     static async addCycle( type , number , reps , id , controller){
         const cycleData= {
