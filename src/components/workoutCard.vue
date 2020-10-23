@@ -68,18 +68,18 @@ export default {
   },
   methods: {
     async toggleFav(){
+      let result;
       if ( !this.routine.fav ){
-        let result = await RoutineApi.addFav(this.routine.id , null);
-        console.log("makeFav");
-        console.log(result);
+        result = await RoutineApi.addFav(this.routine.id , null);
       }else{
         console.log("Deleting");
-        let result = await RoutineApi.deleteFav( this.routine.id , null );
-        console.log(result);
+        result = await RoutineApi.deleteFav( this.routine.id , null );
       }
-
-      this.routine.fav = !this.routine.fav;
-      return 'yes';
+      if( !result.code) {
+        this.routine.fav = !this.routine.fav;
+      }else{
+        console.log("ERROR");
+      }
     },
     async deleteRoutine(){
     let result = await RoutineApi.deleteRoutine(this.routine.id, null);

@@ -1,5 +1,6 @@
 import { Api } from './api.js';
 import {UserApi} from "@/api/user";
+import { CycleApi} from "@/api/cycle";
 const string_level =[ 'rookie', 'beginner', 'intermediate', 'advanced', 'expert' ];
 let level = {};
 level[string_level[0]]=1;
@@ -32,16 +33,6 @@ class RoutineApi {
             }
         }
         return false;
-    }
-    static async getAllRoutines( controller){
-        let routines = await Api.get(this.url + '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
-        routines = routines.results;
-            let vector = [];
-            for (let i = 0 ; i < routines.length; i++ ) {
-                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id , false , routines[i].creator));
-            }
-            console.log(vector);
-            return vector;
     }
     static async getRoutines(controller) {
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
@@ -77,6 +68,7 @@ class RoutineApi {
         const result = await Api.get(this.url+ '/' + id ,true , null);
         const myInfo = await UserApi.getUserData();
         if ( result.creator.id === myInfo.id) {
+            await CycleApi.deleteAllCycles(id , controller);
             return await Api.delete(this.url + '/' + id, true, controller);
         }
         return {
@@ -98,20 +90,8 @@ class RoutineApi {
         location.assign('/rutinas');
         return result.id;
     }
-    static async addCycle( type , number , reps , id , controller){
-        const cycleData= {
-            "name": type,
-            "detail": type,
-            "type": type,
-            "order": number,
-            "repetitions": reps
-        };
-       const result = await Api.post( this.url + '/' + id + '/cycles' , true , cycleData , controller);
-        if(result.code){
-            console.log(result.detail);
-        }
        return result.id;
-    }
+
 }
 
 export {RoutineApi};
