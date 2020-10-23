@@ -1,4 +1,5 @@
 import { Api } from './api.js';
+import {UserApi} from "@/api/user";
 const string_level =[ 'rookie', 'beginner', 'intermediate', 'advanced', 'expert' ];
 let level = {};
 level[string_level[0]]=1;
@@ -8,12 +9,13 @@ level[string_level[3]]=4;
 level[string_level[4]]=5;
 
 class Routine{
-    constructor(name , detail , level , fav ,id) {
+    constructor(name , detail , level , fav ,id , owner) {
         this.name = name;
         this.detail = detail;
         this.level=level;
         this.fav = fav;
         this.id = id;
+        this.owner = owner;
     }
 }
 class RoutineApi {
@@ -35,7 +37,7 @@ class RoutineApi {
         routines = routines.results;
             let vector = [];
             for (let i = 0 ; i < count; i++ ) {
-                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id));
+                vector.push(new Routine( routines[i].name , routines[i].detail , level[routines[i].difficulty], false , routines[i].id) , routines[i].creator.id);
             }
             console.log(vector);
             return vector;
@@ -56,11 +58,9 @@ class RoutineApi {
         let fav_flag;
         for (let i = 0 ; i < routines.length; i++ ) {
             console.log('vuelta: ' + (i+1)  );
-            if (routines[i].creator.id === id && routines[i].id !== 1) {
-                fav_flag = this.isFav((routines[i].id), favourites);
-
-
-                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty], fav_flag, routines[i].id));
+            if ( routines[i].id >= 8 ) {
+                fav_flag = this.isFav((routines[i].id), favourites)
+                vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty], fav_flag, routines[i].id , routines[i].creator.id));
             }
         }
         console.log(vector);
@@ -75,7 +75,15 @@ class RoutineApi {
         return await Api.post(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
     }
     static async deleteRoutine( id , controller){
-        return await Api.delete( this.url + '/' + id  , true , controller);
+        const result = await Api.get(this.url+ '/' + id ,true , null);
+        const myInfo = await UserApi.getUserData();
+        if ( result.creator.id === myInfo.id) {
+            return await Api.delete(this.url + '/' + id, true, controller);
+        }
+        return {
+            code: 1,
+            detail: 'notYourRoutine'
+        }
     }
     static async newRoutine( name , detail , dif , controller){
         const data = {
