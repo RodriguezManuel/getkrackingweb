@@ -7,13 +7,16 @@
 
         <v-row justify="center">
           <v-avatar size="220" class="mt-4">
-            <v-img :src="avatarURLFUNC" lazy-src="@/assets/images/default.png" />
+            <v-img :src="avatarURLFUNC" lazy-src="@/assets/images/default.png"/>
           </v-avatar>
+        </v-row>
+        <v-row justify="center">
+          <PopupEditImage :images="this.images"/>
         </v-row>
 
         <v-row justify="center" class="mt-6">
           <v-col cols="2">
-            <p class="texto mt-9" style="text-align: center">Nombre</p>
+            <p class="texto mt-6" style="text-align: center">Nombre</p>
           </v-col>
           <v-col cols="8">
             <v-row>
@@ -32,9 +35,9 @@
         </v-row>
 
 
-        <v-row justify="center" >
+        <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-9" style="text-align: center">Username</p>
+            <p class="texto mt-6" style="text-align: center">Username</p>
           </v-col>
           <v-col cols="8">
             <v-row>
@@ -100,7 +103,7 @@
 
         <v-row justify="center" v-if="saveChanges">
           <v-col cols="2">
-            <p class="texto mt-2" style="text-align: center">Contraseña</p>
+            <p class="texto mt-2" style="text-align: center">Validar contraseña</p>
           </v-col>
           <v-col cols="8">
             <v-row>
@@ -131,12 +134,6 @@
           </v-btn>
         </div>
 
-
-        <!--        BOTONES CON POSICION ABSOLUTA-->
-        <v-icon size="62" to="/implementar" color="#8B8686"
-                style="position: absolute; top: 180px; right: 40%;z-index: 1">mdi-pencil-circle
-        </v-icon>
-
       </v-card>
     </v-row>
   </div>
@@ -145,14 +142,15 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
-import { UserApi, AllData} from "@/api/user";
+import {UserApi, AllData} from "@/api/user";
+import PopupEditImage from "@/components/PopupEditImage";
 
 export default {
   name: "Perfil",
-  components: {SideBar, TopBar},
+  components: {PopupEditImage, SideBar, TopBar},
   data() {
     return {
-      nombre:'',
+      nombre: '',
       editNombre: false,
       username: '',
       editUsername: false,
@@ -164,7 +162,7 @@ export default {
       menu: false,
       saveChanges: false, //lo prendo cuando toco el boton de guardar cambios, hace que aparezca el campo contraseña
       userInfo: '',
-      image: '',
+      images: [this.image], //lo guardo como puntero asi el hijo lo puede modificar
       rules: {
         required: value => !!value || 'Requerido.',
         counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
@@ -178,27 +176,26 @@ export default {
     }
   },
   methods: {
-    async update(){
-      if(!this.saveChanges){
+    async update() {
+      if (!this.saveChanges) {
         this.saveChanges = true;
         return;
       }
 
       // ESPACIO DONDE SE VALIDARIA QUE LA CONSTRASENIA SEA LA CORRECTA
 
-      const data = new AllData(this.username, this.nombre, this.date, this.email);
+      const data = new AllData(this.username, this.nombre, this.date, this.email, this.images[0]);
       await UserApi.update(data, null);
-    }
-
-  },
-  computed: {
-    avatarURLFUNC(){
-      return this.avatarURL;
     },
   },
-  async mounted(){
+  computed: {
+    avatarURLFUNC() {
+      return this.images[0];
+    },
+  },
+  async mounted() {
     this.userInfo = await UserApi.getUserData(null);
-    this.image = this.userInfo.avatarUrl;
+    this.images[0] = this.userInfo.avatarUrl;
     this.nombre = this.userInfo.fullName;
     this.username = this.userInfo.username;
     this.email = this.userInfo.email;

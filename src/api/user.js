@@ -68,7 +68,7 @@ class ToVerify{
     }
 }
 class AllData{
-    constructor(username, fullName, birthdate, email){
+    constructor(username, fullName, birthdate, email, avatarURL){
         const userData = UserApi.getUserData(null);
         this.username = username;
         this.fullName = fullName;
@@ -76,6 +76,6 @@ class AllData{
         this.birthdate = birthdate;
         this.email = email
         this.phone= userData.phone;
-        this.avatarURL = userData.avatarURL;
+        this.avatarURL = avatarURL;
     }
 }

@@ -166,8 +166,7 @@
 
           <v-row justify="center">
             <div style="width: 300px; height: 60px" class="mr-4">
-              <v-select
-                  :items="possibleSections"
+              <v-select :items="possibleSections"
                   label="Tipo de seccion"
                   v-model="selectedSection"
                   outlined class="textoRutina"
