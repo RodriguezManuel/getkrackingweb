@@ -74,29 +74,6 @@
 
         <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-2" style="text-align: center">Contraseña</p>
-          </v-col>
-          <v-col cols="8">
-            <v-row>
-              <div style="width: 650px">
-                <v-text-field v-model="password" outlined class="texto"
-                              :type="(visibility === false)? 'password':'text'"
-                              placeholder="Contraseña" :disabled="(editPassword !== true)"
-                              :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
-                              rounded background-color="#F7F2F2"
-                              :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
-                              @click:append="visibility = !visibility"/>
-              </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
-                      @click="editPassword = !editPassword">
-                mdi-pencil
-              </v-icon>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <v-row justify="center">
-          <v-col cols="2">
             <p class="texto mt-2" style="text-align: center;">Fecha de nacimiento</p>
           </v-col>
           <v-col cols="8">
@@ -121,8 +98,31 @@
           </v-col>
         </v-row>
 
+        <v-row justify="center" v-if="saveChanges">
+          <v-col cols="2">
+            <p class="texto mt-2" style="text-align: center">Contraseña</p>
+          </v-col>
+          <v-col cols="8">
+            <v-row>
+              <div style="width: 650px">
+                <v-text-field v-model="password" outlined class="texto"
+                              :type="(visibility === false)? 'password':'text'"
+                              placeholder="Contraseña" :disabled="(editPassword !== true)"
+                              :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
+                              rounded background-color="#F7F2F2"
+                              :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
+                              @click:append="visibility = !visibility" v-on:keydown.enter="update()"/>
+              </div>
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
+                      @click="editPassword = !editPassword">
+                mdi-pencil
+              </v-icon>
+            </v-row>
+          </v-col>
+        </v-row>
+
         <div style="text-align: center;" class="my-8">
-          <v-btn v-on:click="update()"  height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+          <v-btn v-on:click="saveChanges = !saveChanges" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
@@ -167,6 +167,7 @@ export default {
       visibility: false,
       date: new Date().toISOString().substr(0, 10),
       menu: false,
+      saveChanges: false, //lo prendo cuando toco el boton de guardar cambios, hace que aparezca el campo contraseña
       userInfo: '',
       image: '',
       rules: {
@@ -183,10 +184,8 @@ export default {
   },
   methods: {
     async update(){
-      console.log("entre a update");
       const data = new AllData(this.username, this.nombre, this.date, this.email, this.password);
-      UserApi.update(data, null);
-      console.log("update successful");
+      await UserApi.update(data, null);
     }
 
   },
@@ -196,9 +195,7 @@ export default {
     this.nombre = this.userInfo.fullName;
     this.username = this.userInfo.username;
     this.email = this.userInfo.email;
-    console.log("AAAAAAA");
-    console.log(this.nombre);
-    console.log(this.image);
+    console.log(this.userInfo);
   }
 }
 </script>
