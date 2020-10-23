@@ -50,7 +50,7 @@ class Api {
   }
 
   static setToken(token){
-    this.token = token;
+    sessionStorage.setItem('token', token);
   }
 
   static async post(url, secure, data, controller) {

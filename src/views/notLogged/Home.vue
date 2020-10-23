@@ -46,9 +46,15 @@
                         <p v-if="emailUsed === true" class="textoRespuesta" style="color: #ff5252">
                           Email ya registrado
                         </p>
-                        <p v-else-if="emailReceived === true" class="textoRespuesta" style="color: #4BB543">
-                          Email de confirmacion enviado
-                        </p>
+                        <div v-else-if="emailReceived === true">
+                          <p class="textoRespuesta" style="color: #4BB543">
+                            Email de confirmacion enviado
+                          </p>
+                          <p class="textoRespuesta" style="color: royalblue" v-on:click="resend_verification()">
+                            ¿No llegó? Clickeá aquí para reenviar.
+                          </p>
+                        </div>
+
                       </div>
                       <router-link to="/mbhert">
                         <p id="EcharleUnVistazo">
@@ -212,6 +218,9 @@ export default {
         this.emailReceived = false;
         this.emailUsed = true;
       }
+    },
+    async resend_verification(){
+      UserApi.resend(this.email, null);
     }
   }
 }

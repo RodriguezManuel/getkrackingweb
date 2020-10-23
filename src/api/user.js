@@ -25,13 +25,15 @@ class UserApi {
     static async login(credentials, controller) {
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         sessionStorage.setItem('token', result.token);
-        Api.token = result.token;
         return result;
     }
     static async verify(v, controller){
         const result = await Api.post(`${UserApi.url}/verify_email`, false, v, controller);
         sessionStorage.setItem('token', result.token);
-        Api.token = result.token;
+    }
+
+    static async getCurrent(controller){
+    return await Api.get(`${UserApi.url}/current`, true, controller);
     }
 
     static async logout(controller) {
@@ -41,6 +43,10 @@ class UserApi {
     }
     static async getUserData(controller){
         return await Api.get( UserApi.url + '/current' , true , controller);
+    }
+    static async resend(email, controller){
+        let aux = {email: email};
+        await Api.post(`${UserApi.url}/resend_verification`, false, aux, controller);
     }
 }
 
