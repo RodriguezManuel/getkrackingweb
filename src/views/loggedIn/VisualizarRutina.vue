@@ -180,6 +180,8 @@ import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import { RoutineApi } from "@/api/routines";
 import '@fortawesome/fontawesome-free/css/all.css'
+import {CycleApi} from "@/api/cycle";
+import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "VisualizarRutina",
@@ -202,6 +204,7 @@ export default {
         name: 'far fa-futbol',
         value: false
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
+      sections_id: [],
       sections: [],
     }
   },
@@ -223,6 +226,23 @@ export default {
       this.rating = data.rating;
       this.reviews = data.reviews;
       console.log(this.rating)
+    },
+    async fillCycle(index , cycleId ){
+      const exercises = await ExercisesApi.getExerciseFromCycle( this.id , cycleId , null );
+      console.log("got exercises");
+      console.log(exercises);
+      for ( let i = 0 ; i<exercises.length; i++){
+        this.sections[index].exercises.push( exercises[i]);
+      }
+    },
+    async updateCycles() {
+      const cycles = await CycleApi.getAllCycles(this.id, null);
+      console.log("got cycles");
+      console.log(cycles);
+      for ( let i = 0 ; i<cycles.length; i++){
+        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id});
+        await this.fillCycle( i , cycles[i].id );
+      }
     }
   },
   async created() {
@@ -233,13 +253,14 @@ export default {
       location.assign('/rutinas');
     }
     const result = await RoutineApi.getSingleRoutine(this.id, null);
-    if ( result.code ){
-      location.assign( '/rutinas');
+    if (result.code) {
+      location.assign('/rutinas');
     }
     this.nombre = result.name;
     this.descripcion = result.detail;
     this.creador = result.creator.username.toUpperCase();
     this.categories[0].value = result.level;
+    await this.updateCycles();
   }
 }
 

@@ -56,7 +56,12 @@ class ExercisesApi {
         if ( result.code ){
             return result;
         }
-        return result.results;
+        let vec = [];
+        for ( let i = 0 ; i < result.results.length ; i++){
+            console.log("pushing");
+            vec.push(new Exercise(result.results[i].name , result.results[i].id, result.results[i].detail , result.results[i].type));
+        }
+        return vec;
     }
     static async getByType( type , controller){
         if ( !string_type.includes(type)) {
