@@ -278,6 +278,14 @@ export default {
         this.creador = result.creator.username.toUpperCase();
         this.categories[0].value = result.level;
         await this.updateCycles();
+      }else{
+      this.sections = [{
+          name: 'warmup', series: 1, exercises: []
+        }, {
+          name: 'exercise', series: 1, exercises: []
+        }, {
+          name: 'cooldown', series: 1, exercises: []
+        },];
       }
     }
 }
