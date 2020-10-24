@@ -23,13 +23,6 @@ class Builder {
             "name": "Master",
             "detail": "Master"
         };
-        const cycleData = {
-            "name": "Master",
-            "detail": "Master",
-            "type": "warmup",
-            "order": 2,
-            "repetitions": 1
-        };
         const data = {
             "name": "Master",
             "detail": "Master",
@@ -42,64 +35,51 @@ class Builder {
         const data1 = {
             "name": "Biceps",
             "detail": "Biceps",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
+            "type": "warmup",
+            "order": 1,
+            "repetitions": 1
         };
 
         const data2 = {
             "name": "Triceps",
             "detail": "Triceps",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
+             "type": "warmup",
+             "order": 2,
+             "repetitions": 1
         };
 
         const data3 = {
             "name": "Pecho",
             "detail": "Pecho",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
+            "type": "warmup",
+            "order": 3,
+            "repetitions": 1
         };
 
         const data4 = {
             "name": "Espalda",
             "detail": "Espalda",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
-        };
+            "type": "warmup",
+            "order": 4,
+            "repetitions": 1
+    };
 
         const data5 = {
             "name": "Abdominales",
             "detail": "Abdominales",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
+            "type": "warmup",
+            "order": 5,
+            "repetitions": 1
         };
 
         const data6 = {
             "name": "piernas",
             "detail": "piernas",
-            "isPublic": true,
-            "difficulty": "rookie",
-            "category": {
-                "id": 1
-            }
+            "type": "warmup",
+            "order": 6,
+            "repetitions": 1
         };
         const vec = [];
-        vec.push(data);
         vec.push(data1);
         vec.push(data2);
         vec.push(data3);
@@ -108,11 +88,12 @@ class Builder {
         vec.push(data6);
         console.log("new category");
         await Api.post(Api.baseUrl + '/categories', true, categoryData, null);
-        for (let i = 0; i < vec.length; i++) {
-            console.log("new routine");
-            await Api.post(RoutineApi.url, true, vec[i], null);
+        console.log("new routine");
+        await Api.post(RoutineApi.url, true, data, null);
+
+        for ( let i = 0 ; i < vec.length ; i++ ) {
             console.log("new cycle");
-            await Api.post(RoutineApi.url + '/' + (i + 1) + '/cycles', true, cycleData, null);
+            await Api.post(RoutineApi.url + '/1/cycles', true, vec[i] , null);
         }
     }
 }

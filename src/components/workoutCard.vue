@@ -47,7 +47,7 @@
       <v-icon color="black">mdi-pencil</v-icon>
     </v-btn>
 
-    <v-btn v-on:click="deleteRoutine" large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;">
+    <v-btn v-on:click="deleteRoutine" large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;" v-if="routine.isOwner">
       <v-icon color="black">mdi-trash-can-outline</v-icon>
     </v-btn>
   </v-card>

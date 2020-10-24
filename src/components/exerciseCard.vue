@@ -19,7 +19,7 @@ import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "exerciseCard",
-  props: ["exercise_object"],
+  props: ["exercise_object" , "type"],
   data(){
     return {
       title: 'EDITAR EJERCICIO',
@@ -31,10 +31,10 @@ export default {
       location.assign(path);
     },
     async deleteExercise(){
-      const result = await ExercisesApi.deleteMasterExercise(this.exercise_object.id , null);
+      const result = await ExercisesApi.deleteMasterExercise(this.exercise_object.id , this.type,null);
       console.log(result);
       if ( !result.code){
-        location.assign("/ejercicios");
+        //location.assign("/ejercicios");
       }else{
         console.log("ERROR");
       }

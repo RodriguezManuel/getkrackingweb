@@ -1,19 +1,16 @@
 import { Api } from './api.js';
 
 
-const string_type= [ 'Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos' ];
+const string_type= [ 'Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'];
 
 
 let tipos= {};
-tipos[string_type[0]] = 2;
-tipos[string_type[1]] = 3;
-tipos[string_type[2]] = 4;
-tipos[string_type[3]] = 5;
-tipos[string_type[4]] = 6;
-tipos[string_type[5]] = 7;
-tipos[string_type[6]] = 1;
-
-
+tipos[string_type[0]] = 1;
+tipos[string_type[1]] = 2;
+tipos[string_type[2]] = 3;
+tipos[string_type[3]] = 4;
+tipos[string_type[4]] = 5;
+tipos[string_type[5]] = 6;
 
 class Exercise{
     constructor(name , detail , id) {
@@ -27,37 +24,54 @@ class ExercisesApi {
         return Api.baseUrl;
     }
     //getters
-    static async getFromDefaultRutine( type ,controller) {
-        return await Api.get(Api.baseUrl + '/routines/' + tipos[type] + '/cycles/' + tipos[type] +'/exercises?page=0&size=99&orderBy=id&direction=asc', true, controller);
-    }
-    static async getByType( type , controller ){
-        console.log("getting routine type:" + type);
-        if ( !string_type.includes(type)){
-            return []
+    static async getExerciseFromCycle( routineId , cycle_id , controller) {
+        const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc' , true , controller);
+        if ( result.code ){
+            console.log("get from exercises got error")
+            return result;
         }
-        console.log("with the id: " + tipos[type]);
-        const result = await ExercisesApi.getFromDefaultRutine(type , controller);
-        if (result.code) {
-            console.log("ERROR");
-        } else {
-            let vector = [];
-            let aux;
-            for (let i = 0; i < result.results.length; i++) {
-                aux = new Exercise(result.results[i].name , result.results[i].detail , result.results[i].id);
-                vector.push(aux);
+        console.log(result);
+        return result.results;
+    }
+    static async getByType( type , controller){
+        if ( !string_type.includes(type)) {
+            return {
+                code: 1,
+                detail: "type doesnt exist"
             }
-            return vector;
         }
+        let vec = [];
+        let result = await this.getExerciseFromCycle( 1 , tipos[type] , controller)
+        if ( result.code){
+            return result;
+        }
+        for ( let i = 0 ; i < result.length ; i++){
+            vec.push(new Exercise(result[i].name , result[i].detail, result[i].id) );
+        }
+        return vec;
     }
-
-    static async getExercises( controller) {
-        return this.getByType('Todos' , controller);
+    static async getMasterExercises( controller ){
+        let result;
+        let j , i;
+        let final = [];
+        for(  i = 1 ; i < 7; i++){
+            result = await this.getExerciseFromCycle(1 , i , controller);
+            console.log("from cycle got:");
+            console.log(result);
+            if ( result.code ){
+                return result;
+            }
+            for ( j = 0 ; j < result.length ; j++ ){
+                final.push(new Exercise(result[j].name , result[j].detail , result[j].id));
+            }
+        }
+        return final;
     }
     //Posters
     static async addExercise(data, id , cycle_id , controller){
         console.log("Adding to rutine id: " + id);
         console.log("Addint to cycle_id: " + cycle_id);
-        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises';
+        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc';
         const send = {
             'name': data.name,
             'detail': data.detail,
@@ -71,14 +85,8 @@ class ExercisesApi {
         if ( !string_type.includes(data.type)){
             return [];
         }
-        let routineId = tipos[data.type];
-        if( routineId !== 1) {
-            let result = await this.addExercise(data ,routineId , routineId ,controller);
-            if (result.code) {
-                return result;
-            }
-        }
-        return this.addExercise( data , 1 , 1 ,controller);
+        let cycle_id = tipos[data.type];
+        return  await this.addExercise(data ,1 , cycle_id ,controller);
     }
     //Editers
     static async editMasterExercise( data , controller){
@@ -94,17 +102,18 @@ class ExercisesApi {
     }
     //Deleters
     static async deleteExercise( routineId , cycleId , exerciseId, controller){
-        const path =  Api.baseUrl + '/routines/' + routineId + '/cycle/' + cycleId + '/exercises/' + exerciseId;
+        const path =  Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycleId + '/exercises/' + exerciseId;
         return Api.delete(path , true , controller);
     }
     static async deleteMasterExercise( id , type , controller){
-        if ( !string_type.includes(type)){
-            return []
+        if ( !string_type.includes(type)) {
+            return {
+                code: 1,
+                detail: "type doesnt exist"
+            }
         }
-        const result = this.deleteExercise( tipos[type] , tipos[type] , id , controller );
-        if ( result.code ){
-            return result;
-        }
+        console.log("getting exercise: " + type);
+
         return this.deleteExercise( 1 , 1 , id , controller);
     }
 }
