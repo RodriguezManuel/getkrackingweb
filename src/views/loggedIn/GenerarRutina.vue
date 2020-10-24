@@ -3,7 +3,7 @@
 
     <side-bar/>
     <top-bar/>
-    <editar-rutina-comp titulo="NUEVA RUTINA" :id="id" />
+    <editar-rutina-comp titulo="NUEVA RUTINA" :id="this.id" />
   </div>
 </template>
 

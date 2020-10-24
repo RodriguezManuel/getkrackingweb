@@ -13,20 +13,21 @@
           </v-col>
           <v-col>
             <div>
-<v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()"
-                            label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>            </div>
+              <v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()"
+                            label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
+            </div>
           </v-col>
         </v-row>
       </v-card>
 
       <div class="text-center my-15" v-if="loading">
         <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
-            indeterminate
-            color="primary"/>
+                             indeterminate
+                             color="primary"/>
       </div>
       <v-row class="my-10" justify="space-around" v-else>
-        <v-col  v-for="n in exercises.length" :key="n">
-          <exercise-card  :exercise_object='exercises[n-1]' :type="categorySelected" class="mx-auto"/>
+        <v-col v-for="n in exercises.length" :key="n">
+          <exercise-card :exercise_object='exercises[n-1]' :type="categorySelected" class="mx-auto"/>
         </v-col>
       </v-row>
 
@@ -41,7 +42,7 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import ExerciseCard from "@/components/exerciseCard";
-import { ExercisesApi } from "@/api/exercises";
+import {ExercisesApi} from "@/api/exercises";
 import BotonGenerar from "@/components/BotonGenerar";
 
 export default {
@@ -59,35 +60,30 @@ export default {
   },
   methods: {
     async changeExercises() {
-      console.log('Old exercises: ' + this.exercises);
       if (this.categorySelected === this.categories[6]) {
-        console.log("Estoy en todos");
         this.exercises = await ExercisesApi.getMasterExercises(null);
-      } else{
+      } else {
         this.exercises = await ExercisesApi.getByType(this.categorySelected, null);
-    }
-      console.log('New exercises: ');
-      console.log(this.exercises);
+      }
     },
     search() {
-        let vector = [];
-        for (let i = 0; i < this.exercises.length; i++) {
-          if ((this.exercises[i].name).includes(this.searchTerm)) {
-            vector.push(this.exercises[i]);
-          }
+      let vector = [];
+      for (let i = 0; i < this.exercises.length; i++) {
+        if ((this.exercises[i].name).includes(this.searchTerm)) {
+          vector.push(this.exercises[i]);
         }
-        this.exercises = vector;
-      },
+      }
+      this.exercises = vector;
+    },
     async reset() {
-      this.loading=true;
+      this.loading = true;
       this.exercises = await ExercisesApi.getMasterExercises(null);
-      this.loading=false;
+      this.loading = false;
     },
   },
-  async created()  {
+  async created() {
     this.exercises = await ExercisesApi.getMasterExercises(null);
     console.log(this.exercises);
-    console.log('created');
     this.loading = false;
   },
 }
@@ -101,6 +97,6 @@ export default {
 
 .opciones {
   font-size: 20px;
-  font-family: NotoSans-Regular,sans-serif;
+  font-family: NotoSans-Regular, sans-serif;
 }
 </style>

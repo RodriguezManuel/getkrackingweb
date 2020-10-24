@@ -22,6 +22,7 @@
                   <v-text-field type="number" min="1" v-model="duracion" outlined
                                 :rules="[rules.required(duracion), rules.valorMIN(duracion)]"/>
                 </div>
+
               </v-row>
             </div>
             <v-row class="ml-15">
@@ -76,6 +77,12 @@
             <v-row justify="space-around" class="mt-6">
               <v-btn width="300px" height="60px" class="CustomButton rounded-pill" to="/rutinas">Eliminar</v-btn>
             </v-row>
+
+            <v-row class="my-15" justify="center" v-if="loading">
+              <v-progress-circular size="80" width="15" style="position: relative; top: 40%"
+                                   indeterminate
+                                   color="primary"/>
+            </v-row>
           </v-col>
         </v-row>
 
@@ -88,9 +95,16 @@
             <v-col>
               <v-row>
                 <v-col>
+                  <!--                  Condicion de que la rutina no sea una nueva y la seccion no haya sido ya limpiada-->
+                  <v-btn v-if="id !== 0 && !section.cleaned"
+                         @click="cleanSection(section)"
+                         class="ml-3 my-auto CustomButton rounded-pill">
+                    Limpiar seccion
+                  </v-btn>
+
+                  <!-- solo se pueden remover las secciones exercise agregadas(arrancan desde el indice 2) que ya fueron limpiadas-->
                   <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6"
-                         v-if="section.name === 'exercise' && index !== 1">
-                    <!--                      solo se pueden remover las secciones exercise agregadas(arrancan desde el indice 2)-->
+                         v-else-if="section.name === 'exercise' && index !== 1">
                     <v-icon size="45" color="gray">mdi-delete</v-icon>
                   </v-btn>
                 </v-col>
@@ -123,7 +137,7 @@
             </v-col>
 
             <v-col>
-              <popup-add-exercise class="mt-9" :added-exercises="section.exercises"/>
+              <popup-add-exercise class="mt-9" :added-exercises="section.exercises" v-if="section.cleaned"/>
             </v-col>
 
           </v-row>
@@ -192,6 +206,7 @@ export default {
   props: ['titulo', 'id'],
   data() {
     return {
+      loading: true,
       nombre: '',
       descripcion: '',
       duracion: 5,
@@ -213,7 +228,7 @@ export default {
   },
   methods: {
     addSection() {
-      this.sections.splice(this.sections.length - 1, 0, {name: 'exercise', series: 1, exercises: []});
+      this.sections.splice(this.sections.length - 1, 0, {name: 'exercise', series: 1, exercises: [], cleaned: true});
       // agrego la seccion exercise antes de cooldown
     },
     removeSection(section, sections) {
@@ -223,6 +238,14 @@ export default {
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
     },
+    cleanSection(section) {
+      section.cleaned = true;
+      CycleApi.deleteAllCycles(this.id, section.id, null);
+      let length = section.exercises.length;
+      for (let i = 0; i < length; i++) {
+        section.exercises.pop();
+      }
+    },
     async generateRoutine() {
       if (this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true || this.rules.counterMIN(this.nombre) !== true
           || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true || this.rules.counterMIN(this.descripcion) !== true
@@ -230,8 +253,14 @@ export default {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
-      console.log(this.categories[0].value);
-      const id = await RoutineApi.newRoutine(this.nombre, this.descripcion, this.categories[0].value, null);
+      this.loading = true;
+      let id;
+      if( this.id === 0 ) {
+        id = await RoutineApi.newRoutine(this.nombre, this.descripcion, this.categories[0].value, null);
+      }else{
+        await CycleApi.deleteAllCycles(this.id, null);
+        id = this.id;
+      }
       let cycle_id;
       let i, j;
       let data_exercise = {
@@ -243,10 +272,10 @@ export default {
         for (j = 0; j < this.sections[i].exercises.length; j++) {
           data_exercise.name = this.sections[i].exercises[j].name;
           data_exercise.detail = this.sections[i].exercises[j].detail;
-          console.log('Adding exercise: ' + data_exercise.name + ' With details: ' + data_exercise.detail);
           await ExercisesApi.addExercise(data_exercise, id, cycle_id, null);
         }
       }
+      this.loading = false;
       location.assign('/rutinas');
     },
     async fillCycle(index , cycleId ){
@@ -257,37 +286,38 @@ export default {
     },
     async updateCycles() {
       const cycles = await CycleApi.getAllCycles(this.id, null);
-      for ( let i = 0 ; i<cycles.length; i++){
-        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id , flag: false});
+      for ( let i = 0 ; i < cycles.length; i++){
+        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id , cleaned: false});
         await this.fillCycle( i , cycles[i].id );
       }
     },
   },
-    async created() {
-      if (this.id !== 0) {
-        this.id = this.$route.params.id;
-        if (this.id === 1) {
-          location.assign('/rutinas');
-        }
-        const result = await RoutineApi.getSingleRoutine(this.id, null);
-        if (result.code) {
-          location.assign('/rutinas');
-        }
-        this.nombre = result.name;
-        this.descripcion = result.detail;
-        this.creador = result.creator.username.toUpperCase();
-        this.categories[0].value = result.level;
-        await this.updateCycles();
-      }else{
-      this.sections = [{
-          name: 'warmup', series: 1, exercises: []
-        }, {
-          name: 'exercise', series: 1, exercises: []
-        }, {
-          name: 'cooldown', series: 1, exercises: []
-        },];
+  async created() {
+    if (this.id !== 0) {
+      this.id = this.$route.params.id;
+      if (this.id === 1) {
+        location.assign('/rutinas');
       }
+      const result = await RoutineApi.getSingleRoutine(this.id, null);
+      if (result.code) {
+        location.assign('/rutinas');
+      }
+      this.nombre = result.name;
+      this.descripcion = result.detail;
+      this.creador = result.creator.username.toUpperCase();
+      this.categories[0].value = result.level;
+      await this.updateCycles();
+    }else{
+      this.sections = [{
+        name: 'warmup', series: 1, exercises: [], cleaned: true
+      }, {
+        name: 'exercise', series: 1, exercises: [], cleaned: true
+      }, {
+        name: 'cooldown', series: 1, exercises: [], cleaned: true
+      },];
     }
+    this.loading = false;
+  }
 }
 </script>
 
@@ -320,16 +350,6 @@ export default {
   font-family: NotoSans-Regular, sans-serif;
   color: #8B8686;
   font-size: 28px;
-}
-
-.textoFoto {
-  font-family: NotoSans-Regular, sans-serif;
-  color: #8B8686;
-  font-size: 28px;
-  text-decoration: underline;
-  text-align: center;
-  position: relative;
-  top: 45%;
 }
 
 .textoSecciones {
