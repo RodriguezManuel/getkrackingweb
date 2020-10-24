@@ -28,7 +28,6 @@ class RoutineApi {
     static isFav(routineid, favs){
         for ( let i = 0 ; i < favs.length; i++){
             if ( routineid === favs[i].id){
-                console.log("match!");
                 return true;
             }
         }
@@ -39,22 +38,24 @@ class RoutineApi {
         let vector = [];
         for(var i = 0; i < string_level.length; i++){
             for(var j = 0; j < allRoutines.length; j++){
-                if(allRoutines[j].difficulty == string_level[i]){
-                    vector.push(allRoutines[i]);
+                if(allRoutines[j].level === i +1){
+                    vector.push(allRoutines[j]);
                 }
             }
         }
+        return vector;
     }
 
     static difiDescending(allRoutines){
         let vector= [];
-        for(var i = string_level.length; i >= 0; i--){
+        for(var i = string_level.length -1; i >= 0; i--){
             for(var j = 0; j < allRoutines.length; j++){
-                if(allRoutines[j].difficulty == string_level[i]){
-                    vector.push(allRoutines[i]);
+                if(allRoutines[j].level === i +1){
+                    vector.push(allRoutines[j]);
                 }
             }
         }
+        return vector;
     }
 
 
@@ -115,7 +116,6 @@ class RoutineApi {
         const result = await Api.get(this.url+ '/' + id ,true , null);
         const myInfo = await UserApi.getUserData();
         if ( result.creator.id === myInfo.id) {
-            console.log("tryna delete");
             await CycleApi.deleteAllCycles(id , controller);
             return await Api.delete(this.url + '/' + id, true, controller);
         }

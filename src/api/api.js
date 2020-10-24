@@ -34,7 +34,7 @@ class Api {
       return result;
     } catch (error) {
       if (!error.code) {
-        const error = { "code": 99, "description": error.message.toLowerCase() };
+        return { "code": 99, "description": error.message.toLowerCase() };
       }
       //throw error;
       return error;

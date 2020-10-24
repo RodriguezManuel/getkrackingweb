@@ -74,37 +74,29 @@ export default {
       difi:'',
     }
   },
-  computed: {
-    filteredRoutines: function (){
-      return this.rutinas.filter((rutina) => {
-        return rutina.name.toLocaleLowerCase().match(this.search.toLowerCase());
-      })
-    }
-  },
   methods: {
     sortByType(){
       let vector = [];
       for(let i = 0; i < this.allRoutines.length; i++){
-        if(this.allRoutines[i].fav && this.type == 'Favoritas'){
+        if(this.allRoutines[i].fav && this.type === 'Favoritas'){
           vector.push(this.allRoutines[i]);
         }
-        else if(this.allRoutines[i].isOwner && this.type == 'Propias'){
+        else if(this.allRoutines[i].isOwner && this.type === 'Propias'){
           vector.push(this.allRoutines[i]);
         }
           
-        else if(this.type == 'Generales'){ //quiero todas
+        else if(this.type === 'Generales'){ //quiero todas
           vector.push(this.allRoutines[i]);
         }
       }
-      console.log(vector);
       this.routines = vector;
     },
 
     sortByDifi(){
-      if(this.difi == 'Ascendente'){
+      if(this.difi === 'Ascendente'){
         this.routines = RoutineApi.difiAscending(this.allRoutines);
       }
-      else if(this.difi == 'Descendente'){
+      else if(this.difi === 'Descendente'){
         this.routines = RoutineApi.difiDescending(this.allRoutines);
       }
       else {
