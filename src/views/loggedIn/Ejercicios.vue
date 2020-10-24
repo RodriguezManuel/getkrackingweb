@@ -10,11 +10,6 @@
           <v-col class="ml-4">
             <v-select v-on:input="changeExercises()" :items="categories" label="Categorias" v-model="categorySelected" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
-
-          <v-col>
-            <v-select :items="intensidad" label="Intensidad" solo flat append-icon="mdi-menu-swap" class="opciones"/>
-          </v-col>
-
           <v-col>
             <div>
               <v-text-field v-model="search" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
@@ -57,8 +52,8 @@ export default {
       exercises: [],
       categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       categorySelected: 'Todos',
-      intensidad: ['Sin orden', 'Ascendente', 'Descendente'],
       search: '',
+      insensi: 0,
     }
   },
   methods: {
@@ -73,7 +68,7 @@ export default {
       console.log('New exercises: ');
       console.log(this.exercises);
     }
-  },
+  },    
   async created()  {
     this.exercises = await ExercisesApi.getMasterExercises(null);
     console.log(this.exercises);

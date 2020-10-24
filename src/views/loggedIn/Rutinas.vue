@@ -8,19 +8,12 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select v-on:input="sortByType()" :items="tipos" label="Tipo" v-model="type" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select v-on:input="sortByType()" :items="tipos" label="Tipo" v-model="type" solo flat append-icon="mdi-menu-down" class="opciones"/>
           </v-col>
 
           <v-col>
-            <v-select v-on:input="sortByDifi()" :items="dificultad" label="Dificultad" v-model="difi" solo flat append-icon="mdi-menu-swap" class="opciones"/>
-          </v-col>
-
-          <v-col>
-            <v-select :items="flexibilidad" label="Flexibilidad" solo flat append-icon="mdi-menu-swap" class="opciones"/>
-          </v-col>
-
-          <v-col>
-            <v-select :items="categoria" label="Categoria" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <!-- v-select v-on:input="sortByDifi()" :items="dificultad" label="Dificultad" v-model="difi" solo flat append-icon="mdi-menu-swap" class="opciones"/ -->
+            <div class="opciones" style="center;" solo flat v-on:click="sortByDifi()">Dificultad <v-icon>{{dificultad[difi%3].icon}}</v-icon> </div>
           </v-col>
 
           <v-col>
@@ -65,13 +58,11 @@ export default {
       routines: [],
       allRoutines:[],
       type:'',
-      tipos: ['Propias', 'Generales', 'Favoritas'],
-      dificultad: ['Sin orden', 'Ascendente', 'Descendente'],
+      tipos: ['Propias', 'Todas', 'Favoritas'],
+      dificultad: [{icon: 'mdi-menu-swap', label: "Sin orden"}, {icon: 'mdi-menu-up', label: "Descendente"}, {icon: 'mdi-menu-down', label: "Ascendente"}],
       puntuacion: ['5', '4', '3', '2', '1'],
-      flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
-      categoria: ['Favoritos', 'No favoritos', 'Todos'],
       searchTerm: '',
-      difi:'',
+      difi:0,
     }
   },
   methods: {
@@ -85,7 +76,7 @@ export default {
           vector.push(this.allRoutines[i]);
         }
           
-        else if(this.type === 'Generales'){ //quiero todas
+        else if(this.type === 'Todas'){ //quiero todas
           vector.push(this.allRoutines[i]);
         }
       }
@@ -93,15 +84,16 @@ export default {
     },
 
     sortByDifi(){
-      if(this.difi === 'Ascendente'){
+      if(this.dificultad[this.difi%3].label === 'Ascendente'){
         this.routines = RoutineApi.difiAscending(this.allRoutines);
       }
-      else if(this.difi === 'Descendente'){
+      else if(this.dificultad[this.difi%3].label === 'Descendente'){
         this.routines = RoutineApi.difiDescending(this.allRoutines);
       }
       else {
         this.routines = this.allRoutines;
       }
+      this.difi++;
     },
 
     search(){
