@@ -56,9 +56,7 @@
             <v-col cols="4">
               <v-row justify="space-around">
                 <v-card style="height: 240px; width: 290px" outlined>
-                  <div v-if="foto === false" style="height: 100%">
-                  </div>
-                  <v-img height="100%" width="100%" v-else
+                  <v-img height="100%" width="100%"
                          src="../../assets/images/workout.png"/>
                 </v-card>
               </v-row>
@@ -71,6 +69,19 @@
                 <v-btn width="300px" height="60px" class="CustomButton rounded-pill" @click="$router.go(-1)">
                   Volver
                 </v-btn>
+              </v-row>
+              <v-row justify="center" class="mt-12">
+                <p class="textoCaracteristicas">Mi puntuacion:</p>
+              </v-row>
+              <v-row justify="center" class="mt-2">
+                <a v-for="n in 10" :key="n">
+                  <v-icon medium v-if="n <= myRating" color="primary" @click="myRating = n">
+                    fas fa-star
+                  </v-icon>
+                  <v-icon medium v-else color="gray darken-2" @click="myRating = n">
+                    far fa-star
+                  </v-icon>
+                </a>
               </v-row>
             </v-col>
           </v-row>
@@ -151,6 +162,7 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
+import '@fortawesome/fontawesome-free/css/all.css'
 
 export default {
   name: "VisualizarRutina",
@@ -161,6 +173,8 @@ export default {
       nombre: '',
       descripcion: '',
       duracion: 5,
+      myRating: 7,
+      rating: 5,
       foto: false,
       categories: [{name: 'Dificultad', value: 3}, {name: 'Flexibilidad', value: 3},
         {name: 'Resistencia', value: 3}, {name: 'Fuerza', value: 3,}],
