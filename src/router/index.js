@@ -70,6 +70,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
     },
     {
+        path: '/editar_rutina/:id',
+        name: 'EditarRutina',
+        component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/EditarRutina.vue')
+    },
+    {
         path: '/visualizar_rutina/:id',
         name: 'VisualizarRutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/VisualizarRutina.vue')
