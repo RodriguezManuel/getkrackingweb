@@ -27,6 +27,7 @@ class UserApi {
         sessionStorage.setItem('token', result.token);
         return result;
     }
+
     static async verify(v, controller){
         const result = await Api.post(`${UserApi.url}/verify_email`, false, v, controller);
         sessionStorage.setItem('token', result.token);
@@ -41,17 +42,24 @@ class UserApi {
         Api.token = undefined;
         sessionStorage.setItem('token', Api.token);
     }
+
     static async getUserData(controller){
         return await Api.get( UserApi.url + '/current' , true , controller);
     }
+
     static async resend(email, controller){
         let aux = {email: email};
         await Api.post(`${UserApi.url}/resend_verification`, false, aux, controller);
     }
 
     static async update(data, controller){
-        console.log(data);
-        await Api.put(`${UserApi.url}/current`, true, data, controller);
+        try {
+            await Api.put(UserApi.url + '/current', true, data, controller);
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false
+        }
     }
 }
 
@@ -67,15 +75,15 @@ class ToVerify{
         this.code = code;
     }
 }
+
 class AllData{
     constructor(username, fullName, birthdate, email, avatarURL){
-        const userData = UserApi.getUserData(null);
         this.username = username;
         this.fullName = fullName;
-        this.gender = userData.gender;
+        this.gender = "other";
         this.birthdate = birthdate;
-        this.email = email
-        this.phone= userData.phone;
-        this.avatarURL = avatarURL;
+        this.email = email;
+        this.phone = "03034568";
+        this.avatarUrl = avatarURL;
     }
 }

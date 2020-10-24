@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="950px">
+  <v-dialog v-model="dialog" persistent width="950px">
     <template v-slot:activator="{ on, attrs }">
       <v-icon size="62" color="#8B8686" slot="activator" v-bind="attrs" v-on="on">
         mdi-pencil-circle
       </v-icon>
     </template>
-    <v-card style="border-radius: 20px;">
+    <v-card style="border-radius: 20px; max-width: 950px">
       <v-card-title>
         <p class="texto mt-3 mx-auto" style="text-align: center">URL de imagen</p>
       </v-card-title>

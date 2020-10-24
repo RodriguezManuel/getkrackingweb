@@ -58,7 +58,6 @@ export default {
     return{
       nombre: '',
       avatarURL:'',
-      userInfo:'',
     }
   },
   computed: {
@@ -67,9 +66,9 @@ export default {
     },
   },
   async mounted(){
-    this.userInfo = await UserApi.getUserData(null);
-    this.nombre = this.userInfo.fullName;
-    this.avatarURL = this.userInfo.avatarUrl;
+    let userInfo = await UserApi.getUserData(null);
+    this.nombre = userInfo.fullName;
+    this.avatarURL = userInfo.avatarUrl;
   }
 }
 </script>

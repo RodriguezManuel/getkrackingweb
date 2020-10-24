@@ -11,12 +11,27 @@
           </v-avatar>
         </v-row>
         <v-row justify="center">
-          <PopupEditImage :images="this.images"/>
+          <v-col cols="2">
+            <p class="texto mt-9  " style="text-align: center">Imagen</p>
+          </v-col>
+          <v-col cols="8">
+            <v-row>
+              <div style="width: 650px">
+                <v-text-field v-model="image" outlined class="texto mt-7"
+                              rounded background-color="#F7F2F2" :disabled="(editImage !== true)"
+                              :rules="[rules.validateURL(image)]"/>
+              </div>
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+                      @click="editImage = !editImage">
+                mdi-pencil
+              </v-icon>
+            </v-row>
+          </v-col>
         </v-row>
 
-        <v-row justify="center" class="mt-6">
+        <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-6" style="text-align: center">Nombre</p>
+            <p class="texto mt-2" style="text-align: center">Nombre</p>
           </v-col>
           <v-col cols="8">
             <v-row>
@@ -37,13 +52,13 @@
 
         <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-6" style="text-align: center">Username</p>
+            <p class="texto mt-2" style="text-align: center">Username</p>
           </v-col>
           <v-col cols="8">
             <v-row>
               <div style="width: 650px">
                 <v-text-field v-model="username" outlined class="texto"
-                              :disabled="(editUsername !== true)" prepend-icon=""
+                              :disabled="(editUsername !== true)"
                               :rules="[rules.required(username), rules.counterMIN(username),rules.counterNameMAX(username)]"
                               rounded background-color="#F7F2F2"/>
               </div>
@@ -101,25 +116,6 @@
           </v-col>
         </v-row>
 
-        <v-row justify="center" v-if="saveChanges">
-          <v-col cols="2">
-            <p class="texto mt-2" style="text-align: center">Validar contraseña</p>
-          </v-col>
-          <v-col cols="8">
-            <v-row>
-              <div style="width: 650px">
-                <v-text-field v-model="password" outlined class="texto"
-                              :type="(visibility === false)? 'password':'text'"
-                              placeholder="Ingrese su contraseña para continuar"
-                              :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
-                              rounded background-color="#F7F2F2"
-                              :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
-                              @click:append="visibility = !visibility" v-on:keydown.enter="update()"/>
-              </div>
-            </v-row>
-          </v-col>
-        </v-row>
-
         <div style="text-align: center;" class="my-8">
           <v-btn v-on:click="update()" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
@@ -143,11 +139,10 @@
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
 import {UserApi, AllData} from "@/api/user";
-import PopupEditImage from "@/components/PopupEditImage";
 
 export default {
   name: "Perfil",
-  components: {PopupEditImage, SideBar, TopBar},
+  components: {SideBar, TopBar},
   data() {
     return {
       nombre: '',
@@ -156,18 +151,19 @@ export default {
       editUsername: false,
       email: '',
       editEmail: false,
-      password: '',
-      visibility: false,
-      date: new Date().toISOString().substr(0, 10),
+      date: null,
       menu: false,
-      saveChanges: false, //lo prendo cuando toco el boton de guardar cambios, hace que aparezca el campo contraseña
-      userInfo: '',
-      images: [this.image], //lo guardo como puntero asi el hijo lo puede modificar
+      image: null,
+      editImage: false,
       rules: {
         required: value => !!value || 'Requerido.',
         counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
         counterNameMAX: value => value.length < 30 || 'Inserte menos de 30 caracteres.',
+        validateURL: value => {
+          const regex = RegExp('(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$', 'i');
+          return regex.test(value);
+        },
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'
@@ -177,28 +173,28 @@ export default {
   },
   methods: {
     async update() {
-      if (!this.saveChanges) {
-        this.saveChanges = true;
-        return;
+      try {
+        const data = await new AllData(this.username, this.nombre, Date.parse(this.date), this.email, this.image);
+        await UserApi.update(data, null);
+        return true;
+      } catch (error) {
+        return false
       }
-
-      // ESPACIO DONDE SE VALIDARIA QUE LA CONSTRASENIA SEA LA CORRECTA
-
-      const data = new AllData(this.username, this.nombre, this.date, this.email, this.images[0]);
-      await UserApi.update(data, null);
     },
   },
   computed: {
     avatarURLFUNC() {
-      return this.images[0];
+      return this.image;
     },
   },
   async mounted() {
-    this.userInfo = await UserApi.getUserData(null);
-    this.images[0] = this.userInfo.avatarUrl;
-    this.nombre = this.userInfo.fullName;
-    this.username = this.userInfo.username;
-    this.email = this.userInfo.email;
+    let userInfo = await UserApi.getUserData(null);
+    let dateObj = new Date(userInfo.birthdate);
+    this.date = dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1) + '-' + dateObj.getUTCDate();
+    this.image = userInfo.avatarUrl;
+    this.nombre = userInfo.fullName;
+    this.username = userInfo.username;
+    this.email = userInfo.email;
   }
 }
 </script>
