@@ -151,7 +151,7 @@ class RoutineApi {
             return self;
         }
         let favourites = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
-        let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
+        let routines = await Api.get(this.url+ '?page=0&size=999&orderBy=dateCreated&direction=asc', true, controller);
         routines = routines.results;
         let vector = [];
         let favFlag;
@@ -208,6 +208,10 @@ class RoutineApi {
             code: 1,
             detail: 'notYourRoutine'
         }
+    }
+    static async deleteRoutineUnsafe( id , controller) {
+        await CycleApi.deleteAllCycles(id, controller);
+        return await Api.delete(this.url + '/' + id, true, controller);
     }
     static async newRoutine( name , detail , dif , controller){
         const data = {

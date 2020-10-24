@@ -52,13 +52,12 @@ class ExercisesApi {
         return new Exercise(result.name , result.detail , result.id , cycle_id);
     }
     static async getExerciseFromCycle( routineId , cycle_id , controller) {
-        const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc' , true , controller);
+        const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises?page=0&size=999&orderBy=name&direction=asc' , true , controller);
         if ( result.code ){
             return result;
         }
         let vec = [];
         for ( let i = 0 ; i < result.results.length ; i++){
-            console.log("pushing");
             vec.push(new Exercise(result.results[i].name , result.results[i].detail, result.results[i].id , result.results[i].type));
         }
         return vec;
