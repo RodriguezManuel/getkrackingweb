@@ -258,25 +258,27 @@ export default {
     async updateCycles() {
       const cycles = await CycleApi.getAllCycles(this.id, null);
       for ( let i = 0 ; i<cycles.length; i++){
-        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id});
+        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id , flag: false});
         await this.fillCycle( i , cycles[i].id );
       }
     },
   },
-    async created(){
-      this.id = this.$route.params.id;
-      if (this.id === 1) {
-        location.assign('/rutinas');
+    async created() {
+      if (this.id !== 0) {
+        this.id = this.$route.params.id;
+        if (this.id === 1) {
+          location.assign('/rutinas');
+        }
+        const result = await RoutineApi.getSingleRoutine(this.id, null);
+        if (result.code) {
+          location.assign('/rutinas');
+        }
+        this.nombre = result.name;
+        this.descripcion = result.detail;
+        this.creador = result.creator.username.toUpperCase();
+        this.categories[0].value = result.level;
+        await this.updateCycles();
       }
-      const result = await RoutineApi.getSingleRoutine(this.id, null);
-      if (result.code) {
-        location.assign('/rutinas');
-      }
-      this.nombre = result.name;
-      this.descripcion = result.detail;
-      this.creador = result.creator.username.toUpperCase();
-      this.categories[0].value = result.level;
-      await this.updateCycles();
     }
 }
 </script>

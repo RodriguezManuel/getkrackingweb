@@ -239,7 +239,7 @@ export default {
         this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id});
         await this.fillCycle( i , cycles[i].id );
       }
-    }
+    },
   },
   async created() {
     this.id = this.$route.params.id;
