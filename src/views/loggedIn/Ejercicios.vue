@@ -30,7 +30,7 @@
       </div>
       <v-row class="my-10" justify="space-around" v-else>
         <v-col  v-for="n in exercises.length" :key="n">
-          <exercise-card  :exercise_object='exercises[n-1]' class="mx-auto"/>
+          <exercise-card  :exercise_object='exercises[n-1]' :type="categorySelected" class="mx-auto"/>
         </v-col>
       </v-row>
 
@@ -62,14 +62,21 @@ export default {
     }
   },
   methods: {
-    async changeExercises(){
+    async changeExercises() {
       console.log('Old exercises: ' + this.exercises);
-      this.exercises = await ExercisesApi.getByType( this.categorySelected , null);
-      console.log('New exercises: ' + this.exercises);
+      if (this.categorySelected === this.categories[6]) {
+        console.log("Estoy en todos");
+        this.exercises = await ExercisesApi.getMasterExercises(null);
+      } else{
+        this.exercises = await ExercisesApi.getByType(this.categorySelected, null);
+    }
+      console.log('New exercises: ');
+      console.log(this.exercises);
     }
   },
   async created()  {
-    this.exercises = await ExercisesApi.getExercises(null);
+    this.exercises = await ExercisesApi.getMasterExercises(null);
+    console.log(this.exercises);
     this.loading = false;
   },
 
