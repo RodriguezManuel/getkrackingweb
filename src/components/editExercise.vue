@@ -7,20 +7,27 @@
 
     <v-card-text>
       <v-form class="mx-15">
-        <v-text-field v-model="name" class="texto mt-7" label="Nombre de ejercicio" height="60"
-                      :rules="[rules.required(name), rules.counterMAX(name)]"
-                      rounded background-color="white" hide-details="false"/>
-        <v-textarea label="Descripcion" v-model="descripcion" class="texto"
-                    auto-grow rounded background-color="white" height="150"
-                    :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
-                    prepend-icon="mdi-text-short" required text hide-details="false"/>
-
-        <div style="width: 300px;" class="mt-4">
-          <v-select :items="categories" label="Categoria" height="60" background-color="white"
-                    style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
-                    rounded v-model="categorieSelected" :disabled="type!==0"
-                    required/>
-        </div>
+        <v-row>
+          <v-text-field v-model="name" class="texto mt-7" label="Nombre de ejercicio" height="60"
+                        :rules="[rules.required(name), rules.counterMAX(name)]"
+                        rounded background-color="white" hide-details="false"/>
+          <v-icon small color="red">mdi-asterisk</v-icon>
+        </v-row>
+        <v-row>
+          <v-textarea label="Descripcion" v-model="descripcion" class="texto"
+                      auto-grow rounded background-color="white" height="150"
+                      :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
+                      prepend-icon="mdi-text-short" required text hide-details="false"/>
+          <v-icon small color="red" style="top: -60px">mdi-asterisk</v-icon>
+        </v-row>
+        <v-row>
+          <div style="width: 300px;" class="mt-4">
+            <v-select :items="categories" label="Categoria" height="60" background-color="white"
+                      style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
+                      rounded v-model="categorieSelected" :disabled="type !== 0"/>
+          </div>
+          <v-icon small color="red" style="top: -10px">mdi-asterisk</v-icon>
+        </v-row>
 
 
         <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton"
@@ -71,13 +78,6 @@
             <v-icon>mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
-        </v-row>
-        <v-row justify="center">
-          <div style="height: 50px">
-            <p class="mensajeError" v-if="incompleteFlag">
-              Faltan completar datos
-            </p>
-          </div>
         </v-row>
       </v-form>
     </v-card-text>
@@ -200,12 +200,6 @@ export default {
   font-family: NotoSans-Regular, sans-serif;
   font-size: 26px;
   color: #8B8686;
-}
-
-.mensajeError {
-  font-family: NotoSans-Regular, sans-serif;
-  font-size: 26px;
-  color: red;
 }
 
 .CustomButton {

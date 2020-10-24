@@ -26,24 +26,29 @@
                       <p id="registerTitle">
                         Registrate!
                       </p>
-
-                      <v-text-field solo type="text" v-model="username"
-                                    :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
-                                    placeholder="Nombre de usuario" size="27%" outlined
-                                    style="font-size: 18px;"/>
-
-                      <v-text-field v-model="email" :rules="[rules.required(email), rules.email(email)]" solo
-                                    type="text"
-                                    placeholder="Email" size="27%" outlined
-                                    style="font-size: 18px;"/>
-
-                      <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
-                                    :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
-                                    placeholder="Contraseña" v-on:keydown.enter="register"
-                                    size="24%" outlined style="font-size: 18px"
-                                    :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
-                                    @click:append="visibility = !visibility"/>
-
+                      <v-row>
+                        <v-text-field solo type="text" v-model="username"
+                                      :rules="[rules.required(username), rules.counterMAX(username), rules.counterMIN(username)]"
+                                      placeholder="Nombre de usuario" size="27%" outlined
+                                      style="font-size: 18px;"/>
+                        <v-icon small color="red" style="top: -30px;left: -20px">mdi-asterisk</v-icon>
+                      </v-row>
+                      <v-row>
+                        <v-text-field v-model="email" :rules="[rules.required(email), rules.email(email)]" solo
+                                      type="text"
+                                      placeholder="Email" size="27%" outlined
+                                      style="font-size: 18px;"/>
+                        <v-icon small color="red" style="top: -30px;left: -20px">mdi-asterisk</v-icon>
+                      </v-row>
+                      <v-row>
+                        <v-text-field v-model="password" solo :type="(visibility === false)? 'password':'text'"
+                                      :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
+                                      placeholder="Contraseña" v-on:keydown.enter="register"
+                                      size="24%" outlined style="font-size: 18px"
+                                      :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
+                                      @click:append="visibility = !visibility"/>
+                        <v-icon small color="red" style="top: -30px;left: -20px">mdi-asterisk</v-icon>
+                      </v-row>
                       <div style="min-height: 38px">
                         <p v-if="emailUsed === true" class="textoRespuesta" style="color: #ff5252">
                           Email o nombre de usuario ya registrado
@@ -51,13 +56,15 @@
 
                         <div v-else-if="emailReceived === true">
                           <v-row class="mx-0">
-                            <p v-if="!loading" class="textoRespuesta" style="color: #4BB543; position: relative; bottom: -6px">
+                            <p v-if="!loading" class="textoRespuesta"
+                               style="color: #4BB543; position: relative; bottom: -6px">
                               Email de confirmacion enviado
                             </p>
 
                             <v-spacer/>
 
-                            <v-btn v-if="canResend" class="rounded-pill textoRespuesta" color="primary" v-on:click="resend_verification()">
+                            <v-btn v-if="canResend" class="rounded-pill textoRespuesta" color="primary"
+                                   v-on:click="resend_verification()">
                               Reenviar
                             </v-btn>
                           </v-row>
@@ -76,7 +83,7 @@
                           Echarle un vistazo
                         </p>
                       </router-link>
-                      
+
                       <v-btn v-on:click="register" width="100%" height="48px" depressed color="#3C3C3C"
                              class="CustomButton white--text">
                         Registrarse
