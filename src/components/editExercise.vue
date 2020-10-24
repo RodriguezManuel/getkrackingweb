@@ -17,6 +17,7 @@
         <div style="width: 300px;" class="mt-4">
           <v-select :items="categories" label="Categoria" height="60" background-color="white" style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
                     rounded v-model="categorieSelected"/>
+        </div>
 
 
         <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton"
