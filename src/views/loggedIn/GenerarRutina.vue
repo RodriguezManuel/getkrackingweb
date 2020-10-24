@@ -160,7 +160,7 @@
                 </div>
               </v-col>
               <v-col>
-                <v-icon x-large class="mt-3" @click="removeExercise(exercise, section.exercises)">mdi-close</v-icon>
+                <div></div>
               </v-col>
             </v-row>
 
@@ -191,6 +191,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import PopupAddExercise from "@/components/PopupAddExercise";
 import { RoutineApi} from "@/api/routines";
 import { ExercisesApi} from "@/api/exercises";
+import {CycleApi} from "@/api/cycle";
 
 export default {
   name: "GenerarRutina",
@@ -225,20 +226,13 @@ export default {
   },
   methods: {
     addSection() {
-      this.sections.splice(this.sections.length-2, 0,{name: 'exercise', series: 1, exercises: []});
+      this.sections.splice(this.sections.length-1, 0,{name: 'exercise', series: 1, exercises: []});
       // agrego la seccion exercise antes de cooldown
     },
     removeSection(section, sections) {
       const index = sections.indexOf(section);
       if (index > -1)
         sections.splice(index, 1);
-      else
-        console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
-    },
-    removeExercise(exercise, exercises) {
-      const index = exercises.indexOf(exercise);
-      if (index > -1)
-        exercises.splice(index, 1);
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
     },
@@ -258,7 +252,7 @@ export default {
         detail: '',
       }
       for( i = 0  ; i < this.sections.length;i++ ){
-        cycle_id = await RoutineApi.addCycle(this.sections[i].name , i +1 , this.sections[i].series , id , null);
+        cycle_id = await CycleApi.addCycle(this.sections[i].name , i +1 , this.sections[i].series , id , null);
         for ( j = 0 ; j < this.sections[i].exercises.length ; j++){
           data_exercise.name = this.sections[i].exercises[j].name;
           data_exercise.detail = this.sections[i].exercises[j].detail;
@@ -267,6 +261,7 @@ export default {
         }
       }
       console.log("sent routine id: " +id);
+      //location.assign('/rutinas');
     }
   }
 }

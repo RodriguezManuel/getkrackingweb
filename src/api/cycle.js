@@ -10,6 +10,7 @@ class CycleApi {
             "order": number,
             "repetitions": reps
         };
+        console.log("adding a cycle");
         const result = await Api.post(RoutineApi.url + '/' + id + '/cycles', true, cycleData, controller);
         if (result.code) {
             return []

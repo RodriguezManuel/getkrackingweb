@@ -24,6 +24,25 @@ class ExercisesApi {
     static get url() {
         return Api.baseUrl;
     }
+    //Posters
+    static async addExercise(data, id , cycle_id , controller){
+        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc';
+        const send = {
+            'name': data.name,
+            'detail': data.detail,
+            'type':'exercise',
+            'duration': 0,
+            'repetitions': 50,
+        }
+        return await Api.post( path , true , send , controller);
+    }
+    static async postMasterExercise( data , controller){
+        if ( !string_type.includes(data.type)){
+            return [];
+        }
+        let cycle_id = tipos[data.type];
+        return  await this.addExercise(data ,1 , cycle_id ,controller);
+    }
     //getters
     static async getSingleExercise( routineId , cycle_id , exercise_id , controller){
         const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises/' + exercise_id , true, controller );
@@ -73,25 +92,7 @@ class ExercisesApi {
         }
         return final;
     }
-    //Posters
-    static async addExercise(data, id , cycle_id , controller){
-        const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc';
-        const send = {
-            'name': data.name,
-            'detail': data.detail,
-            'type':'exercise',
-            'duration': 0,
-            'repetitions': 50,
-        }
-        return await Api.post( path , true , send , controller);
-    }
-    static async postMasterExercise( data , controller){
-        if ( !string_type.includes(data.type)){
-            return [];
-        }
-        let cycle_id = tipos[data.type];
-        return  await this.addExercise(data ,1 , cycle_id ,controller);
-    }
+
     //Editers
     static async editMasterExercise( data , controller){
         const path = Api.baseUrl + '/routines/1/cycles/' + data.type + '/exercises/' + data.id;

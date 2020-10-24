@@ -91,7 +91,7 @@ class RoutineApi {
         let favFlag;
         let isOwner;
         for (let i = 0 ; i < routines.length; i++ ) {
-            if ( routines[i].id >= 8 ) {
+            if ( routines[i].id !== 1 ) {
                 isOwner = routines[i].creator.id === self.id;
                 favFlag = this.isFav(routines[i].id, favourites.results);
                 vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
@@ -133,9 +133,9 @@ class RoutineApi {
             }
         };
         const result = await Api.post( this.url , true , data , controller);
-        location.assign('/rutinas');
         return result.id;
     }
+
 
 }
 

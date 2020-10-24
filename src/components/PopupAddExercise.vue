@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn slot="activator" color="primary" height="40px" class="mr-4 rounded-pill white--text CustomButton"
              v-bind="attrs" v-on="on">
-        Agregar ejercicio
+        Editar ejercicio
       </v-btn>
     </template>
     <v-card style="border-radius:25px" height="100%">
@@ -22,11 +22,10 @@
         <v-spacer/>
       </v-card-actions>
       <v-card-title>
-        <div class="text-center my-15" v-if="loading">
+        <v-row justify="center" class="my-15" v-if="loading">
           <v-progress-circular size="200" width="15" style="position: relative; top: 40%"
-                               indeterminate
-                               color="primary"/>
-        </div>
+                               indeterminate color="primary"/>
+        </v-row>
         <v-row class="my-10" justify="space-around" v-else>
           <v-col v-for="n in exercises.length" :key="n">
             <add-exercise-card :exercise_object='exercises[n-1]' :addedExercises='addedExercises' class="mx-auto"/>
@@ -65,7 +64,7 @@ export default {
     }
   },
   async created() {
-    this.exercises = await ExercisesApi.getExercises();
+    this.exercises = await ExercisesApi.getMasterExercises(null);
     this.loading = false;
   },
   methods: {
