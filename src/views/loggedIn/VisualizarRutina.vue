@@ -229,16 +229,12 @@ export default {
     },
     async fillCycle(index , cycleId ){
       const exercises = await ExercisesApi.getExerciseFromCycle( this.id , cycleId , null );
-      console.log("got exercises");
-      console.log(exercises);
       for ( let i = 0 ; i<exercises.length; i++){
         this.sections[index].exercises.push( exercises[i]);
       }
     },
     async updateCycles() {
       const cycles = await CycleApi.getAllCycles(this.id, null);
-      console.log("got cycles");
-      console.log(cycles);
       for ( let i = 0 ; i<cycles.length; i++){
         this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id});
         await this.fillCycle( i , cycles[i].id );

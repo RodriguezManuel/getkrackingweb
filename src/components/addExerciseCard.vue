@@ -37,6 +37,7 @@ export default {
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
     }
   }
+
 }
 </script>
 

@@ -201,13 +201,7 @@ export default {
         name: 'far fa-futbol',
         value: false
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
-      sections: [{
-        name: 'warmup', series: 1, exercises: []
-      }, {
-        name: 'exercise', series: 1, exercises: []
-      }, {
-        name: 'cooldown', series: 1, exercises: []
-      },],
+      sections: [],
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
@@ -254,8 +248,36 @@ export default {
         }
       }
       location.assign('/rutinas');
+    },
+    async fillCycle(index , cycleId ){
+      const exercises = await ExercisesApi.getExerciseFromCycle( this.id , cycleId , null );
+      for ( let i = 0 ; i<exercises.length; i++){
+        this.sections[index].exercises.push( exercises[i]);
+      }
+    },
+    async updateCycles() {
+      const cycles = await CycleApi.getAllCycles(this.id, null);
+      for ( let i = 0 ; i<cycles.length; i++){
+        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id});
+        await this.fillCycle( i , cycles[i].id );
+      }
+    },
+  },
+    async created(){
+      this.id = this.$route.params.id;
+      if (this.id === 1) {
+        location.assign('/rutinas');
+      }
+      const result = await RoutineApi.getSingleRoutine(this.id, null);
+      if (result.code) {
+        location.assign('/rutinas');
+      }
+      this.nombre = result.name;
+      this.descripcion = result.detail;
+      this.creador = result.creator.username.toUpperCase();
+      this.categories[0].value = result.level;
+      await this.updateCycles();
     }
-  }
 }
 </script>
 

@@ -160,6 +160,7 @@ export default {
       console.log(data);
       this.name = data.name;
       this.descripcion = data.detail;
+
     }
   }
 }

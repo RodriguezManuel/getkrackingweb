@@ -21,7 +21,6 @@ export default {
       type: 0,
     }
   },
-
   created() {
     this.id = this.$route.params.id;
     this.type = this.$route.params.type;
