@@ -29,12 +29,14 @@
                 <v-row class="mt-3" v-for="category in categories" :key="category.name">
                   <a class="textoCaracteristicas" style="margin-bottom: 0;">{{ category.name }}</a>
                   <v-spacer/>
-                  <a v-for="n in 5" :key="n">
-                    <v-icon x-large v-if="n <= category.value" @click="category.value = n">
-                      mdi-checkbox-blank-circle
-                    </v-icon>
-                    <v-icon x-large v-else @click="category.value = n">mdi-checkbox-blank-circle-outline</v-icon>
-                  </a>
+                  <div>
+                    <a v-for="n in 5" :key="n">
+                      <v-icon x-large v-if="n <= category.value" @click="category.value = n">
+                        mdi-checkbox-blank-circle
+                      </v-icon>
+                      <v-icon x-large v-else @click="category.value = n">mdi-checkbox-blank-circle-outline</v-icon>
+                    </a>
+                  </div>
                 </v-row>
               </v-col>
               <v-col class="my-auto ml-4">
@@ -63,7 +65,8 @@
               </v-card>
             </v-row>
             <v-row justify="space-around" class="mt-6">
-              <v-btn v-on:click="generateRoutine()" width="300px" height="60px" color="#FBB13E" class="CustomButton rounded-pill white--text">
+              <v-btn v-on:click="generateRoutine()" width="300px" height="60px" color="#FBB13E"
+                     class="CustomButton rounded-pill white--text">
                 Publicar
               </v-btn>
             </v-row>
@@ -85,7 +88,8 @@
             <v-col>
               <v-row>
                 <v-col>
-                  <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6" v-if="section.name === 'exercise' && index !== 1">
+                  <v-btn v-on:click="removeSection(section, sections)" large icon class="ml-6"
+                         v-if="section.name === 'exercise' && index !== 1">
                     <!--                      solo se pueden remover las secciones exercise agregadas(arrancan desde el indice 2)-->
                     <v-icon size="45" color="gray">mdi-delete</v-icon>
                   </v-btn>
@@ -178,14 +182,14 @@
 <script>
 import '@fortawesome/fontawesome-free/css/all.css'
 import PopupAddExercise from "@/components/PopupAddExercise";
-import { RoutineApi} from "@/api/routines";
-import { ExercisesApi} from "@/api/exercises";
+import {RoutineApi} from "@/api/routines";
+import {ExercisesApi} from "@/api/exercises";
 import {CycleApi} from "@/api/cycle";
 
 export default {
   name: "EditarRutinaComp",
   components: {PopupAddExercise},
-  props: [ 'titulo', 'id' ],
+  props: ['titulo', 'id'],
   data() {
     return {
       nombre: '',
@@ -199,9 +203,9 @@ export default {
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
       sections: [{
         name: 'warmup', series: 1, exercises: []
-      },{
+      }, {
         name: 'exercise', series: 1, exercises: []
-      },{
+      }, {
         name: 'cooldown', series: 1, exercises: []
       },],
       rules: {
@@ -215,7 +219,7 @@ export default {
   },
   methods: {
     addSection() {
-      this.sections.splice(this.sections.length-1, 0,{name: 'exercise', series: 1, exercises: []});
+      this.sections.splice(this.sections.length - 1, 0, {name: 'exercise', series: 1, exercises: []});
       // agrego la seccion exercise antes de cooldown
     },
     removeSection(section, sections) {
@@ -225,28 +229,28 @@ export default {
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE EJERCICIOS");
     },
-    async generateRoutine(){
-      if(this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true || this.rules.counterMIN(this.nombre) !== true
+    async generateRoutine() {
+      if (this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true || this.rules.counterMIN(this.nombre) !== true
           || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true || this.rules.counterMIN(this.descripcion) !== true
-          || this.rules.required(this.duracion) !== true || this.rules.valorMIN(this.duracion) !== true){
+          || this.rules.required(this.duracion) !== true || this.rules.valorMIN(this.duracion) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
       console.log(this.categories[0].value);
-      const id = await RoutineApi.newRoutine(this.nombre, this.descripcion , this.categories[0].value , null);
+      const id = await RoutineApi.newRoutine(this.nombre, this.descripcion, this.categories[0].value, null);
       let cycle_id;
-      let i , j ;
+      let i, j;
       let data_exercise = {
         name: '',
         detail: '',
       }
-      for( i = 0  ; i < this.sections.length;i++ ){
-        cycle_id = await CycleApi.addCycle(this.sections[i].name , i +1 , this.sections[i].series , id , null);
-        for ( j = 0 ; j < this.sections[i].exercises.length ; j++){
+      for (i = 0; i < this.sections.length; i++) {
+        cycle_id = await CycleApi.addCycle(this.sections[i].name, i + 1, this.sections[i].series, id, null);
+        for (j = 0; j < this.sections[i].exercises.length; j++) {
           data_exercise.name = this.sections[i].exercises[j].name;
           data_exercise.detail = this.sections[i].exercises[j].detail;
-          console.log( 'Adding exercise: ' + data_exercise.name + ' With details: ' + data_exercise.detail);
-          await ExercisesApi.addExercise( data_exercise , id , cycle_id , null);
+          console.log('Adding exercise: ' + data_exercise.name + ' With details: ' + data_exercise.detail);
+          await ExercisesApi.addExercise(data_exercise, id, cycle_id, null);
         }
       }
       location.assign('/rutinas');
