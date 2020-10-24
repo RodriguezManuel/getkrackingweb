@@ -44,6 +44,7 @@ class RoutineApi {
         else{
             let vector = {};
             for(let i = 0; i < allRoutines.length; i++){
+                console.log(i + ' ' + allRoutines[i].name);
                 if(allRoutines[i].fav && type == 'Favoritas'){
                     vector.push(allRoutines[i]);
                 }
@@ -61,7 +62,7 @@ class RoutineApi {
             return self;
         }
         let favourites = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
-        let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller);
+        let routines = await Api.get(this.url+ '?page=0&size=99&orderBy=dateCreated&direction=asc', true, controller); //levantamos 99 rutinas de la página 0, cableado
         routines = routines.results;
         let vector = [];
         let favFlag;
