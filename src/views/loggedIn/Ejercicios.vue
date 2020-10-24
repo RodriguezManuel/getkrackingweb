@@ -8,7 +8,8 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select v-on:input="changeExercises()" :items="categories" label="Categorias" v-model="categorySelected" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select v-on:input="changeExercises()" :items="categories" label="Categorias" v-model="categorySelected"
+                      solo flat append-icon="mdi-menu-swap" class="opciones" style="overflow: hidden; !important;"/>
           </v-col>
           <v-col>
             <div>
