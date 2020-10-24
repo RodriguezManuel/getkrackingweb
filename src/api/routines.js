@@ -24,8 +24,22 @@ class RoutineApi {
     static get url() {
         return Api.baseUrl + '/routines';
     }
+    static isFavCheck(routineId , favsOb){
+        if ( favsOb.code ){
+            return false;
+        }
+        if ( favsOb.totalCount === 0 ) {
+            return false
+        }else
+        {
+            return RoutineApi.isFav(routineId , favsOb.results);
+        }
 
+    }
     static isFav(routineid, favs){
+        if( !favs.length ){
+            return false;
+        }
         for ( let i = 0 ; i < favs.length; i++){
             if ( routineid === favs[i].id){
                 return true;
@@ -57,7 +71,25 @@ class RoutineApi {
         }
         return vector;
     }
+    static async getSingleRoutine( id , controller ){
+        const result = await Api.get(RoutineApi.url + '/' + id , true , controller);
+        const self = await Api.get( Api.baseUrl + '/user/current' , true , controller);
+        const favs = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
+        console.log('got the result: ');
+        console.log(result);
+        console.log('favs: ');
+        console.log(favs);
+        console.log('self: ');
+        console.log(self);
 
+        if ( result.code ){
+            return result
+        }
+        else{
+            return new Routine(result.name , result.detail , level[result.difficulty] ,this.isFavCheck(result.id, favs),
+                result.id , result.creator.id === self.id , result.creator );
+        }
+    }
 
     static async getTypeRoutine(type , controller){
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
@@ -74,7 +106,7 @@ class RoutineApi {
         for (let i = 0 ; i < routines.length; i++ ) {
             if ( routines[i].id >= 8 ) {
                 isOwner = routines[i].creator.id === self.id;
-                favFlag = this.isFav(routines[i].id, favourites.results);
+                favFlag = this.isFavCheck(routines[i].id, favourites);
                 vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
                     favFlag, routines[i].id , isOwner, routines[i].creator));
             }
@@ -104,7 +136,34 @@ class RoutineApi {
         }
         return vector;
     }
+    static async getRating(id, controller){
+        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
+        let answer = 0;
+        for(let i = 0; i < ratings.results.length ; i++){
+            answer += ratings.results[i].score;
+        }
+        return {rating: answer/ratings.results.length, reviews: ratings.totalCount};
+    }
 
+    static async getMyRating(id, controller){
+        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
+        let actualUser = await UserApi.getUserData(controller);
+        for(let i = 0; i < ratings.results.length ; i++){
+            if(ratings.results[i].review === actualUser.username){
+                return ratings.results[i].score;
+            }
+        }
+        return 0;
+    }
+
+    static async postRating(id, rate, controller){
+        let actualUser = await UserApi.getUserData(controller);
+        let data = {
+            "score": rate,
+            "review": actualUser.username
+        }
+        return await Api.post(Api.baseUrl + '/routines/' + id + '/ratings', true, data, controller);
+    }
     static async deleteFav( id , controller){
         return await Api.delete(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
     }
@@ -136,35 +195,6 @@ class RoutineApi {
         };
         const result = await Api.post( this.url , true , data , controller);
         return result.id;
-    }
-
-    static async getRating(id, controller){
-        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
-        let answer = 0;
-        for(let i = 0; i < ratings.results.length ; i++){
-            answer += ratings.results[i].score;
-        }
-        return {rating: answer/ratings.results.length, reviews: ratings.totalCount};
-    }
-
-    static async getMyRating(id, controller){
-        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
-        let actualUser = await UserApi.getUserData(controller);
-        for(let i = 0; i < ratings.results.length ; i++){
-            if(ratings.results[i].review === actualUser.username){
-                return ratings.results[i].score;
-            }
-        }
-        return 0;
-    }
-
-    static async postRating(id, rate, controller){
-        let actualUser = await UserApi.getUserData(controller);
-        let data = {
-            "score": rate,
-            "review": actualUser.username
-        }
-        return await Api.post(Api.baseUrl + '/routines/' + id + '/ratings', true, data, controller);
     }
 }
 

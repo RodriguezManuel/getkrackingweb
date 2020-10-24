@@ -70,7 +70,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarRutina.vue')
     },
     {
-        path: '/visualizar_rutina',
+        path: '/visualizar_rutina/:id',
         name: 'VisualizarRutina',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/VisualizarRutina.vue')
     },

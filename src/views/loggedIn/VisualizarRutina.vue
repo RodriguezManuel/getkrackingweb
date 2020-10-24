@@ -155,7 +155,7 @@
                 <div style="width: 250px;">
                   <v-row justify="space-around">
                     <div style="width: 110px;">
-                      <v-text-field v-model="exercise.quantity" type="numeric" min="1" outlined disabled/>
+                      <v-text-field v-model="quantity" type="numeric" min="1" outlined disabled/>
                     </div>
                   </v-row>
                 </div>
@@ -186,11 +186,12 @@ export default {
   components: {SideBar, TopBar},
   data() {
     return {
+      quantity: 1,
+      id: '',
       creador: '',
       nombre: '',
       descripcion: '',
       duracion: 5,
-      id: 4,
       myRating: 0,
       rating: 5,
       reviews: 0,
@@ -213,7 +214,6 @@ export default {
     async changeMyRating(n) {
       if(this.myRating !== 0)
         return;
-
       this.myRating = n;
       await RoutineApi.postRating(this.id, n, null);
       await this.updateRating();
@@ -226,10 +226,28 @@ export default {
     }
   },
   async created() {
+    this.id = this.$route.params.id;
     await this.updateRating()
     this.myRating = await RoutineApi.getMyRating(this.id, null);
+    console.log("got the id:");
+    console.log(this.id);
+    if (this.id === 1) {
+      location.assign('/rutinas');
+    }
+    const result = await RoutineApi.getSingleRoutine(this.id, null);
+    console.log('afuera');
+    if ( result.code ){
+      location.assign( '/rutinas');
+    }
+    this.nombre = result.name;
+    this.descripcion = result.detail;
+    this.creador = result.creator.username.toUpperCase();
+    this.categories[0].value = result.level;
   }
 }
+
+
+
 </script>
 
 <style scoped>
