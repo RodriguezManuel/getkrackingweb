@@ -12,7 +12,7 @@ class CycleApi {
         };
         const result = await Api.post(RoutineApi.url + '/' + id + '/cycles', true, cycleData, controller);
         if (result.code) {
-            console.log(result.detail);
+            return []
         }
         return result.id;
     }
@@ -35,12 +35,10 @@ class CycleApi {
     }
     static async deleteAllCycles( routineId , controller ){
         let cycles = await Api.get( RoutineApi.url + '/' + routineId + '/cycles' , true , controller);
-        console.log("Deleting Cycles");
         cycles = cycles.results;
         for ( let i = 0 ; i < cycles.length ; i++){
             await this.deleteCycle(routineId , cycles[i].id , controller );
         }
-        console.log("cycle deleted");
     }
 }
 

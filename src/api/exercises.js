@@ -25,13 +25,18 @@ class ExercisesApi {
         return Api.baseUrl;
     }
     //getters
+    static async getSingleExercise( routineId , cycle_id , exercise_id , controller){
+        const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises/' + exercise_id , true, controller );
+        if ( result.code ){
+            return result;
+        }
+        return new Exercise(result.name , result.detail , result.id , cycle_id);
+    }
     static async getExerciseFromCycle( routineId , cycle_id , controller) {
         const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc' , true , controller);
         if ( result.code ){
-            console.log("get from exercises got error")
             return result;
         }
-        console.log(result);
         return result.results;
     }
     static async getByType( type , controller){
@@ -70,8 +75,6 @@ class ExercisesApi {
     }
     //Posters
     static async addExercise(data, id , cycle_id , controller){
-        console.log("Adding to rutine id: " + id);
-        console.log("Addint to cycle_id: " + cycle_id);
         const path = Api.baseUrl + '/routines/' + id + '/cycles/' + cycle_id + '/exercises?page=0&size=99&orderBy=name&direction=asc';
         const send = {
             'name': data.name,

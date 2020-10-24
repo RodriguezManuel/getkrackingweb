@@ -2,7 +2,7 @@
   <div>
     <side-bar/>
     <top-bar/>
-    <edit-exercise class="mx-auto mt-16" title="CREAR NUEVO EJERCICIO" style="width: 75%;"/>
+    <edit-exercise :type=0 class="mx-auto mt-16" title="CREAR NUEVO EJERCICIO" style="width: 75%;"/>
   </div>
 </template>
 

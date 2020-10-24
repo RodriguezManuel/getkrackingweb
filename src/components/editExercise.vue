@@ -16,7 +16,7 @@
                     prepend-icon="mdi-text-short"/>
         <div style="width: 300px;" class="mt-4">
           <v-select :items="categories" label="Categoria" height="60" background-color="white" style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
-                    rounded v-model="categorieSelected"/>
+                    rounded v-model="categorieSelected" :disabled="type!==0"/>
         </div>
         <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton">
           Agregar imagen o video
@@ -100,9 +100,18 @@ export default {
       }else{
         location.assign('/ejercicios')
       }
-    }
-
+    },
   },
+  async created() {
+    if (this.type !== 0) {
+      this.categorieSelected = this.categories[this.type - 1];
+      const data = await ExercisesApi.getSingleExercise(1 , this.type , this.id , null);
+      console.log("this is the data:");
+      console.log(data);
+      this.name = data.name;
+      this.descripcion = data.detail;
+    }
+  }
 }
 </script>
 
