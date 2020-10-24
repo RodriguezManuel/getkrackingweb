@@ -108,7 +108,13 @@ class ExercisesApi {
     //Deleters
     static async deleteExercise( routineId , cycleId , exerciseId, controller){
         const path =  Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycleId + '/exercises/' + exerciseId;
-        return Api.delete(path , true , controller);
+        return await Api.delete(path , true , controller);
+    }
+    static async deleteAllExercisesFromCycle(routineId , cycleId, controller){
+        const exercises = await ExercisesApi.getExerciseFromCycle(routineId , cycleId , controller);
+        for( let i = 0 ; i < exercises.length ; i++){
+            await ExercisesApi.deleteExercise(routineId, cycleId , exercises[i].id , controller);
+        }
     }
     static async deleteMasterExercise( id , type , controller){
         return this.deleteExercise( 1 , type , id , controller);

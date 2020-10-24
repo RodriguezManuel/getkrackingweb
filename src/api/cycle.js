@@ -1,5 +1,6 @@
 import { Api } from './api.js';
 import { RoutineApi } from "@/api/routines";
+import {ExercisesApi} from "@/api/exercises";
 
 class CycleApi {
     static async addCycle(type, number, reps, id, controller) {
@@ -17,6 +18,11 @@ class CycleApi {
         }
         return result.id;
     }
+
+/*
+    static async getCycle( routineId, cycleId , controller ){
+        return await Api.get(RoutineApi.url+ '/' + routineId + '/cycles/', true , controller)M
+    }*/
 /*
     static async addBuildingCycle(type, number, id, controller) {
         const cycleData = {
@@ -35,9 +41,10 @@ class CycleApi {
 
     }
     static async deleteAllCycles( routineId , controller ){
-        let cycles = await Api.get( RoutineApi.url + '/' + routineId + '/cycles' , true , controller);
+        let cycles= await Api.get( RoutineApi.url + '/' + routineId + '/cycles' , true , controller);
         cycles = cycles.results;
         for ( let i = 0 ; i < cycles.length ; i++){
+            await ExercisesApi.deleteAllExercisesFromCycle(routineId , cycles[i].id , controller);
             await this.deleteCycle(routineId , cycles[i].id , controller );
         }
     }

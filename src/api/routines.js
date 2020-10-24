@@ -114,7 +114,6 @@ class RoutineApi {
         if ( result.creator.id === myInfo.id) {
             console.log("tryna delete");
             await CycleApi.deleteAllCycles(id , controller);
-            console.log("cycle failed");
             return await Api.delete(this.url + '/' + id, true, controller);
         }
         return {
