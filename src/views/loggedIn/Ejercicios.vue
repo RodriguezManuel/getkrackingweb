@@ -68,11 +68,6 @@ export default {
     }
       console.log('New exercises: ');
       console.log(this.exercises);
-    },    
-    async created()  {
-      this.exercises = await ExercisesApi.getMasterExercises(null);
-      console.log(this.exercises);
-      this.loading = false;
     },
     search() {
         let vector = [];
@@ -88,7 +83,13 @@ export default {
       this.exercises = await ExercisesApi.getMasterExercises(null);
       this.loading=false;
     },
-  }
+  },
+  async created()  {
+    this.exercises = await ExercisesApi.getMasterExercises(null);
+    console.log(this.exercises);
+    console.log('created');
+    this.loading = false;
+  },
 }
 </script>
 

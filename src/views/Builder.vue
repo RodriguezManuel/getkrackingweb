@@ -1,12 +1,14 @@
 <template>
-  <v-btn v-on:click="refreshMaster">
-    Generar Master
-  <v-card v-if="ready">
-    <p>
-       Master creadooo! :)
-    </p>
+  <v-card color="primary" >
+    <v-btn v-on:click="refreshMaster">
+      Generar Master
+    </v-btn>
+    <v-card v-if="ready">
+      <p>
+         Master creadooo! :)
+      </p>
+    </v-card>
   </v-card>
-  </v-btn>
 </template>
 
 <script>
@@ -21,10 +23,8 @@ export default {
   },
   methods: {
     async refreshMaster(){
-      const result = await Builder.buildMaster();
-      if (!result.code){
-        this.ready = true;
-      }
+      await Builder.buildMaster();
+      this.ready = true;
     }
   }
 }
