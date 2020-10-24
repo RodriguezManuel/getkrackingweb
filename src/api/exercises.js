@@ -13,10 +13,11 @@ tipos[string_type[4]] = 5;
 tipos[string_type[5]] = 6;
 
 class Exercise{
-    constructor(name , detail , id) {
+    constructor(name , detail , id , type) {
         this.name = name;
         this.id = id;
         this.detail = detail;
+        this.type = type
     }
 }
 class ExercisesApi {
@@ -46,7 +47,7 @@ class ExercisesApi {
             return result;
         }
         for ( let i = 0 ; i < result.length ; i++){
-            vec.push(new Exercise(result[i].name , result[i].detail, result[i].id) );
+            vec.push(new Exercise(result[i].name , result[i].detail, result[i].id , tipos[type]) );
         }
         return vec;
     }
@@ -62,7 +63,7 @@ class ExercisesApi {
                 return result;
             }
             for ( j = 0 ; j < result.length ; j++ ){
-                final.push(new Exercise(result[j].name , result[j].detail , result[j].id));
+                final.push(new Exercise(result[j].name , result[j].detail , result[j].id , i));
             }
         }
         return final;
@@ -90,7 +91,7 @@ class ExercisesApi {
     }
     //Editers
     static async editMasterExercise( data , controller){
-        const path = Api.baseUrl + '/routines/1/cycles/1/exercises/' + data.id;
+        const path = Api.baseUrl + '/routines/1/cycles/' + data.type + '/exercises/' + data.id;
         const send = {
             'name': data.name,
             'detail': data.detail,
@@ -106,15 +107,7 @@ class ExercisesApi {
         return Api.delete(path , true , controller);
     }
     static async deleteMasterExercise( id , type , controller){
-        if ( !string_type.includes(type)) {
-            return {
-                code: 1,
-                detail: "type doesnt exist"
-            }
-        }
-        console.log("getting exercise: " + type);
-
-        return this.deleteExercise( 1 , 1 , id , controller);
+        return this.deleteExercise( 1 , type , id , controller);
     }
 }
 

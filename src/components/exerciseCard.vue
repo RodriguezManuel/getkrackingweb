@@ -19,7 +19,7 @@ import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "exerciseCard",
-  props: ["exercise_object" , "type"],
+  props: ["exercise_object" , "type" ],
   data(){
     return {
       title: 'EDITAR EJERCICIO',
@@ -27,14 +27,14 @@ export default {
   },
   methods:{
     redirect(){
-      let path = "/editar_ejercicio/" + this.exercise_object.id;
+      let path = "/editar_ejercicio/" + this.exercise_object.id + '/' + this.exercise_object.type;
       location.assign(path);
     },
     async deleteExercise(){
-      const result = await ExercisesApi.deleteMasterExercise(this.exercise_object.id , this.type,null);
+      const result = await ExercisesApi.deleteMasterExercise(this.exercise_object.id , this.exercise_object.type,null);
       console.log(result);
       if ( !result.code){
-        //location.assign("/ejercicios");
+        location.assign("/ejercicios");
       }else{
         console.log("ERROR");
       }

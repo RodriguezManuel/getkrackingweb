@@ -79,7 +79,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/GenerarEjercicio.vue')
     },
     {
-        path: '/editar_ejercicio/:id',
+        path: '/editar_ejercicio/:id/:type',
         name: 'EditarEjercicio',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/EditarEjercicio.vue')
     },

@@ -48,7 +48,7 @@ import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "editExercise",
-  props: ['title', 'id'],
+  props: ['title', 'id' , 'type'],
   data: () => ({
     name: '',
     descripcion: '',
@@ -69,7 +69,9 @@ export default {
         return
       }
 
-      let result = null;
+      let result = {
+        code:0,
+      };
       if (this.title === "CREAR NUEVO EJERCICIO") {
         if ( this.categorieSelected == null ){
           return;
@@ -88,15 +90,18 @@ export default {
         const data = {
           name: this.name,
           detail: this.descripcion,
-          id: this.id
+          id: this.id,
+          type: this.type
         }
         result = await ExercisesApi.editMasterExercise(data, null);
       }
-      if (!result.code) {
-        location.assign("../ejercicios");
-      } else
+      if (result.code) {
         console.log("ERROR");
+      }else{
+        location.assign('/ejercicios')
+      }
     }
+
   },
 }
 </script>
