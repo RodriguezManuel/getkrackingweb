@@ -34,6 +34,26 @@ class RoutineApi {
         }
         return false;
     }
+
+    static async getByType(type, controller){
+        console.log("routine type: "+ type);
+        const allRoutines = await Api.get(Api.baseUrl + '/routines', true, controller);
+        if(allRoutines.code){
+            console.log("ERROR");
+        }
+        else{
+            let vector = {};
+            for(let i = 0; i < allRoutines.length; i++){
+                if(allRoutines[i].fav && type == 'Favoritas'){
+                    vector.push(allRoutines[i]);
+                }
+                else if(allRoutines[i].isOwner && type == 'Propias')
+                    vector.push(allRoutines[i]);
+            }
+            return vector;
+        }
+    }
+
     static async getTypeRoutine(type , controller){
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
         if (self.code) {
