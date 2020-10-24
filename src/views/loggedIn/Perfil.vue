@@ -7,13 +7,31 @@
 
         <v-row justify="center">
           <v-avatar size="220" class="mt-4">
-            <v-img src="@/assets/images/default.png" />
+            <v-img :src="avatarURLFUNC" lazy-src="@/assets/images/default.png"/>
           </v-avatar>
         </v-row>
-
-        <v-row justify="center" class="mt-6">
+        <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-9" style="text-align: center">Nombre</p>
+            <p class="texto mt-9  " style="text-align: center">Imagen</p>
+          </v-col>
+          <v-col cols="8">
+            <v-row>
+              <div style="width: 650px">
+                <v-text-field v-model="image" outlined class="texto mt-7"
+                              rounded background-color="#F7F2F2" :disabled="(editImage !== true)"
+                              :rules="[rules.validateURL(image)]"/>
+              </div>
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+                      @click="editImage = !editImage">
+                mdi-pencil
+              </v-icon>
+            </v-row>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <v-col cols="2">
+            <p class="texto mt-2" style="text-align: center">Nombre</p>
           </v-col>
           <v-col cols="8">
             <v-row>
@@ -32,15 +50,15 @@
         </v-row>
 
 
-        <v-row justify="center" >
+        <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-9" style="text-align: center">Username</p>
+            <p class="texto mt-2" style="text-align: center">Username</p>
           </v-col>
           <v-col cols="8">
             <v-row>
               <div style="width: 650px">
                 <v-text-field v-model="username" outlined class="texto"
-                              :disabled="(editUsername !== true)" prepend-icon=""
+                              :disabled="(editUsername !== true)"
                               :rules="[rules.required(username), rules.counterMIN(username),rules.counterNameMAX(username)]"
                               rounded background-color="#F7F2F2"/>
               </div>
@@ -74,29 +92,6 @@
 
         <v-row justify="center">
           <v-col cols="2">
-            <p class="texto mt-2" style="text-align: center">Contraseña</p>
-          </v-col>
-          <v-col cols="8">
-            <v-row>
-              <div style="width: 650px">
-                <v-text-field v-model="password" outlined class="texto"
-                              :type="(visibility === false)? 'password':'text'"
-                              placeholder="Contraseña" :disabled="(editPassword !== true)"
-                              :rules="[rules.required(password), rules.counterMAX(password), rules.counterMIN(password)]"
-                              rounded background-color="#F7F2F2"
-                              :append-icon="(visibility === false)? 'mdi-eye': 'mdi-eye-off'"
-                              @click:append="visibility = !visibility"/>
-              </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
-                      @click="editPassword = !editPassword">
-                mdi-pencil
-              </v-icon>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <v-row justify="center">
-          <v-col cols="2">
             <p class="texto mt-2" style="text-align: center;">Fecha de nacimiento</p>
           </v-col>
           <v-col cols="8">
@@ -122,23 +117,18 @@
         </v-row>
 
         <div style="text-align: center;" class="my-8">
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
+          <v-btn v-on:click="update()" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
             <v-icon large style="position: relative; left: -12px;">mdi-content-save-outline</v-icon>
             Guardar cambios
           </v-btn>
+
           <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
                  color=primary>
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
         </div>
-
-
-        <!--        BOTONES CON POSICION ABSOLUTA-->
-        <v-icon size="62" to="/implementar" color="#8B8686"
-                style="position: absolute; top: 180px; right: 40%;z-index: 1">mdi-pencil-circle
-        </v-icon>
 
       </v-card>
     </v-row>
@@ -148,31 +138,32 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
-import { UserApi} from "@/api/user";
+import {UserApi, AllData} from "@/api/user";
 
 export default {
   name: "Perfil",
   components: {SideBar, TopBar},
   data() {
     return {
-      nombre: 'Julian Sicardi',
+      nombre: '',
       editNombre: false,
-      username: 'juliansicardi99',
+      username: '',
       editUsername: false,
-      email: 'juliansicardicabjcasla@yahoort.com',
+      email: '',
       editEmail: false,
-      password: 'pastaconfrutidimare',
-      editPassword: false,
-      visibility: false,
-      date: new Date().toISOString().substr(0, 10),
+      date: null,
       menu: false,
-      userInfo: '',
-      image: '',
+      image: null,
+      editImage: false,
       rules: {
         required: value => !!value || 'Requerido.',
         counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
         counterNameMAX: value => value.length < 30 || 'Inserte menos de 30 caracteres.',
+        validateURL: value => {
+          const regex = RegExp('(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$', 'i');
+          return regex.test(value);
+        },
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Formato de mail invalido.'
@@ -180,10 +171,30 @@ export default {
       },
     }
   },
-  async created(){
-    this.userInfo = await UserApi.getUserData(null);
-    this.image = this.userInfo.avatarUrl;
-    console.log(this.image);
+  methods: {
+    async update() {
+      try {
+        const data = await new AllData(this.username, this.nombre, Date.parse(this.date), this.email, this.image);
+        await UserApi.update(data, null);
+        return true;
+      } catch (error) {
+        return false
+      }
+    },
+  },
+  computed: {
+    avatarURLFUNC() {
+      return this.image;
+    },
+  },
+  async mounted() {
+    let userInfo = await UserApi.getUserData(null);
+    let dateObj = new Date(userInfo.birthdate);
+    this.date = dateObj.getUTCFullYear() + '-' + (dateObj.getUTCMonth() + 1) + '-' + dateObj.getUTCDate();
+    this.image = userInfo.avatarUrl;
+    this.nombre = userInfo.fullName;
+    this.username = userInfo.username;
+    this.email = userInfo.email;
   }
 }
 </script>

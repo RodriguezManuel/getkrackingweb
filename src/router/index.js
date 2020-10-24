@@ -58,6 +58,7 @@ const routes = [
         name: 'Mensajes',
         component: () => import(/* webpackChunkName: "about" */ '../views/loggedIn/NoImplementado.vue')
     },
+        //Acá habia una configuracion que desde not logged te llevaba a un tal ajustes que no existe
     {
         path: '/ajustes',
         name: 'Ajustes',
