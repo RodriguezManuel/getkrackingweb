@@ -58,14 +58,10 @@
             <v-row>
               <div style="width: 650px">
                 <v-text-field v-model="username" outlined class="texto"
-                              :disabled="(editUsername !== true)"
+                              :disabled="true"
                               :rules="[rules.required(username), rules.counterMIN(username),rules.counterNameMAX(username)]"
                               rounded background-color="#F7F2F2"/>
               </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
-                      @click="editUsername = !editUsername">
-                mdi-pencil
-              </v-icon>
             </v-row>
           </v-col>
         </v-row>
@@ -78,14 +74,10 @@
             <v-row>
               <div style="width: 650px">
                 <v-text-field v-model="email" outlined class="texto"
-                              :disabled="(editEmail !== true)"
+                              :disabled="true"
                               :rules="[rules.required(email), rules.email(email)]"
                               rounded background-color="#F7F2F2"/>
               </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
-                      @click="editEmail = !editEmail">
-                mdi-pencil
-              </v-icon>
             </v-row>
           </v-col>
         </v-row>
@@ -148,9 +140,7 @@ export default {
       nombre: '',
       editNombre: false,
       username: '',
-      editUsername: false,
       email: '',
-      editEmail: false,
       date: null,
       menu: false,
       image: null,
