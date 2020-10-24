@@ -22,6 +22,15 @@
           </v-col>
 
           <v-col>
+            <div class="mt-2">
+              <div class="opciones" v-on:click="sortByRating()">
+                Rating
+                <v-icon large class="ml-7">{{ dificultad[rating % 3].icon }}</v-icon>
+              </div>
+            </div>
+          </v-col>
+
+          <v-col>
             <div>
               <v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()"
                             label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
@@ -72,6 +81,7 @@ export default {
       puntuacion: ['5', '4', '3', '2', '1'],
       searchTerm: '',
       difi: 0,
+      rating:0,
     }
   },
   methods: {
@@ -94,6 +104,16 @@ export default {
         this.routines = RoutineApi.difiAscending(this.allRoutines);
       } else if (this.dificultad[this.difi % 3].label === 'Descendente') {
         this.routines = RoutineApi.difiDescending(this.allRoutines);
+      } else {
+        this.routines = this.allRoutines;
+      }
+      this.difi++;
+    },
+    sortByRating(){
+      if (this.dificultad[this.rating % 3].label === 'Ascendente') {
+        this.routines = RoutineApi.ratingAscending(this.allRoutines);
+      } else if (this.dificultad[this.rating % 3].label === 'Descendente') {
+        this.routines = RoutineApi.ratingDescending(this.allRoutines);
       } else {
         this.routines = this.allRoutines;
       }

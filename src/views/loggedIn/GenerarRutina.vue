@@ -3,7 +3,7 @@
 
     <side-bar/>
     <top-bar/>
-    <editar-rutina-comp titulo="NUEVA RUTINA" id = 0 />
+    <editar-rutina-comp titulo="NUEVA RUTINA" :id="id" />
   </div>
 </template>
 
@@ -15,6 +15,11 @@ import EditarRutinaComp from "@/components/EditarRutinaComp";
 export default {
   name: "GenerarRutina",
   components: {EditarRutinaComp, SideBar, TopBar},
+  data(){
+    return {
+      id: 0,
+    }
+  },
 }
 </script>
 
