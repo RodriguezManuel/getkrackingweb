@@ -115,8 +115,8 @@
             Guardar cambios
           </v-btn>
 
-          <v-btn to="/implementar" height="64px" width="350px" class="CustomButton rounded-pill" depressed
-                 color=primary>
+          <v-btn height="64px" width="350px" class="CustomButton rounded-pill" depressed
+                 color="primary" @click="logout" >
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
@@ -171,6 +171,10 @@ export default {
         return false
       }
     },
+    async logout() {
+      await UserApi.logout(null);
+      location.assign('/');
+    }
   },
   computed: {
     avatarURLFUNC() {
