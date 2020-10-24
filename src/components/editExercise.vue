@@ -14,12 +14,47 @@
                     auto-grow rounded background-color="white" height="150"
                     :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
                     prepend-icon="mdi-text-short"/>
-        <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton">
-          Agregar imagen o video
+
+
+        <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton"
+               @click="addOn(images)">
+          Agregar imagen
         </v-btn>
+
         <v-row>
-          <v-col v-for="image in images" :key="image">
-            <v-img :src="image"/>
+          <v-col v-for="(image, index) in images" :key="index">
+            <div style="width: 650px">
+              <v-row>
+                <v-text-field v-model="image.src" outlined class="texto" label="URL de imagen"
+                              rounded background-color="#F7F2F2"
+                              :rules="[rules.validateURL(image.src)]"/>
+                <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px;"
+                        @click="deleteFrom(image, images)">
+                  mdi-delete
+                </v-icon>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+
+        <v-btn depressed color="white" min-width="240px" min-height="45px" class="rounded-pill mt-4 CustomButton"
+               @click="addOn(videos)">
+          Agregar video
+        </v-btn>
+
+        <v-row>
+          <v-col v-for="(video, index) in videos" :key="index">
+            <div style="width: 650px">
+              <v-row>
+                <v-text-field v-model="video.src" outlined class="texto" label="URL de video"
+                              rounded background-color="#F7F2F2"
+                              :rules="[rules.validateURL(video.src)]"/>
+                <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px;"
+                        @click="deleteFrom(video, videos)">
+                  mdi-delete
+                </v-icon>
+              </v-row>
+            </div>
           </v-col>
         </v-row>
 
@@ -40,25 +75,40 @@
 </template>
 
 <script>
-import { ExercisesApi} from "@/api/exercises";
+import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "editExercise",
-  props: ['title' , 'id'],
+  props: ['title', 'id'],
   data: () => ({
     nombre: '',
     descripcion: '',
-    images: '',
+    images: [],
+    videos: [],
     rules: {
       required: value => !!value || 'Requerido.',
       counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
       counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
+      validateURL: value => {
+        const regex = RegExp('(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+@]*)*(\\?[;&a-z\\d%_.~+=-@]*)?(\\#[-a-z\\d_@]*)?$', 'i');
+        return regex.test(value);
+      },
     },
   }),
   methods: {
+    addOn(section) {
+      section.push({src: ''})
+    },
+    deleteFrom(element, section) {
+      const index = this.section.indexOf(element);
+      if (index > -1)
+        section.splice(index, 1);
+      else
+        console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE VIDEOS");
+    },
     async editCard() {
-      if(this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true
-          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true ){
+      if (this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true
+          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
       }
@@ -69,7 +119,6 @@ export default {
           name: this.nombre,
           detail: this.descripcion,
         }
-        console.log("trying to send");
         result = await ExercisesApi.postMasterExercise(data, null);
         console.log(result);
       } else {
@@ -79,14 +128,13 @@ export default {
           id: this.id
         }
         result = await ExercisesApi.editMasterExercise(data, null);
-        console.log("yass queen");
       }
       if (!result.code) {
         location.assign("../ejercicios");
       } else
         console.log("ERROR");
-      }
-    },
+    }
+  },
 }
 </script>
 
