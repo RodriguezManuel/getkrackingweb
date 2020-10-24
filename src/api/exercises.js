@@ -17,7 +17,7 @@ class Exercise{
         this.name = name;
         this.id = id;
         this.detail = detail;
-        this.type = type
+        this.type = type;
     }
 }
 class ExercisesApi {
@@ -44,6 +44,7 @@ class ExercisesApi {
         return  await this.addExercise(data ,1 , cycle_id ,controller);
     }
     //getters
+
     static async getSingleExercise( routineId , cycle_id , exercise_id , controller){
         const result = await Api.get(Api.baseUrl + '/routines/' + routineId + '/cycles/' + cycle_id + '/exercises/' + exercise_id , true, controller );
         if ( result.code ){
