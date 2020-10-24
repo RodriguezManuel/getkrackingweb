@@ -83,6 +83,19 @@
                   </v-icon>
                 </a>
               </v-row>
+              <v-row justify="center" class="mt-12">
+                <p class="textoCaracteristicas">Puntuacion general:</p>
+              </v-row>
+              <v-row justify="center" class="mt-2">
+                <a v-for="n in 10" :key="n">
+                  <v-icon medium v-if="n <= rating" color="primary" @click="rating = n">
+                    fas fa-star
+                  </v-icon>
+                  <v-icon medium v-else color="gray darken-2" @click="rating = n">
+                    far fa-star
+                  </v-icon>
+                </a>
+              </v-row>
             </v-col>
           </v-row>
 
