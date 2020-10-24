@@ -25,7 +25,7 @@
 
           <v-col>
             <div>
-              <v-text-field v-model="search" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
+              <v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
             </div>
           </v-col>
         </v-row>
@@ -70,7 +70,7 @@ export default {
       puntuacion: ['5', '4', '3', '2', '1'],
       flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
       categoria: ['Favoritos', 'No favoritos', 'Todos'],
-      search: '',
+      searchTerm: '',
     }
   },
   computed: {
@@ -82,7 +82,34 @@ export default {
   },
   methods: {
     sortByType(){
-      this.routines = RoutineApi.getByType(this.type, null);
+      let vector = [];
+      for(let i = 0; i < this.allRoutines.length; i++){
+        if(this.allRoutines[i].fav && this.type == 'Favoritas'){
+          vector.push(this.allRoutines[i]);
+        }
+        else if(this.allRoutines[i].isOwner && this.type == 'Propias'){
+          vector.push(this.allRoutines[i]);
+        }
+          
+        else if(this.type == 'Generales'){ //quiero todas
+          vector.push(this.allRoutines[i]);
+        }
+      }
+      console.log(vector);
+      this.routines = vector;
+    },
+
+    search(){
+      let vector = [];
+      for(let i = 0; i < this.allRoutines.length; i++){
+        if((this.allRoutines[i].name).includes(this.searchTerm)){
+          vector.push(this.allRoutines[i]);
+        }
+      }
+      this.routines = vector;
+    },
+    reset(){
+      this.routines = this.allRoutines;
     }
   },
 
