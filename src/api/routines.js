@@ -77,6 +77,30 @@ class RoutineApi {
         }
         return vector;
     }
+    static ratingAscending(allRoutines){
+        let vector = [];
+        for(let i = 1; i <= 10; i++){
+            for(let j = 0; j < allRoutines.length; j++){
+                if(allRoutines[j].level === i +1){
+                    vector.push(allRoutines[j]);
+                }
+            }
+        }
+        return vector;
+    }
+    static ratingDescending(allRoutines){
+        let vector= [];
+        for(let i = 10; i > 0; i--){
+            for(let j = 0; j < allRoutines.length; j++){
+                if(allRoutines[j].level === i +1){
+                    vector.push(allRoutines[j]);
+                }
+            }
+        }
+        return vector;
+    }
+
+
     static async getSingleRoutine( id , controller ){
         const result = await Api.get(RoutineApi.url + '/' + id , true , controller);
         const self = await Api.get( Api.baseUrl + '/user/current' , true , controller);

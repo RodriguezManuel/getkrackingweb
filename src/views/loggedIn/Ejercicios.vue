@@ -13,8 +13,8 @@
           </v-col>
           <v-col>
             <div>
-              <v-text-field v-model="search" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
-            </div>
+<v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()"
+                            label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>            </div>
           </v-col>
         </v-row>
       </v-card>
@@ -53,7 +53,7 @@ export default {
       exercises: [],
       categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas', 'Todos'],
       categorySelected: 'Todos',
-      search: '',
+      searchTerm: '',
       insensi: 0,
     }
   },
@@ -68,14 +68,27 @@ export default {
     }
       console.log('New exercises: ');
       console.log(this.exercises);
-    }
-  },    
-  async created()  {
-    this.exercises = await ExercisesApi.getMasterExercises(null);
-    console.log(this.exercises);
-    this.loading = false;
-  },
-
+    },    
+    async created()  {
+      this.exercises = await ExercisesApi.getMasterExercises(null);
+      console.log(this.exercises);
+      this.loading = false;
+    },
+    search() {
+        let vector = [];
+        for (let i = 0; i < this.exercises.length; i++) {
+          if ((this.exercises[i].name).includes(this.searchTerm)) {
+            vector.push(this.exercises[i]);
+          }
+        }
+        this.exercises = vector;
+      },
+    async reset() {
+      this.loading=true;
+      this.exercises = await ExercisesApi.getMasterExercises(null);
+      this.loading=false;
+    },
+  }
 }
 </script>
 
