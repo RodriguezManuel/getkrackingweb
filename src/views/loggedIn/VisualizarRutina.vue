@@ -229,13 +229,10 @@ export default {
     this.id = this.$route.params.id;
     await this.updateRating()
     this.myRating = await RoutineApi.getMyRating(this.id, null);
-    console.log("got the id:");
-    console.log(this.id);
     if (this.id === 1) {
       location.assign('/rutinas');
     }
     const result = await RoutineApi.getSingleRoutine(this.id, null);
-    console.log('afuera');
     if ( result.code ){
       location.assign( '/rutinas');
     }

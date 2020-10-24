@@ -41,7 +41,7 @@
                               :rules="[rules.required(nombre), rules.counterNameMAX(nombre)]"
                               rounded background-color="#F7F2F2"/>
               </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
                       @click="editNombre = !editNombre">
                 mdi-pencil
               </v-icon>
@@ -62,7 +62,7 @@
                               :rules="[rules.required(username), rules.counterMIN(username),rules.counterNameMAX(username)]"
                               rounded background-color="#F7F2F2"/>
               </div>
-              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 5px; left: 5px;"
+              <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px; left: 5px;"
                       @click="editUsername = !editUsername">
                 mdi-pencil
               </v-icon>

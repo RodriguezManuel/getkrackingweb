@@ -3,8 +3,9 @@
 
     <side-bar/>
     <top-bar/>
-    <editar-rutina-comp titulo="NUEVA RUTINA" id = 0 />
+    <editar-rutina-comp titulo="EDITAR RUTINA" :id="this.$route.params.id"/>
   </div>
+
 </template>
 
 <script>
@@ -13,7 +14,7 @@ import TopBar from "@/components/TopBar"
 import EditarRutinaComp from "@/components/EditarRutinaComp";
 
 export default {
-  name: "GenerarRutina",
+  name: "EditarRutina",
   components: {EditarRutinaComp, SideBar, TopBar},
 }
 </script>

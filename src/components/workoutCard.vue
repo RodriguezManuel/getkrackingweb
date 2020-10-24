@@ -43,8 +43,12 @@
       <v-icon color="black">fas fa-dumbbell</v-icon>
     </v-btn>
 
-    <v-btn large icon style="position: absolute; top: 29%; right: 7px; z-index: 1;">
+    <v-btn large icon style="position: absolute; top: 29%; right: 7px; z-index: 1;" :to="'/editar_rutina/' + routine.id" v-if="routine.isOwner">
       <v-icon color="black">mdi-pencil</v-icon>
+    </v-btn>
+
+    <v-btn large icon style="position: absolute; top: 29%; right: 7px; z-index: 1;" :to="'/visualizar_rutina/' + routine.id" v-else>
+      <v-icon color="black">mdi-eye</v-icon>
     </v-btn>
 
     <v-btn v-on:click="deleteRoutine" large icon style="position: absolute; top: 40%; right: 7px; z-index: 1;" v-if="routine.isOwner">

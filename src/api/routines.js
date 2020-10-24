@@ -10,7 +10,7 @@ level[string_level[3]]=4;
 level[string_level[4]]=5;
 
 class Routine{
-    constructor(name , detail , level , fav ,id , isOwner, creator) {
+    constructor(name , detail , level , fav ,id , isOwner, creator , rating) {
         this.name = name;
         this.detail = detail;
         this.level=level;
@@ -18,6 +18,7 @@ class Routine{
         this.id = id;
         this.isOwner = isOwner;
         this.creator = creator;
+        this.rating = rating;
     }
 }
 class RoutineApi {
@@ -48,10 +49,15 @@ class RoutineApi {
         return false;
     }
 
+    //posters
+    static async addFav( id , controller){
+        return await Api.post(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
+    }
+
     static difiAscending(allRoutines){
         let vector = [];
-        for(var i = 0; i < string_level.length; i++){
-            for(var j = 0; j < allRoutines.length; j++){
+        for(let i = 0; i < string_level.length; i++){
+            for(let j = 0; j < allRoutines.length; j++){
                 if(allRoutines[j].level === i +1){
                     vector.push(allRoutines[j]);
                 }
@@ -62,8 +68,8 @@ class RoutineApi {
 
     static difiDescending(allRoutines){
         let vector= [];
-        for(var i = string_level.length -1; i >= 0; i--){
-            for(var j = 0; j < allRoutines.length; j++){
+        for(let i = string_level.length -1; i >= 0; i--){
+            for(let j = 0; j < allRoutines.length; j++){
                 if(allRoutines[j].level === i +1){
                     vector.push(allRoutines[j]);
                 }
@@ -87,10 +93,10 @@ class RoutineApi {
         }
         else{
             return new Routine(result.name , result.detail , level[result.difficulty] ,this.isFavCheck(result.id, favs),
-                result.id , result.creator.id === self.id , result.creator );
+                result.id , result.creator.id === self.id , result.creator , result.averageRating);
         }
     }
-
+    /*
     static async getTypeRoutine(type , controller){
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
         if (self.code) {
@@ -113,7 +119,7 @@ class RoutineApi {
         }
         return vector;
     }
-
+*/
     static async getRoutines(controller) {
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);
         if (self.code) {
@@ -131,7 +137,7 @@ class RoutineApi {
                 isOwner = routines[i].creator.id === self.id;
                 favFlag = this.isFav(routines[i].id, favourites.results);
                 vector.push(new Routine(routines[i].name, routines[i].detail, level[routines[i].difficulty],
-                    favFlag, routines[i].id , isOwner, routines[i].creator));
+                    favFlag, routines[i].id , isOwner, routines[i].creator , routines[i].averageRating));
             }
         }
         return vector;
@@ -166,10 +172,6 @@ class RoutineApi {
     }
     static async deleteFav( id , controller){
         return await Api.delete(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
-    }
-
-    static async addFav( id , controller){
-        return await Api.post(Api.baseUrl+'/user/current/routines/'+ id +'/favourites' , true , controller);
     }
     static async deleteRoutine( id , controller){
         const result = await Api.get(this.url+ '/' + id ,true , null);
