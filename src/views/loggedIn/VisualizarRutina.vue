@@ -75,10 +75,10 @@
               </v-row>
               <v-row justify="center" class="mt-2">
                 <a v-for="n in 10" :key="n">
-                  <v-icon medium v-if="n <= myRating" color="primary" @click="myRating = n">
+                  <v-icon medium v-if="n <= myRating" color="primary" @click="changeMyRating(n)">
                     fas fa-star
                   </v-icon>
-                  <v-icon medium v-else color="gray darken-2" @click="myRating = n">
+                  <v-icon medium v-else color="gray darken-2" @click="changeMyRating(n)">
                     far fa-star
                   </v-icon>
                 </a>
@@ -88,13 +88,16 @@
               </v-row>
               <v-row justify="center" class="mt-2">
                 <a v-for="n in 10" :key="n">
-                  <v-icon medium v-if="n <= rating" color="primary" @click="rating = n">
+                  <v-icon medium v-if="n <= getRating" color="primary">
                     fas fa-star
                   </v-icon>
-                  <v-icon medium v-else color="gray darken-2" @click="rating = n">
+                  <v-icon medium v-else color="gray darken-2">
                     far fa-star
                   </v-icon>
                 </a>
+              </v-row>
+              <v-row justify="center" class="mt-12">
+                <p class="textoCaracteristicas">Reviews: {{reviews}}</p>
               </v-row>
             </v-col>
           </v-row>
@@ -175,6 +178,7 @@
 <script>
 import SideBar from "@/components/SideBar"
 import TopBar from "@/components/TopBar"
+import { RoutineApi } from "@/api/routines";
 import '@fortawesome/fontawesome-free/css/all.css'
 
 export default {
@@ -182,12 +186,14 @@ export default {
   components: {SideBar, TopBar},
   data() {
     return {
-      creador: 'mbeh',
+      creador: '',
       nombre: '',
       descripcion: '',
       duracion: 5,
-      myRating: 7,
+      id: 4,
+      myRating: 0,
       rating: 5,
+      reviews: 0,
       foto: false,
       categories: [{name: 'Dificultad', value: 3}, {name: 'Flexibilidad', value: 3},
         {name: 'Resistencia', value: 3}, {name: 'Fuerza', value: 3,}],
@@ -197,6 +203,31 @@ export default {
       }, {name: 'fas fa-football-ball', value: false}, {name: 'mdi-yoga', value: false}],
       sections: [],
     }
+  },
+  computed: {
+    getRating(){
+      return this.rating;
+    }
+  },
+  methods: {
+    async changeMyRating(n) {
+      if(this.myRating !== 0)
+        return;
+
+      this.myRating = n;
+      await RoutineApi.postRating(this.id, n, null);
+      await this.updateRating();
+    },
+    async updateRating(){
+      let data = await RoutineApi.getRating(this.id, null);
+      this.rating = data.rating;
+      this.reviews = data.reviews;
+      console.log(this.rating)
+    }
+  },
+  async created() {
+    await this.updateRating()
+    this.myRating = await RoutineApi.getMyRating(this.id, null);
   }
 }
 </script>

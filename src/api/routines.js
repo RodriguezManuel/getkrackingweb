@@ -138,7 +138,34 @@ class RoutineApi {
         return result.id;
     }
 
+    static async getRating(id, controller){
+        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
+        let answer = 0;
+        for(let i = 0; i < ratings.results.length ; i++){
+            answer += ratings.results[i].score;
+        }
+        return {rating: answer/ratings.results.length, reviews: ratings.totalCount};
+    }
 
+    static async getMyRating(id, controller){
+        let ratings = await Api.get(Api.baseUrl + '/routines/' + id + '/ratings', true, controller);
+        let actualUser = await UserApi.getUserData(controller);
+        for(let i = 0; i < ratings.results.length ; i++){
+            if(ratings.results[i].review === actualUser.username){
+                return ratings.results[i].score;
+            }
+        }
+        return 0;
+    }
+
+    static async postRating(id, rate, controller){
+        let actualUser = await UserApi.getUserData(controller);
+        let data = {
+            "score": rate,
+            "review": actualUser.username
+        }
+        return await Api.post(Api.baseUrl + '/routines/' + id + '/ratings', true, data, controller);
+    }
 }
 
 export {RoutineApi};
