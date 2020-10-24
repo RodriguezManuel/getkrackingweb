@@ -8,17 +8,23 @@
       <v-card style="width: 98%; height: 75px; margin-left: 1%; border-radius: 36px">
         <v-row style="width: 98%;" class="ma-1">
           <v-col class="ml-4">
-            <v-select v-on:input="sortByType()" :items="tipos" label="Tipo" v-model="type" solo flat append-icon="mdi-menu-down" class="opciones"/>
+            <v-select v-on:input="sortByType()" :items="tipos" label="Tipo" v-model="type" solo flat
+                      append-icon="mdi-menu-down" class="opciones" style="overflow: hidden; !important;"/>
           </v-col>
 
           <v-col>
-            <!-- v-select v-on:input="sortByDifi()" :items="dificultad" label="Dificultad" v-model="difi" solo flat append-icon="mdi-menu-swap" class="opciones"/ -->
-            <div class="opciones" style="center;" solo flat v-on:click="sortByDifi()">Dificultad <v-icon>{{dificultad[difi%3].icon}}</v-icon> </div>
+            <div class="mt-2">
+              <div class="opciones" v-on:click="sortByDifi()">
+                Dificultad
+                <v-icon large class="ml-7">{{ dificultad[difi % 3].icon }}</v-icon>
+              </div>
+            </div>
           </v-col>
 
           <v-col>
             <div>
-              <v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()" label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
+              <v-text-field v-model="searchTerm" v-on:input="search()" v-on:keydown.enter="reset()"
+                            label="Buscar por nombre" prepend-icon="mdi-magnify" class="opciones" solo flat/>
             </div>
           </v-col>
         </v-row>
@@ -56,61 +62,59 @@ export default {
     return {
       loading: true,
       routines: [],
-      allRoutines:[],
-      type:'',
+      allRoutines: [],
+      type: '',
       tipos: ['Propias', 'Todas', 'Favoritas'],
-      dificultad: [{icon: 'mdi-menu-swap', label: "Sin orden"}, {icon: 'mdi-menu-up', label: "Descendente"}, {icon: 'mdi-menu-down', label: "Ascendente"}],
+      dificultad: [{icon: 'mdi-menu-swap', label: "Sin orden"}, {
+        icon: 'mdi-menu-up',
+        label: "Descendente"
+      }, {icon: 'mdi-menu-down', label: "Ascendente"}],
       puntuacion: ['5', '4', '3', '2', '1'],
       searchTerm: '',
-      difi:0,
+      difi: 0,
     }
   },
   methods: {
-    sortByType(){
+    sortByType() {
       let vector = [];
-      for(let i = 0; i < this.allRoutines.length; i++){
-        if(this.allRoutines[i].fav && this.type === 'Favoritas'){
+      for (let i = 0; i < this.allRoutines.length; i++) {
+        if (this.allRoutines[i].fav && this.type === 'Favoritas') {
           vector.push(this.allRoutines[i]);
-        }
-        else if(this.allRoutines[i].isOwner && this.type === 'Propias'){
+        } else if (this.allRoutines[i].isOwner && this.type === 'Propias') {
           vector.push(this.allRoutines[i]);
-        }
-          
-        else if(this.type === 'Todas'){ //quiero todas
+        } else if (this.type === 'Todas') { //quiero todas
           vector.push(this.allRoutines[i]);
         }
       }
       this.routines = vector;
     },
 
-    sortByDifi(){
-      if(this.dificultad[this.difi%3].label === 'Ascendente'){
+    sortByDifi() {
+      if (this.dificultad[this.difi % 3].label === 'Ascendente') {
         this.routines = RoutineApi.difiAscending(this.allRoutines);
-      }
-      else if(this.dificultad[this.difi%3].label === 'Descendente'){
+      } else if (this.dificultad[this.difi % 3].label === 'Descendente') {
         this.routines = RoutineApi.difiDescending(this.allRoutines);
-      }
-      else {
+      } else {
         this.routines = this.allRoutines;
       }
       this.difi++;
     },
 
-    search(){
+    search() {
       let vector = [];
-      for(let i = 0; i < this.allRoutines.length; i++){
-        if((this.allRoutines[i].name).includes(this.searchTerm)){
+      for (let i = 0; i < this.allRoutines.length; i++) {
+        if ((this.allRoutines[i].name).includes(this.searchTerm)) {
           vector.push(this.allRoutines[i]);
         }
       }
       this.routines = vector;
     },
-    reset(){
+    reset() {
       this.routines = this.allRoutines;
     }
   },
 
-  async created(){
+  async created() {
     this.routines = await RoutineApi.getRoutines(null);
     this.allRoutines = this.routines;
     this.loading = false;
@@ -126,7 +130,7 @@ export default {
 
 .opciones {
   font-size: 20px;
-  font-family: NotoSans-Regular,sans-serif;
+  font-family: NotoSans-Regular, sans-serif;
 }
 
 </style>
