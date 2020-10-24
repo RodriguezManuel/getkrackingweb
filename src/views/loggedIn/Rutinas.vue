@@ -117,7 +117,7 @@ export default {
       } else {
         this.routines = this.allRoutines;
       }
-      this.difi++;
+      this.rating++;
     },
 
     search() {
