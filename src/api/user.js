@@ -41,6 +41,7 @@ class UserApi {
         await Api.post(`${UserApi.url}/logout`, true, controller);
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('currenUser');
+        Api.token = null;
     }
 
     static async getUserData(controller){
