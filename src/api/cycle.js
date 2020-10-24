@@ -18,6 +18,10 @@ class CycleApi {
         }
         return result.id;
     }
+    static async getAllCycles(routineId , controller){
+        let cycles= await Api.get( RoutineApi.url + '/' + routineId + '/cycles' , true , controller);
+        return cycles.results
+    }
 
 /*
     static async getCycle( routineId, cycleId , controller ){
@@ -41,11 +45,10 @@ class CycleApi {
 
     }
     static async deleteAllCycles( routineId , controller ){
-        let cycles= await Api.get( RoutineApi.url + '/' + routineId + '/cycles' , true , controller);
-        cycles = cycles.results;
+        const cycles = await CycleApi.getAllCycles(routineId , controller);
         for ( let i = 0 ; i < cycles.length ; i++){
             await ExercisesApi.deleteAllExercisesFromCycle(routineId , cycles[i].id , controller);
-            await this.deleteCycle(routineId , cycles[i].id , controller );
+            await CycleApi.deleteCycle(routineId , cycles[i].id , controller );
         }
     }
 }
