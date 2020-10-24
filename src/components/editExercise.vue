@@ -7,16 +7,19 @@
 
     <v-card-text>
       <v-form class="mx-15">
-        <v-text-field v-model="name" class="texto mt-7" label="name" height="60"
+        <v-text-field v-model="name" class="texto mt-7" label="Nombre de ejercicio" height="60"
                       :rules="[rules.required(name), rules.counterMAX(name)]"
-                      rounded background-color="white"/>
+                      rounded background-color="white" hide-details="false"/>
         <v-textarea label="Descripcion" v-model="descripcion" class="texto"
                     auto-grow rounded background-color="white" height="150"
                     :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
-                    prepend-icon="mdi-text-short"/>
+                    prepend-icon="mdi-text-short" required text hide-details="false"/>
+
         <div style="width: 300px;" class="mt-4">
-          <v-select :items="categories" label="Categoria" height="60" background-color="white" style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
-                    rounded v-model="categorieSelected" :disabled="type!==0"/>
+          <v-select :items="categories" label="Categoria" height="60" background-color="white"
+                    style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
+                    rounded v-model="categorieSelected" :disabled="type!==0"
+                    required/>
         </div>
 
 
@@ -69,6 +72,13 @@
             Guardar cambios
           </v-btn>
         </v-row>
+        <v-row justify="center">
+          <div style="height: 50px">
+            <p class="mensajeError" v-if="incompleteFlag">
+              Faltan completar datos
+            </p>
+          </div>
+        </v-row>
       </v-form>
     </v-card-text>
     <v-btn icon color="grey darken-2" @click="$router.go(-1)"
@@ -83,10 +93,12 @@ import {ExercisesApi} from "@/api/exercises";
 
 export default {
   name: "editExercise",
-  props: ['title', 'id' , 'type'],
+  props: ['title', 'id', 'type'],
   data: () => ({
+    loading: true,
     name: '',
     descripcion: '',
+    incompleteFlag: false,
     categories: ['Biceps', 'Triceps', 'Pecho', 'Espalda', 'Abdominales', 'Piernas'],
     categorieSelected: null,
     images: [],
@@ -116,25 +128,28 @@ export default {
       if (this.rules.required(this.name) !== true || this.rules.counterMAX(this.name) !== true
           || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
+        this.incompleteFlag = true;
         return
       }
-
+      this.loading = true;
       let result = {
-        code:0,
+        code: 0,
       };
       if (this.title === "CREAR NUEVO EJERCICIO") {
-        if ( this.categorieSelected == null ){
+        if (this.categorieSelected == null) {
+          this.loading = false;
           return;
         }
         const data = {
-          name: this.name,
-          detail: this.descripcion,
-          type: this.categorieSelected,
-        },
-        result = await ExercisesApi.postMasterExercise(data, null);
+              name: this.name,
+              detail: this.descripcion,
+              type: this.categorieSelected,
+            },
+            result = await ExercisesApi.postMasterExercise(data, null);
         console.log(result);
       } else {
-        if ( this.categorieSelected != null){
+        if (this.categorieSelected != null) {
+          this.loading = false;
           return;
         }
         const data = {
@@ -147,21 +162,22 @@ export default {
       }
       if (result.code) {
         console.log("ERROR");
-      }else{
+      } else {
         location.assign('/ejercicios')
       }
+      this.loading = false;
     },
   },
   async created() {
     if (this.type !== 0) {
       this.categorieSelected = this.categories[this.type - 1];
-      const data = await ExercisesApi.getSingleExercise(1 , this.type , this.id , null);
+      const data = await ExercisesApi.getSingleExercise(1, this.type, this.id, null);
       console.log("this is the data:");
       console.log(data);
       this.name = data.name;
       this.descripcion = data.detail;
-
     }
+    this.loading = false;
   }
 }
 </script>
@@ -184,6 +200,12 @@ export default {
   font-family: NotoSans-Regular, sans-serif;
   font-size: 26px;
   color: #8B8686;
+}
+
+.mensajeError {
+  font-family: NotoSans-Regular, sans-serif;
+  font-size: 26px;
+  color: red;
 }
 
 .CustomButton {
