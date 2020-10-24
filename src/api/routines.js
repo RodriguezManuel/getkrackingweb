@@ -35,25 +35,28 @@ class RoutineApi {
         return false;
     }
 
-    static async getByType(type, controller){
-        console.log("routine type: "+ type);
-        const allRoutines = await Api.get(Api.baseUrl + '/routines', true, controller);
-        if(allRoutines.code){
-            console.log("ERROR");
-        }
-        else{
-            let vector = {};
-            for(let i = 0; i < allRoutines.length; i++){
-                console.log(i + ' ' + allRoutines[i].name);
-                if(allRoutines[i].fav && type == 'Favoritas'){
+    static difiAscending(allRoutines){
+        let vector = [];
+        for(var i = 0; i < string_level.length; i++){
+            for(var j = 0; j < allRoutines.length; j++){
+                if(allRoutines[j].difficulty == string_level[i]){
                     vector.push(allRoutines[i]);
                 }
-                else if(allRoutines[i].isOwner && type == 'Propias')
-                    vector.push(allRoutines[i]);
             }
-            return vector;
         }
     }
+
+    static difiDescending(allRoutines){
+        let vector= [];
+        for(var i = string_level.length; i >= 0; i--){
+            for(var j = 0; j < allRoutines.length; j++){
+                if(allRoutines[j].difficulty == string_level[i]){
+                    vector.push(allRoutines[i]);
+                }
+            }
+        }
+    }
+
 
     static async getTypeRoutine(type , controller){
         const self = await Api.get(Api.baseUrl + '/user/current', true, controller);

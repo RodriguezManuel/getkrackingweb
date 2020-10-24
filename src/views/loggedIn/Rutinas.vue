@@ -12,7 +12,7 @@
           </v-col>
 
           <v-col>
-            <v-select :items="dificultad" label="Dificultad" solo flat append-icon="mdi-menu-swap" class="opciones"/>
+            <v-select v-on:input="sortByDifi()" :items="dificultad" label="Dificultad" v-model="difi" solo flat append-icon="mdi-menu-swap" class="opciones"/>
           </v-col>
 
           <v-col>
@@ -71,6 +71,7 @@ export default {
       flexibilidad: ['Sin orden', 'Ascendente', 'Descendente'],
       categoria: ['Favoritos', 'No favoritos', 'Todos'],
       searchTerm: '',
+      difi:'',
     }
   },
   computed: {
@@ -97,6 +98,18 @@ export default {
       }
       console.log(vector);
       this.routines = vector;
+    },
+
+    sortByDifi(){
+      if(this.difi == 'Ascendente'){
+        this.routines = RoutineApi.difiAscending(this.allRoutines);
+      }
+      else if(this.difi == 'Descendente'){
+        this.routines = RoutineApi.difiDescending(this.allRoutines);
+      }
+      else {
+        this.routines = this.allRoutines;
+      }
     },
 
     search(){
