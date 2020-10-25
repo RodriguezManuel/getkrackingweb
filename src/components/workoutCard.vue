@@ -76,7 +76,6 @@ export default {
       if ( !this.routine.fav ){
         result = await RoutineApi.addFav(this.routine.id , null);
       }else{
-        console.log("Deleting");
         result = await RoutineApi.deleteFav( this.routine.id , null );
       }
       if( !result.code) {

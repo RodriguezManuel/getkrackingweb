@@ -23,8 +23,7 @@
         <v-row>
           <div style="width: 300px;" class="mt-4">
             <v-select :items="categories" label="Categoria" height="60" background-color="white"
-                      style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
-                      rounded v-model="categorieSelected" :disabled="type !== 0"/>
+                      style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;" rounded v-model="categorieSelected"/>
           </div>
           <v-icon small color="red" style="top: -10px">mdi-asterisk</v-icon>
         </v-row>
