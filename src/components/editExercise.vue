@@ -124,9 +124,8 @@ export default {
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE VIDEOS");
     },
-    async addMedia( exercise_id , type ){
+    async addMedia( exercise_id , cycle_id ){
       let i;
-      let cycle_id = await MediaApi.getCycleId(type);
       for (  i = 0 ; i < this.images.length; i++){
         await MediaApi.addImageToExercise(this.images[i].src , i +1  , cycle_id , exercise_id , null );
       }
@@ -134,10 +133,9 @@ export default {
         await MediaApi.addVideoToExercise(this.videos[i].src , i + 1 ,cycle_id , exercise_id , null);
       }
     },
-    async editMedia( exercise_id , type){
-      let cycle_id = await MediaApi.getCycleId(type);
+    async editMedia( exercise_id ,cycle_id){
       await MediaApi.cleanMedia(cycle_id, exercise_id , null);
-      await this.addMedia(exercise_id, type);
+      await this.addMedia(exercise_id, cycle_id);
     },
     async editCard() {
       if (this.rules.required(this.name) !== true || this.rules.counterMAX(this.name) !== true
@@ -163,12 +161,10 @@ export default {
             result = await ExercisesApi.postMasterExercise(data, null);
             console.log(result);
             let id = result.id
-            await this.addMedia(id , data.type);
+            const type = await MediaApi.getCycleId(data.type)
+            await this.addMedia(id , type);
       } else {
-        if (this.categorieSelected != null) {
-          this.loading = false;
-          return;
-        }
+        console.log("sending");
         const data = {
           name: this.name,
           detail: this.descripcion,
