@@ -26,6 +26,9 @@
       <v-btn v-on:click="verif()" color="primary" class="black--text my-7 CustomButton rounded-pill">
         Verificar
       </v-btn>
+      <div style=" height: 30px">
+        <p v-if="codigoInvalido" class="texto" style="color: #ff5252; text-align: center">Verificacion erronea.</p>
+      </div>
     </v-card>
   </div>
 </template>
@@ -42,6 +45,7 @@ export default {
       token: this.$route.query.token,
       code: '',
       email: '',
+      codigoInvalido: false,
       rules: {
         required: value => !!value || 'Requerido.',
         counterCode: value => value.length == 6,
@@ -56,7 +60,11 @@ export default {
     async verif() {
       // eslint-disable-next-line no-undef
       const v = new ToVerify(this.email, this.code);
-      await UserApi.verify(v, null);
+      let result = await UserApi.verify(v, null);
+      if(result)
+        location.assign('/');
+      else
+        this.codigoInvalido = true;
     }
   },
 }

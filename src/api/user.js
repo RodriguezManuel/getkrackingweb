@@ -30,7 +30,11 @@ class UserApi {
 
     static async verify(v, controller){
         const result = await Api.post(`${UserApi.url}/verify_email`, false, v, controller);
+        if(result.code)
+            return false;
+
         sessionStorage.setItem('token', result.token);
+        return true;
     }
 
     static async getCurrent(controller){

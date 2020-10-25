@@ -189,6 +189,14 @@ export default {
       console.log(data);
       this.name = data.name;
       this.descripcion = data.detail;
+      let auxImages = await MediaApi.getImagesFromExercise(this.type, this.id, null);
+      let auxVideos = await MediaApi.getVideosFromExercise(this.type, this.id, null);
+      for(let i = 0; i < auxImages.results.length ; i++){
+        this.images.push({src: auxImages.results[i].url});
+      }
+      for(let i = 0; i < auxVideos.results.length ; i++){
+        this.videos.push({src: auxVideos.results[i].url});
+      }
     }
     this.loading = false;
   }
