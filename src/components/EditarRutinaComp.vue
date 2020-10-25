@@ -252,8 +252,8 @@ export default {
       }
     },
     async generateRoutine() {
-      if (this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true || this.rules.counterMIN(this.nombre) !== true
-          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true || this.rules.counterMIN(this.descripcion) !== true
+      if (this.rules.required(this.nombre) !== true || this.rules.counterMAX(this.nombre) !== true
+          || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true
           || this.rules.required(this.duracion) !== true || this.rules.valorMIN(this.duracion) !== true) {
         // SI FALLA ALGUNOS DE LOS REQUISITOS(SUCEDE CUANDO NO RETORNAN TRUE(ALGUNOS AL FALLAR RETORNAN UN STRING)), IMPIDO EL POST
         return
