@@ -1,5 +1,6 @@
 export { Api };
 import urlApi from '../api/paths.js'
+
 class Api {
   static token = null;
   static get baseUrl() {

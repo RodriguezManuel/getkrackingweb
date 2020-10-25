@@ -9,11 +9,17 @@
         <v-row>
           <v-col cols="8">
             <div style="max-width: 500px" class="mx-15">
-              <v-text-field label="Nombre de rutina" type="text" v-model="nombre" class="textoRutina"
-                            :rules="[rules.required(nombre), rules.counterMAX(nombre), rules.counterMIN(nombre)]"/>
-              <v-textarea label="Descripcion" v-model="descripcion" class="textoRutina" rows="1" auto-grow
-                          :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion), rules.counterMIN(descripcion)]"
-                          prepend-icon="mdi-text-short"/>
+              <v-row>
+                <v-text-field label="Nombre de rutina" type="text" v-model="nombre" class="textoRutina"
+                              :rules="[rules.required(nombre), rules.counterMAX(nombre)]"/>
+                <v-icon small color="red">mdi-asterisk</v-icon>
+              </v-row>
+              <v-row>
+                <v-textarea label="Descripcion" v-model="descripcion" class="textoRutina" rows="1" auto-grow
+                            :rules="[rules.required(descripcion), rules.counterMAXDESC(descripcion)]"
+                            prepend-icon="mdi-text-short"/>
+                <v-icon small color="red">mdi-asterisk</v-icon>
+              </v-row>
               <v-row>
                 <v-icon x-large>mdi-clock-outline</v-icon>
                 <p class="my-auto textoRutina"> Duracion estimada en minutos: </p>
@@ -220,7 +226,6 @@ export default {
       rules: {
         required: value => !!value || 'Requerido.',
         counterMAX: value => value.length < 20 || 'Inserte menos de 20 caracteres.',
-        counterMIN: value => value.length > 6 || 'Inserte mas de 6 caracteres.',
         counterMAXDESC: value => value.length < 100 || 'Inserte menos de 100 caracteres',
         valorMIN: value => value > 0 || 'Duracion invalida.'
       },
@@ -255,9 +260,9 @@ export default {
       }
       this.loading = true;
       let id;
-      if( this.id === 0 ) {
+      if (this.id === 0) {
         id = await RoutineApi.newRoutine(this.nombre, this.descripcion, this.categories[0].value, null);
-      }else{
+      } else {
         await CycleApi.deleteAllCycles(this.id, null);
         id = this.id;
       }
@@ -278,17 +283,23 @@ export default {
       this.loading = false;
       location.assign('/rutinas');
     },
-    async fillCycle(index , cycleId ){
-      const exercises = await ExercisesApi.getExerciseFromCycle( this.id , cycleId , null );
-      for ( let i = 0 ; i<exercises.length; i++){
-        this.sections[index].exercises.push( exercises[i]);
+    async fillCycle(index, cycleId) {
+      const exercises = await ExercisesApi.getExerciseFromCycle(this.id, cycleId, null);
+      for (let i = 0; i < exercises.length; i++) {
+        this.sections[index].exercises.push(exercises[i]);
       }
     },
     async updateCycles() {
       const cycles = await CycleApi.getAllCycles(this.id, null);
-      for ( let i = 0 ; i < cycles.length; i++){
-        this.sections.push({name: cycles[i].name , series: cycles[i].repetitions, exercises: [] , id: cycles[i].id , cleaned: false});
-        await this.fillCycle( i , cycles[i].id );
+      for (let i = 0; i < cycles.length; i++) {
+        this.sections.push({
+          name: cycles[i].name,
+          series: cycles[i].repetitions,
+          exercises: [],
+          id: cycles[i].id,
+          cleaned: false
+        });
+        await this.fillCycle(i, cycles[i].id);
       }
     },
   },
@@ -307,7 +318,7 @@ export default {
       this.creador = result.creator.username.toUpperCase();
       this.categories[0].value = result.level;
       await this.updateCycles();
-    }else{
+    } else {
       this.sections = [{
         name: 'warmup', series: 1, exercises: [], cleaned: true
       }, {

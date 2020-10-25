@@ -39,8 +39,9 @@ class UserApi {
 
     static async logout(controller) {
         await Api.post(`${UserApi.url}/logout`, true, controller);
-        Api.token = undefined;
-        sessionStorage.setItem('token', Api.token);
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('currenUser');
+        Api.token = null;
     }
 
     static async getUserData(controller){
