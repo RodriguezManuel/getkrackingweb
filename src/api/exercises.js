@@ -86,8 +86,6 @@ class ExercisesApi {
         let final = [];
         for(  i = 1 ; i < 7; i++){
             result = await this.getExerciseFromCycle(1 , i , controller);
-            console.log("from cycle got:");
-            console.log(result);
             if ( result.code ){
                 return result;
             }

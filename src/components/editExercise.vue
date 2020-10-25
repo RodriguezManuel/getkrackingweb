@@ -90,6 +90,7 @@
 
 <script>
 import {ExercisesApi} from "@/api/exercises";
+import {MediaApi} from "@/api/media";
 
 export default {
   name: "editExercise",
@@ -124,6 +125,21 @@ export default {
       else
         console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE VIDEOS");
     },
+    async addMedia( exercise_id , type ){
+      let i;
+      let cycle_id = await MediaApi.getCycleId(type);
+      for (  i = 0 ; i < this.images.length; i++){
+        await MediaApi.addImageToExercise(this.images[i].src , i +1  , cycle_id , exercise_id , null );
+      }
+      for ( i = 0 ; i < this.videos.length ; i++){
+        await MediaApi.addVideoToExercise(this.videos[i].src , i + 1 ,cycle_id , exercise_id , null);
+      }
+    },
+    async editMedia( exercise_id , type){
+      let cycle_id = await MediaApi.getCycleId(type);
+      await MediaApi.cleanMedia(cycle_id, exercise_id , null);
+      await this.addMedia(exercise_id, type);
+    },
     async editCard() {
       if (this.rules.required(this.name) !== true || this.rules.counterMAX(this.name) !== true
           || this.rules.required(this.descripcion) !== true || this.rules.counterMAXDESC(this.descripcion) !== true) {
@@ -146,7 +162,9 @@ export default {
               type: this.categorieSelected,
             },
             result = await ExercisesApi.postMasterExercise(data, null);
-        console.log(result);
+            console.log(result);
+            let id = result.id
+            await this.addMedia(id , data.type);
       } else {
         if (this.categorieSelected != null) {
           this.loading = false;
@@ -159,11 +177,12 @@ export default {
           type: this.type
         }
         result = await ExercisesApi.editMasterExercise(data, null);
+        await this.editMedia( this.id , data.type);
       }
       if (result.code) {
         console.log("ERROR");
       } else {
-        location.assign('/ejercicios')
+        //location.assign('/ejercicios')
       }
       this.loading = false;
     },
