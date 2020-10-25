@@ -23,9 +23,10 @@
         <v-row>
           <div style="width: 300px;" class="mt-4">
             <v-select :items="categories" label="Categoria" height="60" background-color="white"
-                      style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;" rounded v-model="categorieSelected"/>
+                      style="font-family: NotoSans-Regular, sans-serif;color: #8B8686;"
+                      rounded v-model="categorieSelected" :disabled="type !== 0"/>
           </div>
-          <v-icon small color="red" style="top: -10px">mdi-asterisk</v-icon>
+          <v-icon small color="red" style="top: -10px" v-if="!(type !== 0)">mdi-asterisk</v-icon>
         </v-row>
 
 
@@ -42,7 +43,7 @@
                               rounded background-color="#F7F2F2"
                               :rules="[rules.validateURL(image.src)]"/>
                 <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px;"
-                        @click="deleteFrom(image, images)">
+                        @click="deleteFrom(index, images)">
                   mdi-delete
                 </v-icon>
               </v-row>
@@ -63,7 +64,7 @@
                               rounded background-color="#F7F2F2"
                               :rules="[rules.validateURL(video.src)]"/>
                 <v-icon size="34" color="#8B8686" style="position: relative; bottom: 15px;"
-                        @click="deleteFrom(video, videos)">
+                        @click="deleteFrom(index, videos)">
                   mdi-delete
                 </v-icon>
               </v-row>
@@ -78,6 +79,10 @@
             Guardar cambios
           </v-btn>
         </v-row>
+        <v-row justify="center" v-if="loading === true">
+          <v-progress-circular indeterminate color="primary" size="75"/>
+        </v-row>
+
       </v-form>
     </v-card-text>
     <v-btn icon color="grey darken-2" @click="$router.go(-1)"
@@ -117,12 +122,8 @@ export default {
     addOn(section) {
       section.push({src: ''})
     },
-    deleteFrom(element, section) {
-      const index = this.section.indexOf(element);
-      if (index > -1)
+    deleteFrom(index, section) {
         section.splice(index, 1);
-      else
-        console.log("ERROR: SE INTENTO REMOVER ALGO INEXISTENTE DE LA LISTA DE VIDEOS");
     },
     async addMedia( exercise_id , cycle_id ){
       let i;
@@ -164,7 +165,6 @@ export default {
             const type = await MediaApi.getCycleId(data.type)
             await this.addMedia(id , type);
       } else {
-        console.log("sending");
         const data = {
           name: this.name,
           detail: this.descripcion,
@@ -177,7 +177,7 @@ export default {
       if (result.code) {
         console.log("ERROR");
       } else {
-        //location.assign('/ejercicios')
+        location.assign('/ejercicios')
       }
       this.loading = false;
     },
@@ -186,7 +186,6 @@ export default {
     if (this.type !== 0) {
       this.categorieSelected = this.categories[this.type - 1];
       const data = await ExercisesApi.getSingleExercise(1, this.type, this.id, null);
-      console.log("this is the data:");
       console.log(data);
       this.name = data.name;
       this.descripcion = data.detail;
@@ -197,7 +196,6 @@ export default {
 </script>
 
 <style scoped>
-
 @font-face {
   font-family: "NotoSans-Regular";
   src: url("../assets/fonts/NotoSans-Regular.ttf");

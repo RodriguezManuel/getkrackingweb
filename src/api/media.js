@@ -23,8 +23,6 @@ class MediaApi{
     }
     //adders
     static async addImageToExercise(urlImage , number, cycle_id , exercise_id , controller){
-        console.log('adding url: ');
-        console.log('urlImage');
         const path = Api.baseUrl + '/routines/1/cycles/' + cycle_id + '/exercises/' + exercise_id + '/images';
         const send = {
             number: number,

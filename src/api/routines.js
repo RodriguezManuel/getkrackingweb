@@ -105,11 +105,8 @@ class RoutineApi {
         const result = await Api.get(RoutineApi.url + '/' + id , true , controller);
         const self = await Api.get( Api.baseUrl + '/user/current' , true , controller);
         const favs = await Api.get(Api.baseUrl + '/user/current/routines/favourites' , true , null);
-        console.log('got the result: ');
         console.log(result);
-        console.log('favs: ');
         console.log(favs);
-        console.log('self: ');
         console.log(self);
 
         if ( result.code ){

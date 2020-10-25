@@ -38,7 +38,6 @@ class Builder{
         }
         const result = this.post(masterRoutine , "/api/routines");
         if (result.ok) {
-            console.log("added Mater Routine");
         }
         let result2 = this.get( {} ,"/api/routines" );
         if ( result2.ok){
