@@ -107,7 +107,13 @@
             <v-spacer/>
           </v-col>
         </v-row>
-
+        <div style="height: 50px">
+          <v-row justify="center" class="my-15" >
+            <v-progress-circular size="40" width="15" style="position: relative; top: 40%"
+                                 indeterminate color="primary" v-if="loading"/>
+            <p v-else-if="loaded" class="texto" style="color: #4BB543;">Cambios guardados.</p>
+          </v-row>
+        </div>
         <div style="text-align: center;" class="my-8">
           <v-btn v-on:click="update()" height="64px" width="350px" class="CustomButton mr-2 gray darken-0 rounded-pill"
                  depressed>
@@ -116,7 +122,7 @@
           </v-btn>
 
           <v-btn height="64px" width="350px" class="CustomButton rounded-pill" depressed
-                 color="primary" @click="logout" >
+                 color="primary" @click="logout">
             <v-icon large style="position: relative; left: -12px;">mdi-logout</v-icon>
             Cerrar sesión
           </v-btn>
@@ -137,6 +143,8 @@ export default {
   components: {SideBar, TopBar},
   data() {
     return {
+      loading: true,
+      loaded: false,
       nombre: '',
       editNombre: false,
       username: '',
@@ -163,11 +171,15 @@ export default {
   },
   methods: {
     async update() {
+      this.loading = true;
       try {
         const data = await new AllData(this.username, this.nombre, Date.parse(this.date), this.email, this.image);
         await UserApi.update(data, null);
+        this.loading = false;
+        this.loaded = true;
         return true;
       } catch (error) {
+        this.loading = false;
         return false
       }
     },
@@ -189,6 +201,7 @@ export default {
     this.nombre = userInfo.fullName;
     this.username = userInfo.username;
     this.email = userInfo.email;
+    this.loading = false;
   }
 }
 </script>
